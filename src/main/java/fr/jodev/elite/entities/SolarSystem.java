@@ -15,8 +15,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="SOLARSYSTEMS")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idSolarSystem")
+@Table(name="SOLAR_SYSTEMS")
 public class SolarSystem {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

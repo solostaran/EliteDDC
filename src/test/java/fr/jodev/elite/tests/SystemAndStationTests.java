@@ -13,7 +13,7 @@ import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.services.StationService;
 import fr.jodev.elite.services.SystemService;
 
-public class SystemTests {
+public class SystemAndStationTests {
 	
 	private static Logger logger = Logger.getLogger("ELITE");
 

@@ -23,7 +23,7 @@ import fr.jodev.elite.services.SystemService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class StationTests extends AbstractTransactionalJUnit4SpringContextTests {
+public class StationServiceTests extends AbstractTransactionalJUnit4SpringContextTests {
 
 	@Autowired
 	private StationService stationService;

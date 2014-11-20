@@ -9,6 +9,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="STATIONS")
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idStation")
@@ -29,6 +33,8 @@ public class Station {
 	@JoinColumn(name="idSolarSystem", nullable=false)
 //	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idSolarSystem")
 //	@JsonUnwrapped(prefix="parentSolarSystem.")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idSolarSystem")
+	@JsonIdentityReference(alwaysAsId=true)
 	private SolarSystem parentSolarSystem;
 	
 	protected Station() {}

@@ -15,9 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 public class HibernateConfiguration {
-
-//	@Value("#{dataSource}")
-//	private DataSource dataSource;
 	
 	@Bean(name="dataSource")
 	public DataSource dataSourceBean() {
@@ -32,11 +29,6 @@ public class HibernateConfiguration {
 	@Bean(name="sessionFactory")
 	public LocalSessionFactoryBean sessionFactoryBean() {
 		Properties props = new Properties();
-//		props.put("hibernate.connection.driver_class", com.mysql.jdbc.Driver.class.getName());
-//		props.put("hibernate.connection.url", "jdbc:mysql://localhost/elite");
-//		props.put("hibernate.connection.username", "elite");
-//		props.put("hibernate.connection.password", "reitnorf");
-//		props.put("hibernate.default_schema", "elite");
 		
 //		props.put("hibernate.current_session_context_class", "thread");
 		props.put("connection.pool_size", "1");
@@ -47,7 +39,9 @@ public class HibernateConfiguration {
 		props.put("hibernate.hbm2ddl.auto", "update");
 
 		LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
-		bean.setAnnotatedClasses(new Class[]{SolarSystem.class, Station.class});		
+		bean.setAnnotatedClasses(new Class[]{
+				SolarSystem.class, Station.class,
+				ShipOutfitCategory.class, ShipBuyable.class, ShipOutfitSlot.class});		
 		bean.setHibernateProperties(props);
 		bean.setDataSource(this.dataSourceBean());
 //		bean.setSchemaUpdate(true); // hibernate 3

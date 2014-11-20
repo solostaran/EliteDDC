@@ -18,7 +18,7 @@ import fr.jodev.elite.services.SystemService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration
-public class SystemTests extends AbstractTransactionalJUnit4SpringContextTests {
+public class SystemServiceTests extends AbstractTransactionalJUnit4SpringContextTests {
 	// a transaction is provided for each test (no need to beginTransaction or commit)
 	// by default there is a rollback
 	
