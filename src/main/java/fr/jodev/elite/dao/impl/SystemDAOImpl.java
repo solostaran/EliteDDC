@@ -39,6 +39,12 @@ public class SystemDAOImpl implements SystemDAO {
 		session.update(sys);
 		return sys;
 	}
+	
+	@Override
+	public SolarSystem getByIdNow(long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (SolarSystem)session.get(SolarSystem.class, id);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

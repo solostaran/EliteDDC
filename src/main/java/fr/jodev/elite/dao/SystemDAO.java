@@ -8,5 +8,6 @@ public interface SystemDAO {
 	void addSolarSystem(SolarSystem sys);
 	void removeSolarSystem(SolarSystem sys);
 	SolarSystem getById(long id);
+	SolarSystem getByIdNow(long id);
 	List<SolarSystem> getByName(String name);
 }

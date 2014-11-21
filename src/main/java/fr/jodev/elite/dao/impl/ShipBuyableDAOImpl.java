@@ -2,8 +2,6 @@ package fr.jodev.elite.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -32,17 +30,18 @@ public class ShipBuyableDAOImpl extends AbstractDAO implements ShipBuyableDAO {
 		sb = (ShipBuyable)find(ShipBuyable.class, id);
 		return sb;
 	}
+	
+	@Override
+	public ShipBuyable getByIdNow(long id) {
+		return (ShipBuyable)get(ShipBuyable.class, id);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ShipBuyable> getAll() {
-//		List<ShipBuyable> list = null;
-//		list = (List<ShipBuyable>)findAll(ShipBuyable.class);
-//		return list;
-		Session session = sessionFactory.getCurrentSession();
-		String hql = "from ShipBuyable";
-		Query query = session.createQuery(hql);
-		return (List<ShipBuyable>)query.list();
+//		Session session = sessionFactory.getCurrentSession();
+//		String hql = "from ShipBuyable";
+//		Query query = session.createQuery(hql);
+		return (List<ShipBuyable>)findAll(ShipBuyable.class);
 	}
-
 }

@@ -1,5 +1,6 @@
 package fr.jodev.elite.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ import fr.jodev.elite.services.ShipOutfitCategoryService;
 @Scope("singleton")
 public class ShipOutfitCategoryServiceImpl implements ShipOutfitCategoryService {
 	
+	// Memory Cache
+	private List<String> names;
+	
 	@Autowired
 	private ShipOutfitCategoryDAO shipOutfitCategoryDAO;
 
@@ -28,6 +32,18 @@ public class ShipOutfitCategoryServiceImpl implements ShipOutfitCategoryService 
 	@Transactional
 	public void add(int id, String name) {
 		shipOutfitCategoryDAO.add(new ShipOutfitCategory(id,name));
+	}
+
+	@Override
+	@Transactional
+	public List<String> getNames() {
+		if (names == null) {
+			List<ShipOutfitCategory> list = shipOutfitCategoryDAO.getAll();
+			names = new ArrayList<String>();
+			for (ShipOutfitCategory soc : list)
+				names.add(soc.getName());
+		}
+		return names;
 	}
 
 }

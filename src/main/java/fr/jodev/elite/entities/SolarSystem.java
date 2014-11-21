@@ -13,9 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 @Table(name="SOLAR_SYSTEMS")
+@JsonSerialize
 public class SolarSystem {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

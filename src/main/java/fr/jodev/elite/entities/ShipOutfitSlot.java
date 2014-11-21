@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="SHIP_OUTFIT_SLOTS")
 public class ShipOutfitSlot {
@@ -16,12 +21,15 @@ public class ShipOutfitSlot {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long idShipOutfitSlot;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "idShipBuyable", nullable=false)
 	private ShipBuyable ship;
 	
 	@ManyToOne
 	@JoinColumn(name = "idShipOutfitCategory")
+	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idShipOutfitCategory")
+	@JsonIdentityReference(alwaysAsId=true)
 	private ShipOutfitCategory shipOutfitCategory;
 	
 	private int size;

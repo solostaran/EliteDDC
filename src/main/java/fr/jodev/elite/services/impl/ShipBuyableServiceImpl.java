@@ -65,4 +65,10 @@ public class ShipBuyableServiceImpl implements ShipBuyableService {
 		return sb.getSlots();
 	}
 
+	@Override
+	@Transactional
+	public ShipBuyable getById(long id) {
+		return shipBuyableDAOImpl.getByIdNow(id);
+	}
+
 }

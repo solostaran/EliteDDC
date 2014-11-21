@@ -48,6 +48,19 @@ public class AbstractDAO {
 //            HibernateFactory.close(session);
         }
     }
+    
+    protected Object get(Class<?> clazz, Long id) {
+    	Object obj = null;
+        try {
+            startOperation();
+            obj = session.get(clazz, id);
+        } catch (HibernateException e) {
+            handleException(e);
+        } finally {
+//            HibernateFactory.close(session);
+        }
+        return obj;
+    }
 
     protected Object find(Class<?> clazz, Long id) {
         Object obj = null;

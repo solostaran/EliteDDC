@@ -41,6 +41,11 @@ public class SystemServiceImpl implements SystemService {
 	@Override
 	@Transactional
 	public SolarSystem getById(long id) {
-		return systemDAO.getById(id);
+		// TODO: Lazy loading doesn't work in Jackson 2.4.3
+		// TODO: maybe it will be fixed in Jackson 2.5.0
+		// see https://github.com/FasterXML/jackson-datatype-hibernate/issues/25
+		// see https://github.com/FasterXML/jackson-datatype-hibernate/pull/58
+		// So for now, I don't call systemDAO.getById but systemDAO.getByIdNow fix instead.
+		return systemDAO.getByIdNow(id);
 	}
 }

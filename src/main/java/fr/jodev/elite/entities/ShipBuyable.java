@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,8 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="SHIP_BUYABLES")
@@ -32,8 +31,8 @@ public class ShipBuyable {
 	private float defaultMaxRange;
 	private int mass;
 	
-	@JsonIgnore
-	@OneToMany(targetEntity=ShipOutfitSlot.class, mappedBy = "ship", cascade=CascadeType.ALL)
+//	@JsonIgnore
+	@OneToMany(fetch=FetchType.EAGER, targetEntity=ShipOutfitSlot.class, mappedBy = "ship", cascade=CascadeType.ALL)
 	private List<ShipOutfitSlot> slots = new ArrayList<ShipOutfitSlot>();
 	
 	protected ShipBuyable() {}

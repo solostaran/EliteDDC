@@ -34,6 +34,7 @@ public class HibernateConfiguration {
 		props.put("connection.pool_size", "1");
 //		props.put("cache.provider_class", "org.hibernate.cache.NoCacheProvider");
 		props.put("hibernate.dialect", MySQL5Dialect.class.getName());
+//		props.put("hibernate.enable_lazy_load_no_trans", "true");
 		props.put("show_sql", "true");
 		props.put("hibernate.format_sql", "true");
 		props.put("hibernate.hbm2ddl.auto", "update");

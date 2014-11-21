@@ -1,12 +1,12 @@
 package fr.jodev.elite.dao.impl;
 
+import static fr.jodev.elite.entities.OutfitCategoryComparator.ID_SORT;
+import static fr.jodev.elite.entities.OutfitCategoryComparator.getComparator;
+
+import java.util.Collections;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -20,6 +20,8 @@ public class ShipOutfitCategoryDAOImpl extends AbstractDAO implements ShipOutfit
 
 //	private static Logger logger = Logger.getLogger("ELITE");
 	
+	private List<ShipOutfitCategory> listSoc; // Cache with sorted entities
+	
 	@Autowired
 	protected void setSessionFactory(SessionFactory sessionFactory) {
 		super.sessionFactory = sessionFactory;
@@ -32,22 +34,17 @@ public class ShipOutfitCategoryDAOImpl extends AbstractDAO implements ShipOutfit
 
 	@Override
 	public ShipOutfitCategory getById(long id) {
-		ShipOutfitCategory soc = null;
-		soc = (ShipOutfitCategory)find(ShipOutfitCategory.class, id);
-		return soc;
+		return (ShipOutfitCategory)find(ShipOutfitCategory.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<ShipOutfitCategory> getAll() {
-		List<ShipOutfitCategory> list = null;
-		Session session = sessionFactory.getCurrentSession();
-		Criteria crit = session.createCriteria(ShipOutfitCategory.class);
-		crit.addOrder(Order.asc("idShipOutfitCategory"));
-//		list = (List<ShipOutfitCategory>)findAll(ShipOutfitCategory.class);
-		Query query = session.createQuery("from ShipOutfitCategory");
-		list = (List<ShipOutfitCategory>)query.list();
-		return list;
+		if (listSoc == null) {
+			listSoc = (List<ShipOutfitCategory>)findAll(ShipOutfitCategory.class);
+			Collections.sort(listSoc, getComparator(ID_SORT));
+		}
+		return listSoc;
 	}
 
 }

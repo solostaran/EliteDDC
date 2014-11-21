@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,6 +33,8 @@ public class BuyableShipPersistanceTests extends
 	@Autowired
 	private ShipBuyableDAO shipBuyableDAOImpl;
 	
+	private Logger logperso = Logger.getLogger("ELITE");
+	
 	private ShipOutfitCategory soctest1;
 	private ShipOutfitCategory soctest2;
 	private ShipBuyable sbtest;
@@ -44,6 +47,9 @@ public class BuyableShipPersistanceTests extends
 		shipOutfitCategoryDAOImpl.add(soctest2);
 		sbtest = new ShipBuyable("SBSW");
 		shipBuyableDAOImpl.add(sbtest);
+		
+		sbtest.addSlot(soctest1, 1);
+		sbtest.addSlot(soctest2, 2);
 	}
 	
 	@After
@@ -86,8 +92,18 @@ public class BuyableShipPersistanceTests extends
 	@Test
 	@Transactional
 	public void testAddSlotToShip() throws Exception {
+		int size = sbtest.getSlots().size();
 		sbtest.addSlot(soctest1, 2);
 		List<ShipOutfitSlot> list = sbtest.getSlots();
-		assertTrue(list.size() == 1);
+		assertTrue(list.size() == size + 1);
+	}
+	
+	@Test
+	@Transactional
+	public void testGetShipSlots() throws Exception {
+		List<ShipOutfitSlot> list = sbtest.getSlots();
+		for (ShipOutfitSlot soc : list)
+			logperso.info(soc.getShipOutfitCategory().getName()+" "+soc.getSize());
+		assertTrue(list.size() == 2);
 	}
 }
