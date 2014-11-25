@@ -1,5 +1,6 @@
 package fr.jodev.elite.services.impl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,8 +10,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.jodev.elite.dao.ShipBuyableDAO;
 import fr.jodev.elite.dao.StationDAO;
 import fr.jodev.elite.dao.SystemDAO;
+import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.SameNameException;
@@ -26,6 +29,9 @@ public class StationServiceImpl implements StationService {
 	
 	@Autowired
 	private SystemDAO systemDAO;
+	
+	@Autowired
+	private ShipBuyableDAO shipBuyableDAO;
 
 	@Override
 	@Transactional
@@ -79,5 +85,32 @@ public class StationServiceImpl implements StationService {
 		s.setIsBlackMarket(isBlackMarket);
 		s.setIsShipyard(isShipyard);
 		s.setIsOutfitting(isOutfitting);
+	}
+
+	@Override
+	@Transactional
+	public void addShipBuyable(long idStation, long idShipBuyable) {
+		Station s = stationDAO.getById(idStation);
+		ShipBuyable ship = shipBuyableDAO.getById(idShipBuyable);
+		stationDAO.addShipBuyable(s, ship);
+	}
+
+	@Override
+	@Transactional
+	public void removeShipBuyable(long idStation, long idShipBuyable) {
+		Station s = stationDAO.getById(idStation);
+		ShipBuyable ship = shipBuyableDAO.getById(idShipBuyable);
+		stationDAO.removeShipBuyable(s, ship);
+	}
+
+	@Override
+	@Transactional
+	public List<Long> getShipBuyables(long idStation) {
+		Station s = stationDAO.getById(idStation);
+		List<ShipBuyable> list = s.getStationShipyard();
+		List<Long> ret = new ArrayList<Long>();
+		for (ShipBuyable ship : list)
+			ret.add(ship.getIdShipBuyable());
+		return ret;
 	}
 }

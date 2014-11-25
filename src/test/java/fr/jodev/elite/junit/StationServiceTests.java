@@ -16,8 +16,10 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.services.ShipBuyableService;
 import fr.jodev.elite.services.StationService;
 import fr.jodev.elite.services.SystemService;
 
@@ -31,11 +33,18 @@ public class StationServiceTests extends AbstractTransactionalJUnit4SpringContex
 	@Autowired
 	private SystemService systemService;
 	
+	@Autowired
+	private ShipBuyableService shipBuyableService;
+	
 	private SolarSystem sys;
+	private ShipBuyable ship;
+	private Station sta;
 	
 	@Before
 	public void populateTests() {
 		sys = systemService.createSolarSystem("SolarTest123");
+		sta = stationService.createStation(sys.getIdSolarSystem(), "Galaga123");
+		ship = shipBuyableService.createShip("RType123");
 	}
 	
 	@After
@@ -62,10 +71,26 @@ public class StationServiceTests extends AbstractTransactionalJUnit4SpringContex
 	@Test
 	@Transactional
 	public void testStationsAndSolarSystem() throws Exception {
+		Set<Station> set = sys.getStations();
+		final int size = set.size();
 		Station s = stationService.createStation(sys.getIdSolarSystem(), "Sol3");
 		stationService.createStation(sys.getIdSolarSystem(), "Luna2");
-		Set<Station> set = sys.getStations();
-		assertTrue(set.size() == 2);
+		set = sys.getStations();
+		assertTrue(set.size() == size + 2);
 		assertTrue(s.getParentSolarSystem() == sys);
+	}
+	
+	@Test
+	@Transactional
+	public void testAddShipBuyable() throws Exception {
+		final long id = sta.getIdStation();
+		final long idship = ship.getIdShipBuyable();
+		stationService.addShipBuyable(id, idship);
+		List<Long> list = stationService.getShipBuyables(id);
+		assertTrue(list.size() == 1);
+		
+		stationService.removeShipBuyable(id, idship);
+		list = stationService.getShipBuyables(id);
+		assertTrue(list.isEmpty());
 	}
 }

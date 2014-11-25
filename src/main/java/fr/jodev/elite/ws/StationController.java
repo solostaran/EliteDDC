@@ -46,4 +46,14 @@ public class StationController {
 		}
 		stationService.updateStation(idStation, name, isMarket, isBlackMarket, isShipyard, isOutfitting);
 	}
+	
+	@RequestMapping("/addship")
+	public void addShipBuyable(@RequestParam(value="idstation", required=true) long idStation, @RequestParam(value="idship", required=true) long idShipBuyable) {
+		stationService.addShipBuyable(idStation, idShipBuyable);
+	}
+	
+	@RequestMapping("/removeship")
+	public void removeShipBuyable(@RequestParam(value="idstation", required=true) long idStation, @RequestParam(value="idship", required=true) long idShipBuyable) {
+		stationService.removeShipBuyable(idStation, idShipBuyable);
+	}
 }

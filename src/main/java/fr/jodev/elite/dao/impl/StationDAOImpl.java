@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import fr.jodev.elite.dao.StationDAO;
+import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.Station;
 
 @Repository("stationDAO")
@@ -40,6 +41,20 @@ public class StationDAOImpl implements StationDAO {
 		String hql = "from Station s where lower(s.name) like '"+name.toLowerCase()+"%'";
 		Query query = session.createQuery(hql);
 		return (List<Station>)query.list();
+	}
+
+	@Override
+	public void addShipBuyable(Station s, ShipBuyable ship) {
+		Session session = sessionFactory.getCurrentSession();
+		s.addShipBuyable(ship);
+		session.update(s);
+	}
+
+	@Override
+	public void removeShipBuyable(Station s, ShipBuyable ship) {
+		Session session = sessionFactory.getCurrentSession();
+		s.removeShipBuyable(ship);
+		session.update(s);
 	}
 
 }

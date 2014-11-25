@@ -8,8 +8,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.services.ShipBuyableService;
 import fr.jodev.elite.services.StationService;
 import fr.jodev.elite.services.SystemService;
 
@@ -41,6 +43,15 @@ public class SystemAndStationTests {
 		
 		List<Station> lista = staserv.getByName("Test");
 		logger.info("Get StationByName(Test) : size of list = "+lista.size());
+		
+		ShipBuyableService sbserv = (ShipBuyableService)ctx.getBean("shipBuyableServiceImpl");
+		
+		List<ShipBuyable> listship = sbserv.getAll();
+		final long idship1 = listship.get(0).getIdShipBuyable();
+		final long idship2 = listship.get(listship.size() - 1).getIdShipBuyable();
+		staserv.addShipBuyable(sta.getIdStation(), idship1);
+		staserv.addShipBuyable(sta.getIdStation(), idship2);
+		logger.info("Added 2 ships in "+sta.getName()+" shipyard.");
 		
 		((ConfigurableApplicationContext)ctx).close();
 	}

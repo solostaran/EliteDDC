@@ -11,4 +11,7 @@ public interface StationService {
 	void updateStation(long idStation, String name, boolean isMarket, boolean isBlackMarket, boolean isShipyard, boolean isOutfitting);
 	List<Station> getByName(String name);
 	Station getById(long id);
+	void addShipBuyable(long idStation, long idShipBuyable);
+	void removeShipBuyable(long idStation, long idShipBuyable);
+	List<Long> getShipBuyables(long idStation);
 }
