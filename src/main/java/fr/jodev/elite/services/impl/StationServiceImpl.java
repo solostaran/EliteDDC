@@ -50,7 +50,7 @@ public class StationServiceImpl implements StationService {
 	@Override
 	@Transactional
 	public Station getById(long id) {
-		return stationDAO.getById(id);
+		return stationDAO.getByIdNow(id);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class StationServiceImpl implements StationService {
 			boolean isMarket, boolean isBlackMarket,
 			boolean isShipyard, boolean isOutfitting) {
 		Station s = stationDAO.getById(idStation);
-		s.setName(name);
+		if (name != null && !name.isEmpty()) s.setName(name);
 		s.setIsMarket(isMarket);
 		s.setIsBlackMarket(isBlackMarket);
 		s.setIsShipyard(isShipyard);

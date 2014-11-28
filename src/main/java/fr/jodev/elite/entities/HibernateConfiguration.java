@@ -42,7 +42,8 @@ public class HibernateConfiguration {
 		LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
 		bean.setAnnotatedClasses(new Class[]{
 				SolarSystem.class, Station.class,
-				ShipOutfitCategory.class, ShipBuyable.class, ShipOutfitSlot.class});		
+				ShipOutfitCategory.class, ShipBuyable.class, ShipOutfitSlot.class,
+				GoodsCategory.class, GoodsDesignation.class, Goods.class});		
 		bean.setHibernateProperties(props);
 		bean.setDataSource(this.dataSourceBean());
 //		bean.setSchemaUpdate(true); // hibernate 3

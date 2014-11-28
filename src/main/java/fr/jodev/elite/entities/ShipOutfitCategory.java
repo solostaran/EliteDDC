@@ -27,7 +27,7 @@ public class ShipOutfitCategory {
 	public Long getIdShipOutfitCategory() {
 		return idShipOutfitCategory;
 	}
-	public void setIdShipOutfitCategory(Long idShipOutfitCategory) {
+	protected void setIdShipOutfitCategory(Long idShipOutfitCategory) {
 		this.idShipOutfitCategory = idShipOutfitCategory;
 	}
 	

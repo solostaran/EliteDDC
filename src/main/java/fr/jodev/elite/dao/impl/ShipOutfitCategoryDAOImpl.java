@@ -25,7 +25,7 @@ public class ShipOutfitCategoryDAOImpl extends AbstractDAO implements ShipOutfit
 	@Autowired
 	protected void setSessionFactory(SessionFactory sessionFactory) {
 		super.sessionFactory = sessionFactory;
-	}; 
+	};
 	
 	@Override
 	public void add(ShipOutfitCategory soc) {

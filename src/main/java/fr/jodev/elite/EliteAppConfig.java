@@ -43,7 +43,6 @@ public class EliteAppConfig  extends WebMvcConfigurerAdapter {
 		Hibernate4Module module = new Hibernate4Module();
 		module.enable(Hibernate4Module.Feature.FORCE_LAZY_LOADING);
 		mapper.registerModule(module);
-
 		messageConverter.setObjectMapper(mapper);
 		return messageConverter;
 

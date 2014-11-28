@@ -33,6 +33,12 @@ public class StationDAOImpl implements StationDAO {
 		session.update(s);
 		return s;
 	}
+	
+	@Override
+	public Station getByIdNow(long id) {
+		Session session = sessionFactory.getCurrentSession();
+		return (Station)session.get(Station.class, id);
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -16,6 +16,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -48,8 +49,9 @@ public class Station {
 			joinColumns = {@JoinColumn(name="idStation")},
 			inverseJoinColumns={@JoinColumn(name="idShipBuyable")}
 			)
-	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idShipBuyable")
-	@JsonIdentityReference(alwaysAsId=true)
+//	@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="idShipBuyable")
+//	@JsonIdentityReference(alwaysAsId=true)
+	@JsonIgnore
 	private List<ShipBuyable> stationShipyard = new ArrayList<ShipBuyable>();
 
 	protected Station() {}
