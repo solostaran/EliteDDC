@@ -43,8 +43,8 @@ public class GoodsServiceImpl implements GoodsService {
 		Goods g = goodsDAO.addOrGet(idStation, idGoodsDesignation);
 		if (price >= 0) g.setPrice(price);
 		if (number >= 0) g.setNumber(number);
-		if (supplyOrDemand >= 0) g.setSupplyOrDemand(supplyOrDemand);
-		if (priority >= 0) g.setPriority(priority);
+		if (supplyOrDemand >= 0 && supplyOrDemand <= 2) g.setSupplyOrDemand(supplyOrDemand);
+		if (priority >= 0 && priority <= 3) g.setPriority(priority);
 		goodsDAO.update(g);
 	}
 

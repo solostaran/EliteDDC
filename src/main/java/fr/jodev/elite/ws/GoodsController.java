@@ -46,4 +46,14 @@ public class GoodsController {
 	public List<Goods> getByStation(@RequestParam(value="id", required=true) long idStation) {
 		return goodsService.getStationMarket(idStation);
 	}
+	
+	@RequestMapping("/update")
+	public void update(@RequestParam(value="station", required=true) long idStation,
+			@RequestParam(value="designation", required=true) long idGoodsDesignation,
+			@RequestParam(value="price", required=false, defaultValue="-1") int price,
+			@RequestParam(value="number", required=false, defaultValue="-1") long number,
+			@RequestParam(value="supplyOrDemand", required=false, defaultValue="-1") int supplyOrDemand,
+			@RequestParam(value="priority", required=false, defaultValue="-1") int priority)  {
+		goodsService.updateGoods(idStation, idGoodsDesignation, price, number, supplyOrDemand, priority);
+	}
 }

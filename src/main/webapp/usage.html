@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Elite:Dangerous</title>
+<link rel="stylesheet" type="text/css" href="/css/Simple.css" />
+</head>
+<body>
+ <img src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" align="left" />
+ <h2 align="center">Elite:Dangerous - Collected Data - Web Service</h2>
+ <img src="http://www.elitedangerous.com/images/frontier-small.png" align="right"/>
+ <br/><br/>
+ <b>Usage:</b><br/>
+ <table>
+  <tr style="font-weight: bold">
+   <td width="15%">Type of service</td><td width="20%">Function</td><td>Web Service URL</td><td width="20%">Return type</td></tr>
+  <tr>
+   <td rowspan=5 style="vertical-align: text-top">Solar Systems</td>
+  </tr>
+  <tr>
+   <td>Creation</td>
+   <td>/solarsystem/create?name=&lt;name&gt;</td>
+   <td>Created solar system with ID</td>
+  </tr>
+  <tr>
+   <td>Search by name</td>
+   <td>/solarsystem/byname?name=&lt;name&gt;</td>
+   <td>List of solar systems</td>
+  <tr/>
+  <tr>
+   <td>Search by ID</td>
+   <td>/solarsystem/&lt;id&gt;</td>
+   <td>The select solar system or empty</td>
+  </tr>
+  <tr>
+   <td rowspan=10 style="vertical-align: text-top">Stations</td>
+  </tr>
+  <tr>
+   <td>Search by name</td>
+   <td>/station/byname?name=&lt;name&gt;</td>
+   <td>List of stations</td>
+  </tr>
+  <tr>
+   <td>Search by ID</td>
+   <td>/station/&lt;id&gt;</td>
+   <td>The selected station or empty</td>
+  </tr>
+  <tr>
+   <td>Get market goods</td>
+   <td>/station/&lt;id&gt;/market</td>
+   <td>List of goods in the station's market</td>
+  </tr>
+  <tr>
+   <td>Get buyable ships</td>
+   <td>/station/&lt;id&gt;/shipyard</td>
+   <td>List of buyable ships in the station</td>
+  </tr>
+  <tr>
+   <td>Get buyable ships</td>
+   <td>/station/shipyard?idstation=&lt;id&gt;</td>
+   <td>List of buyable ships in the station</td>
+  </tr>
+  <tr>
+   <td>Creation (SolarSystem ID required)</td>
+   <td>/station/create?id=&lt;solarsystemid&gt;</td>
+   <td>Created station with ID</td>
+  </tr>
+  <tr>
+   <td>Update</td>
+   <td>/station/update?id=&lt;id&gt;&amp;name=&lt;name&gt;<br/>
+    &nbsp;&nbsp;&nbsp;&amp;market=&lt;false/true&gt; &amp;blackmarket=&lt;false/true&gt;<br/>
+    &nbsp;&nbsp;&amp;shipyard=&lt;false/true&gt; &amp;outfitting=&lt;false/true&gt;</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Add a buyable ship</td>
+   <td>/station/addship?idstation=&lt;id&gt;&amp;idship=&lt;id&gt;</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Remove a buyable ship</td>
+   <td>/station/removeship?idstation=&lt;id&gt;&amp;idship=&lt;id&gt;</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td rowspan=3 style="vertical-align: text-top">Ship Outfit Categories</td>
+  </tr>
+  <tr>
+   <td>Get all categories</td>
+   <td>/ship/outfitcategories</td>
+   <td>List of outfit's categories</td>
+  </tr>
+  <tr>
+   <td>Get all categories' name</td>
+   <td>/ship/outfitcategories/names</td>
+   <td>List of names (String)</td>
+  </tr>
+  <tr>
+   <td rowspan=4 style="vertical-align: text-top">Buyable Ships</td>
+  </tr>
+  <tr>
+   <td>Get all buyable ships</td>
+   <td>/ship/buyables</td>
+   <td>List of buyable ships</td>
+  </tr>
+  <tr>
+   <td>Get a specific ship</td>
+   <td>/ship/buyables/&lt;id&gt;</td>
+   <td>The selected ship</td>
+  </tr>
+  <tr>
+   <td>Get a ship outfit's slots</td>
+   <td>/ship/buyables/&lt;id&gt;/slots</td>
+   <td>List of outfit's slots</td>
+  </tr>
+  <tr>
+   <td rowspan=6 style="vertical-align: text-top">Goods</td>
+  </tr>
+  <tr>
+   <td>Get all goods' categories</td>
+   <td>/goods/categories</td>
+   <td>List of goods' categories</td>
+  </tr>
+  <tr>
+   <td>Get all goods' designations (sub-categories)</td>
+   <td>/goods/designations</td>
+   <td>List of goods' designations</td>
+  </tr>
+  <tr>
+   <td>Get a specific goods (create it if empty)</td>
+   <td>/goods/get?station=&lt;id&gt;&amp;designation=&lt;id&gt;</td>
+   <td>One specific goods</td>
+  </tr>
+  <tr>
+   <td>Get all goods in a station's market<br/>See also /station/&lt;id&gt;/market</td>
+   <td>/goods/station?id=&lt;id&gt;</td>
+   <td>List of goods in the station's market</td>
+  </tr>
+  <tr>
+   <td>Update a goods (IDs required, other attributes optional: 0=reset value, supply=1/demand=2, priority high=1/med=2/low=3)</td>
+   <td>/goods/update?station=&lt;id&gt;&amp;designation=&lt;id&gt;<br/>
+    &nbsp;&nbsp;&nbsp;&amp;price=&lt;price&gt;&amp;number=&lt;number&gt;<br/>
+    &nbsp;&nbsp;&nbsp;&amp;supplyOrDemand=&lt;0/1/2&gt;&amp;priority=&lt;0/1/2/3&gt;</td>
+   <td>nothing</td>
+  </tr>
+ </table>
+</body>
+</html>
