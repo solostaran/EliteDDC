@@ -1,0 +1,7 @@
+﻿{
+	"driverClassName" : "org.h2.Driver",
+	"url" : "jdbc:h2:./elite",
+	"username" : "elite",
+	"password" : "",
+	"dialect" : "org.hibernate.dialect.H2Dialect"
+}

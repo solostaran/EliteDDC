@@ -67,7 +67,7 @@ public class BuyableShipsPopulate {
 		populateSlots(idship, listEgSlots);
 
 		// Populate Hauler
-		idship = populateShip("Hauler", 52720L, 14, 0, 0);
+		idship = populateShip("Hauler", 52720L, 14, 9.87f, 10.91f);
 		final int [][] listHaSlots = {{1,1},{2,0},{2,0},
 				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,2},
 				{11,3},{11,3},{11,2},{11,1}
@@ -134,7 +134,7 @@ public class BuyableShipsPopulate {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = 
-				new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context.xml");
+				new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context-h2.xml");
 		//		ApplicationContext ctx = new AnnotationConfigApplicationContext(HibernateConfiguration.class);
 
 		shipOutfitCategoryService = (ShipOutfitCategoryService)ctx.getBean("shipOutfitCategoryServiceImpl");

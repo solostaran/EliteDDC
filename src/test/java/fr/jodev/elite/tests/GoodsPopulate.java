@@ -65,7 +65,7 @@ public class GoodsPopulate {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = 
-				new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context.xml");
+				new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context-h2.xml");
 		//		ApplicationContext ctx = new AnnotationConfigApplicationContext(HibernateConfiguration.class);
 
 		goodsCategoryService = (GoodsCategoryService)ctx.getBean("goodsCategoryServiceImpl");

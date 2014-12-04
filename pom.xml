@@ -6,7 +6,7 @@
 	<groupId>fr.jodev.elite</groupId>
 	<artifactId>elite-ws-spring</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>The Elite Dangerous Data Collection Web Service</name>
 	<url>http://www.elitedangerous.com/</url>
 	<description>
@@ -141,6 +141,18 @@
 			<groupId>org.codehaus.janino</groupId>
 			<artifactId>commons-compiler</artifactId>
 			<version>2.6.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.182</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.8.7</version>
 		</dependency>
 	</dependencies>
 

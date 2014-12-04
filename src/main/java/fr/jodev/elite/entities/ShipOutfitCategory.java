@@ -12,6 +12,7 @@ import org.hibernate.annotations.NaturalId;
 //@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="name")
 public class ShipOutfitCategory {
 	@Id
+	@Column(nullable=false)
 	private Long idShipOutfitCategory;
 	
 	@NaturalId

@@ -22,7 +22,7 @@ public class SystemAndStationTests {
 
 	public static void main(String[] args) {
 		ApplicationContext ctx = 
-		        new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context.xml");
+		        new ClassPathXmlApplicationContext("classpath:/META-INF/spring/app-context-h2.xml");
 		
 		SessionFactory sessionFactory = (SessionFactory)ctx.getBean("sessionFactory");
 		sessionFactory.openSession();

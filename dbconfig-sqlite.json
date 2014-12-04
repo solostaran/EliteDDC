@@ -1,0 +1,7 @@
+{
+  "driverClassName": "org.sqlite.JDBC",
+  "url": "jdbc:mysql:elite.sqlite",
+  "username": "elite",
+  "password": "",
+  "dialect": "org.hibernate.dialect.SQLiteDialect"
+}
