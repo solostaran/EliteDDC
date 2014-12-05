@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +33,7 @@ public class StationController {
 		return stationService.getByName(name);
 	}
 	
-	@RequestMapping("/create")
+	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public Station create(@RequestParam(value="id",required=true) long idSolarSystem,
 			@RequestParam(value="name",required=true) String name) {
 		if (name == null || name.isEmpty()) {
@@ -40,17 +42,45 @@ public class StationController {
 		return stationService.createStation(idSolarSystem, name);
 	}
 	
-	@RequestMapping("/update")
+	@RequestMapping(value="/create", method=RequestMethod.POST)
+	public Station create(@RequestBody fr.jodev.elite.model.Station station) {
+		if (station.idSolarSystem == -1) {
+			throw new EmptyArgumentException("idSolarSystem");
+		}
+		if (station.name == null || station.name.isEmpty()) {
+			throw new EmptyArgumentException("name");
+		}
+		stationService.createStation(station.idSolarSystem, station.name);
+		stationService.updateStation(station);
+		return null;
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public void update(@RequestParam(value="id",required=true) long idStation,
-			@RequestParam(value="name",required=true) String name,
-			@RequestParam(value="market",required=true) boolean isMarket,
-			@RequestParam(value="blackmarket",required=true) boolean isBlackMarket,
-			@RequestParam(value="shipyard",required=true) boolean isShipyard,
-			@RequestParam(value="outfitting",required=true) boolean isOutfitting) {
+			@RequestParam(value="name",required=false, defaultValue="") String name,
+			@RequestParam(value="isMarket",required=false, defaultValue="") String market,
+			@RequestParam(value="isBlackmarket",required=false, defaultValue="") String blackMarket,
+			@RequestParam(value="isShipyard",required=false, defaultValue="") String shipyard,
+			@RequestParam(value="isOutfitting",required=false, defaultValue="") String outfitting) {
 		if (name == null || name.isEmpty()) {
 			throw new EmptyArgumentException("name");
 		}
-		stationService.updateStation(idStation, name, isMarket, isBlackMarket, isShipyard, isOutfitting);
+		fr.jodev.elite.model.Station station = new fr.jodev.elite.model.Station();
+		station.idStation = idStation;
+		station.name = name;
+		station.isMarket = market;
+		station.isBlackMarket = blackMarket;
+		station.isShipyard = shipyard;
+		station.isOutfitting = outfitting;
+		stationService.updateStation(station);
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.PUT)
+	public void update(@RequestBody fr.jodev.elite.model.Station station) {
+		if (station.idStation == -1) {
+			throw new EmptyArgumentException("idStation");
+		}
+		stationService.updateStation(station);
 	}
 	
 	@RequestMapping("/shipyard")

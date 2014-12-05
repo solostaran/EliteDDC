@@ -33,7 +33,7 @@
    <td>The select solar system or empty</td>
   </tr>
   <tr>
-   <td rowspan=10 style="vertical-align: text-top">Stations</td>
+   <td rowspan=12 style="vertical-align: text-top">Stations</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -61,15 +61,25 @@
    <td>List of buyable ships in the station</td>
   </tr>
   <tr>
-   <td>Creation (SolarSystem ID required)</td>
+   <td>Creation (GET, SolarSystem ID required)</td>
    <td>/station/create?id=&lt;solarsystemid&gt;</td>
    <td>Created station with ID</td>
   </tr>
   <tr>
-   <td>Update</td>
+   <td>Creation (POST,JSON)</td>
+   <td>/station/create<br/>method=POST, Content-Type: application/json<br>{"idSolarSystem","name","isBlackMarket","isMarket","isShipyard","isOutfitting"}</td>
+   <td>Created station with ID</td>
+  </tr>
+  <tr>
+   <td>Update (GET)</td>
    <td>/station/update?id=&lt;id&gt;&amp;name=&lt;name&gt;<br/>
-    &nbsp;&nbsp;&nbsp;&amp;market=&lt;false/true&gt; &amp;blackmarket=&lt;false/true&gt;<br/>
+    &nbsp;&nbsp;&nbsp;&amp;market=&lt;false/true&gt; &amp;blackMarket=&lt;false/true&gt;<br/>
     &nbsp;&nbsp;&amp;shipyard=&lt;false/true&gt; &amp;outfitting=&lt;false/true&gt;</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update (PUT,JSON)</td>
+   <td>/station/update<br/>method=PUT, Content-Type: application/json<br>{"idStation":Long,"idSolarSystem":Long,"name":String,"isBlackMarket":boolean,<br/>"isMarket":boolean,"isShipyard":boolean,"isOutfitting":boolean}</td>
    <td>nothing</td>
   </tr>
   <tr>
@@ -114,7 +124,7 @@
    <td>List of outfit's slots</td>
   </tr>
   <tr>
-   <td rowspan=6 style="vertical-align: text-top">Goods</td>
+   <td rowspan=7 style="vertical-align: text-top">Goods</td>
   </tr>
   <tr>
    <td>Get all goods' categories</td>
@@ -132,15 +142,22 @@
    <td>One specific goods</td>
   </tr>
   <tr>
-   <td>Get all goods in a station's market<br/>See also /station/&lt;id&gt;/market</td>
+   <td>Get all goods in a station's market<br/>(See also /station/&lt;id&gt;/market)</td>
    <td>/goods/station?id=&lt;id&gt;</td>
    <td>List of goods in the station's market</td>
   </tr>
   <tr>
-   <td>Update a goods (IDs required, other attributes optional: 0=reset value, supply=1/demand=2, priority high=1/med=2/low=3)</td>
-   <td>/goods/update?station=&lt;id&gt;&amp;designation=&lt;id&gt;<br/>
-    &nbsp;&nbsp;&nbsp;&amp;price=&lt;price&gt;&amp;number=&lt;number&gt;<br/>
-    &nbsp;&nbsp;&nbsp;&amp;supplyOrDemand=&lt;0/1/2&gt;&amp;priority=&lt;0/1/2/3&gt;</td>
+   <td>Update a goods (GET, IDs required)</td>
+   <td>/goods/update?station=&lt;id&gt;&amp;designation=&lt;id&gt;&amp;price=&lt;price&gt;<br/>
+    &nbsp;&nbsp;&nbsp;&amp;number=&lt;number&gt;&amp;supplyOrDemand=&lt;0/1/2&gt;&amp;priority=&lt;0/1/2/3&gt;<br/>
+    attributes: 0=reset value, supply=1/demand=2, priority high=1/med=2/low=3)</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update goods (PUT,JSON)</td>
+   <td>/goods/update<br/>method=PUT, Content-Type: application/json<br/>
+    Body= List of Goods<br/>
+    [{"idStation":Long, "idDesignation":Long, "price":Int,<br/>&nbsp;&nbsp;&nbsp;"number":Long, "supplyOrDemand":Int, "priority":Int},{...}]</td>
    <td>nothing</td>
   </tr>
  </table>

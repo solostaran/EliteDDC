@@ -10,14 +10,17 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.jodev.elite.Constants;
 import fr.jodev.elite.dao.ShipBuyableDAO;
 import fr.jodev.elite.dao.StationDAO;
 import fr.jodev.elite.dao.SystemDAO;
 import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.exceptions.EmptyArgumentException;
 import fr.jodev.elite.exceptions.SameNameException;
 import fr.jodev.elite.exceptions.SolarSystemNotFoundException;
+import fr.jodev.elite.exceptions.StationNotFoundException;
 import fr.jodev.elite.services.StationService;
 
 @Service
@@ -32,20 +35,6 @@ public class StationServiceImpl implements StationService {
 	
 	@Autowired
 	private ShipBuyableDAO shipBuyableDAO;
-
-	@Override
-	@Transactional
-	public Station createStation(long idSolarSystem, String name) {
-		SolarSystem sys = systemDAO.getById(idSolarSystem);
-		Station s = null;
-		try {
-			s = new Station(sys, name);
-			stationDAO.addStation(s);
-		} catch(ObjectNotFoundException e) {
-			throw new SolarSystemNotFoundException(idSolarSystem);
-		}
-		return s;
-	}
 	
 	@Override
 	@Transactional
@@ -58,11 +47,25 @@ public class StationServiceImpl implements StationService {
 	public List<Station> getByName(String name) {
 		return stationDAO.getByName(name);
 	}
+	
+	@Override
+	@Transactional
+	public Station createStation(long idSolarSystem, String name) {
+		SolarSystem sys = systemDAO.getById(idSolarSystem);
+		try {
+			sys.getIdSolarSystem();
+		} catch (ObjectNotFoundException e) {
+			throw new SolarSystemNotFoundException(idSolarSystem);
+		}
+		return createStation(sys, name);
+	}
 
 	@Override
 	@Transactional
 	public Station createStation(SolarSystem sys, String name) {
-		if (sys == null) return null;
+		if (sys == null) {
+			throw new EmptyArgumentException("SolarSystem");
+		}
 		List<Station> list = getByName(name);
 		Iterator<Station> l = list.iterator();
 		while (l.hasNext()) {
@@ -85,6 +88,35 @@ public class StationServiceImpl implements StationService {
 		s.setIsBlackMarket(isBlackMarket);
 		s.setIsShipyard(isShipyard);
 		s.setIsOutfitting(isOutfitting);
+	}
+	
+	@Override
+	@Transactional
+	public void updateStation(fr.jodev.elite.model.Station station) {
+		Station s = stationDAO.getById(station.idStation);
+		try {
+			s.getIdStation();
+		} catch (ObjectNotFoundException e) {
+			throw new StationNotFoundException(station.idStation);
+		}
+		if (station.name != null && !station.name.isEmpty()) s.setName(station.name);
+		if (station.isMarket != null) {
+			if (Constants.TRUE.toLowerCase().equals(station.isMarket.toLowerCase())) s.setIsMarket(true);
+			if (Constants.FALSE.toLowerCase().equals(station.isMarket.toLowerCase())) s.setIsMarket(false);
+		}
+		if (station.isBlackMarket != null) {
+			if (Constants.TRUE.toLowerCase().equals(station.isBlackMarket.toLowerCase())) s.setIsBlackMarket(true);
+			if (Constants.FALSE.toLowerCase().equals(station.isBlackMarket.toLowerCase())) s.setIsBlackMarket(false);
+		}
+		if (station.isShipyard != null) {
+			if (Constants.TRUE.toLowerCase().equals(station.isShipyard.toLowerCase())) s.setIsShipyard(true);
+			if (Constants.FALSE.toLowerCase().equals(station.isShipyard.toLowerCase())) s.setIsShipyard(false);
+		}
+		if (station.isOutfitting != null) {
+			if (Constants.TRUE.toLowerCase().equals(station.isOutfitting.toLowerCase())) s.setIsOutfitting(true);
+			if (Constants.FALSE.toLowerCase().equals(station.isOutfitting.toLowerCase())) s.setIsOutfitting(false);
+		}
+		stationDAO.addStation(s);
 	}
 
 	@Override

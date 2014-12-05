@@ -3,7 +3,9 @@ package fr.jodev.elite.ws;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,7 +49,7 @@ public class GoodsController {
 		return goodsService.getStationMarket(idStation);
 	}
 	
-	@RequestMapping("/update")
+	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public void update(@RequestParam(value="station", required=true) long idStation,
 			@RequestParam(value="designation", required=true) long idGoodsDesignation,
 			@RequestParam(value="price", required=false, defaultValue="-1") int price,
@@ -55,5 +57,12 @@ public class GoodsController {
 			@RequestParam(value="supplyOrDemand", required=false, defaultValue="-1") int supplyOrDemand,
 			@RequestParam(value="priority", required=false, defaultValue="-1") int priority)  {
 		goodsService.updateGoods(idStation, idGoodsDesignation, price, number, supplyOrDemand, priority);
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.PUT)
+	public void update(@RequestBody List<fr.jodev.elite.model.Goods> list) {
+		for (fr.jodev.elite.model.Goods g : list) {
+			goodsService.updateGoods(g);
+		}
 	}
 }

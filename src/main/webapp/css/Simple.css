@@ -1,2 +1,5 @@
 @CHARSET "ISO-8859-1";
-table { width:95% }
+table {
+	width:95%;
+ 	border-spacing: 5px;
+}

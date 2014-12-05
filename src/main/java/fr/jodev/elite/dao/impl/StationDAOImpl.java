@@ -15,23 +15,23 @@ import fr.jodev.elite.entities.Station;
 
 @Repository("stationDAO")
 @Scope("singleton")
-public class StationDAOImpl implements StationDAO {
+public class StationDAOImpl extends AbstractDAO implements StationDAO {
 	
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected void setSessionFactory(SessionFactory sessionFactory) {
+		super.sessionFactory = sessionFactory;
+	};
 
 	@Override
 	public void addStation(Station s) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(s);
+		saveOrUpdate(s);
 	}
 
 	@Override
 	public Station getById(long id) {
-		Session session = sessionFactory.getCurrentSession();
-		Station s = (Station)session.load(Station.class, id);
-		session.update(s);
-		return s;
+//		Session session = sessionFactory.getCurrentSession();
+//		return (Station)session.load(Station.class, id);
+		return (Station)find(Station.class, id);
 	}
 	
 	@Override

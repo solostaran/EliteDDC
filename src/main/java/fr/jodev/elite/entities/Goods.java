@@ -20,6 +20,7 @@ import fr.jodev.elite.DateNumberSerializer;
 @Entity
 @Table(name="GOODS")
 public class Goods {
+	@JsonIgnore
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	private Long idGoods;
