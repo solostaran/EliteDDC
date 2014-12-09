@@ -2,11 +2,11 @@ package fr.jodev.elite;
 
 public class DB_Parameters {
 
-	private String driverClassName = "com.mysql.jdbc.Driver";
-	private String url = "jdbc:mysql://localhost:3306/elite";
+	private String driverClassName = "org.h2.Driver";
+	private String url = "jdbc:h2:./elite";
 	private String username = "elite";
-	private String password = "reitnorf";
-	private String dialect = "org.hibernate.dialect.MySQL5InnoDBDialect";
+	private String password = "";
+	private String dialect = "org.hibernate.dialect.H2Dialect";
 	
 	public String getDriverClassName() {
 		return driverClassName;

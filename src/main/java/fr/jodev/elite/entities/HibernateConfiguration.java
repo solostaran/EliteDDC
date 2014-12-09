@@ -31,10 +31,10 @@ public class HibernateConfiguration {
 	static {
 		params = null;
 		try {
-			File config = new File("dbconfig-h2.json");
-			System.out.println("Reading database configuration file : "+config.getAbsolutePath());
+			File config = new File("dbconfig.json");
 			ObjectMapper mapper = new ObjectMapper();
 			params = mapper.readValue(config, DB_Parameters.class);
+			System.out.println("Reading database configuration file : "+config.getAbsolutePath());
 		} catch (JsonParseException e) {
 			System.out.println("Could not parse database configuration file !");
 		} catch (JsonMappingException e) {
@@ -52,8 +52,8 @@ public class HibernateConfiguration {
 //		// MySql
 //		dataSource.setDriverClassName(com.mysql.jdbc.Driver.class.getName());
 //		dataSource.setUrl("jdbc:mysql://localhost:3306/elite");
-//		dataSource.setUsername("elite");
-//		dataSource.setPassword("reitnorf");
+//		dataSource.setUsername("user");
+//		dataSource.setPassword("pass");
 //		// H2Database
 //		dataSource.setDriverClassName(org.h2.Driver.class.getName());
 //		dataSource.setUrl("jdbc:h2:./elite");

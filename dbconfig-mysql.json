@@ -1,7 +1,7 @@
-﻿{
-	"driverClassName" : "com.mysql.jdbc.Driver",
-	"url" : "jdbc:mysql://localhost:3306/elite",
-	"username" : "elite",
-	"password" : "reitnorf",
-	"dialect" : "org.hibernate.dialect.MySQL5Dialect"
+{
+  "driverClassName": "com.mysql.jdbc.Driver",
+  "url": "jdbc:mysql://localhost:3306/elite",
+  "username": "user",
+  "password": "pass",
+  "dialect": "org.hibernate.dialect.MySQL5Dialect"
 }
