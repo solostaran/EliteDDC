@@ -1,9 +1,7 @@
 package fr.jodev.elite.exceptions;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Bad Station ID") // 404
+//@ResponseStatus(value=HttpStatus.BAD_REQUEST, reason="Bad Station ID") // 400
 public class StationNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	

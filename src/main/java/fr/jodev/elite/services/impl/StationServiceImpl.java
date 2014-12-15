@@ -3,6 +3,7 @@ package fr.jodev.elite.services.impl;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,14 @@ public class StationServiceImpl implements StationService {
 	@Override
 	@Transactional
 	public Station getById(long id) {
-		return stationDAO.getByIdNow(id);
+		Station sta = stationDAO.getByIdNow(id);
+		try {
+			sta.getIdStation();
+		} catch (Exception e) {
+			throw new StationNotFoundException(id);
+		}
+		return sta;
+//		return stationDAO.getByIdNow(id);
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class StationServiceImpl implements StationService {
 		if (sys == null) {
 			throw new EmptyArgumentException("SolarSystem");
 		}
-		List<Station> list = getByName(name);
+		Set<Station> list = sys.getStations();
 		Iterator<Station> l = list.iterator();
 		while (l.hasNext()) {
 			if (l.next().getName().toLowerCase().equals(name.toLowerCase()))

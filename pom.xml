@@ -8,7 +8,7 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>The Elite Dangerous Data Collection Web Service</name>
-	<url>http://www.elitedangerous.com/</url>
+	<url>https://github.com/solostaran/EliteDDC</url>
 	<description>
 		<![CDATA[This project is a Rest Web Service with a Spring Boot Mvc configuration and Hibernate4 as ORM.]]>
 	</description>
@@ -116,6 +116,38 @@
 			<version>1.7.7</version>
 		</dependency>  -->
 		
+ 		<!-- <dependency>
+    		<groupId>javax.servlet</groupId>
+    		<artifactId>jstl</artifactId>
+    		<version>1.2</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.glassfish.web</groupId>
+		    <artifactId>jstl-impl</artifactId>
+		    <version>1.2</version>
+		    <exclusions>
+		        <exclusion>
+		            <artifactId>servlet-api</artifactId>
+		            <groupId>javax.servlet</groupId>
+		        </exclusion>
+		        <exclusion>
+		            <artifactId>jsp-api</artifactId>
+		            <groupId>javax.servlet.jsp</groupId>
+		        </exclusion>
+		        <exclusion>
+		            <artifactId>jstl-api</artifactId>
+		            <groupId>javax.servlet.jsp.jstl</groupId>
+	        	</exclusion>
+	    	</exclusions>
+		</dependency>  -->
+		
+		<!-- Tell Spring Boot to setup Thymeleaf for page rendering. -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -148,7 +180,6 @@
 			<artifactId>h2</artifactId>
 			<version>1.4.182</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.xerial</groupId>
 			<artifactId>sqlite-jdbc</artifactId>

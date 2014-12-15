@@ -1,0 +1,33 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!-- <head th:substituteby="header :: copy"></head> -->
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDS Error Page</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+</head>
+<body>
+	<div class="header">
+		<img src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" />
+		<h1>Guru Meditation</h1>
+	</div>
+	<br/>
+
+	<p th:if="${url}">
+		<b>Page:</b> <span th:text="${url}">Page URL</span>
+	</p>
+
+	<p th:if="${timestamp}" id='created'>
+		<b>Occurred:</b> <span th:text="${timestamp}">Timestamp</span>
+	</p>
+
+	<p th:if="${status}">
+		<b>Response Status:</b> <span th:text="${status}">status-code</span> <span
+			th:if="${error}" th:text="'('+${error}+')'">error ...</span>
+	</p>
+	
+	<p th:if="${message}">
+		<b>Message:</b> <span th:text="${message}">message</span>
+	</p>
+ </body>
+</html>

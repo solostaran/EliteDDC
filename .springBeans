@@ -7,10 +7,10 @@
 	</configSuffixes>
 	<enableImports><![CDATA[true]]></enableImports>
 	<configs>
-		<config>src/main/resources/META-INF/spring/app-context-mysql.xml</config>
+		<config>java:fr.jodev.elite.EliteAppConfig</config>
+		<config>java:fr.jodev.elite.EliteWebController</config>
 	</configs>
 	<autoconfigs>
-		<config>java:fr.jodev.elite.EliteAppConfig</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>

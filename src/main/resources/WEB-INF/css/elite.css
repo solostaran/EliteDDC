@@ -1,0 +1,15 @@
+@CHARSET "ISO-8859-1";
+table {
+	width:95%;
+ 	border-spacing: 5px;
+}
+
+.header img {
+  float: left;
+  margin-right: 20px;
+}
+
+.header h1 {
+  position: relative;
+  top: 20px;
+}

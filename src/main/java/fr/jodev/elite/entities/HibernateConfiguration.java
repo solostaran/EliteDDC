@@ -7,6 +7,8 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
@@ -27,6 +29,12 @@ public class HibernateConfiguration {
 
 	private static DB_Parameters params;
 	private Properties properties = null;
+	
+	private Logger logger;
+	
+	public HibernateConfiguration() {
+		logger = LoggerFactory.getLogger("HIBERNATE CONFIG");
+	}
 
 	static {
 		params = null;
@@ -69,9 +77,12 @@ public class HibernateConfiguration {
 		dataSource.setUrl(params.getUrl());
 		dataSource.setUsername(params.getUsername());
 		dataSource.setPassword(params.getPassword());
-		System.out.println("DataSource: driverclassname="+dataSource.getDriverClassName());
-		System.out.println("DataSource: url="+dataSource.getUrl());
-		System.out.println("DataSource: username="+dataSource.getUsername());
+//		System.out.println("DataSource: driverclassname="+dataSource.getDriverClassName());
+//		System.out.println("DataSource: url="+dataSource.getUrl());
+//		System.out.println("DataSource: username="+dataSource.getUsername());
+		logger.info("DataSource: driverclassname="+dataSource.getDriverClassName());
+		logger.info("DataSource: url="+dataSource.getUrl());
+		logger.info("DataSource: username="+dataSource.getUsername());
 		return dataSource;
 	}
 
@@ -88,8 +99,10 @@ public class HibernateConfiguration {
 //			properties.put("hibernate.enable_lazy_load_no_trans", "true");
 //			properties.put("hibernate.format_sql", "true");
 			properties.put("show_sql", "true");
-			System.out.println("Properties: hibernate.hbm2ddl.auto="+properties.getProperty("hibernate.hbm2ddl.auto"));
-			System.out.println("Properties: hibernate.dialect="+properties.getProperty("hibernate.dialect"));
+//			System.out.println("Properties: hibernate.hbm2ddl.auto="+properties.getProperty("hibernate.hbm2ddl.auto"));
+//			System.out.println("Properties: hibernate.dialect="+properties.getProperty("hibernate.dialect"));
+			logger.info("Properties: hibernate.hbm2ddl.auto="+properties.getProperty("hibernate.hbm2ddl.auto"));
+			logger.info("Properties: hibernate.dialect="+properties.getProperty("hibernate.dialect"));
 		}
 		return properties;
 	}
@@ -105,9 +118,14 @@ public class HibernateConfiguration {
 //		return props;
 //	}
 
+	/**
+	 * I tried my application without this bean but it is needed so that dataSource is defined before Hibernate initialization.<br/>
+	 * I do not use this for anything else, database transactions are made through {@link #sessionFactoryBean()} 
+	 */
 	@Bean(name = "entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-		System.out.println("Defining entityManagerFactory bean");
+//		System.out.println("Defining entityManagerFactory bean");
+		logger.info("Defining entityManagerFactory bean");
 		LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
 		entityManager.setDataSource(this.dataSourceBean());
 		entityManager.setPackagesToScan(new String[]{"fr.elite.jodev.dao.impl","fr.elite.jodev.services.impl"});
@@ -119,9 +137,14 @@ public class HibernateConfiguration {
 		return entityManager;
 	}
 
+	/**
+	 * This bean is called after Hibernate initialization,
+	 * so dataSource must be defined before that through {@link #entityManagerFactory()}
+	 */
 	@Bean(name="sessionFactory")
 	public LocalSessionFactoryBean sessionFactoryBean() {
-		System.out.println("Defining sessionFactory bean");
+//		System.out.println("Defining sessionFactory bean");
+		logger.info("Defining sessionFactory bean");
 		LocalSessionFactoryBean bean = new LocalSessionFactoryBean();
 		bean.setAnnotatedClasses(new Class[]{
 				SolarSystem.class, Station.class,

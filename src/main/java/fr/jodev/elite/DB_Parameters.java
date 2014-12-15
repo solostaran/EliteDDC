@@ -1,5 +1,8 @@
 package fr.jodev.elite;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DB_Parameters {
 
 	private String driverClassName = "org.h2.Driver";

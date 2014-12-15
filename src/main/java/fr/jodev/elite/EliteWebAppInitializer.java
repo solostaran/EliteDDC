@@ -20,7 +20,7 @@ public class EliteWebAppInitializer implements WebApplicationInitializer {
 		ctx.register(HibernateConfiguration.class);
 		ctx.setServletContext(servletContext);
 		Dynamic dynamic = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
-		dynamic.addMapping("/elite/");
+		dynamic.addMapping("/");
 		dynamic.setLoadOnStartup(1);
 	}
 
