@@ -14,6 +14,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NaturalId;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +29,7 @@ public class Station {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long idStation;
 
+	@NaturalId(mutable=true)
 	@Column(nullable=false)
 	private String name;
 

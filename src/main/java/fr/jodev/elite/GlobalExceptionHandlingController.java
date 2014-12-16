@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.jodev.elite.exceptions.EmptyArgumentException;
 import fr.jodev.elite.exceptions.ExceptionObject;
+import fr.jodev.elite.exceptions.SameNameException;
 import fr.jodev.elite.exceptions.SolarSystemNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
 
@@ -60,7 +62,8 @@ public class GlobalExceptionHandlingController {
 	 * @return
 	 * @throws Exception
 	 */
-	@ExceptionHandler({SolarSystemNotFoundException.class,StationNotFoundException.class})
+	@ExceptionHandler({SolarSystemNotFoundException.class,StationNotFoundException.class,
+		EmptyArgumentException.class, SameNameException.class})
 	@ResponseStatus(value=HttpStatus.BAD_REQUEST)
 	public @ResponseBody ExceptionObject handleErrorJson(HttpServletRequest req, Exception exception)
 			throws Exception {

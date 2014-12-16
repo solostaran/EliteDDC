@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.jodev.elite.entities.Goods;
@@ -50,21 +51,22 @@ public class StationController {
 		if (station.name == null || station.name.isEmpty()) {
 			throw new EmptyArgumentException("name");
 		}
-		stationService.createStation(station.idSolarSystem, station.name);
+		Station ret = stationService.createStation(station.idSolarSystem, station.name);
+		station.idStation = ret.getIdStation();
 		stationService.updateStation(station);
-		return null;
+		return ret;
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public void update(@RequestParam(value="id",required=true) long idStation,
+	public @ResponseBody Station update(@RequestParam(value="id",required=true) long idStation,
 			@RequestParam(value="name",required=false, defaultValue="") String name,
 			@RequestParam(value="isMarket",required=false, defaultValue="") String market,
 			@RequestParam(value="isBlackmarket",required=false, defaultValue="") String blackMarket,
 			@RequestParam(value="isShipyard",required=false, defaultValue="") String shipyard,
 			@RequestParam(value="isOutfitting",required=false, defaultValue="") String outfitting) {
-		if (name == null || name.isEmpty()) {
-			throw new EmptyArgumentException("name");
-		}
+//		if (name == null || name.isEmpty()) {
+//			throw new EmptyArgumentException("name");
+//		}
 		fr.jodev.elite.model.Station station = new fr.jodev.elite.model.Station();
 		station.idStation = idStation;
 		station.name = name;
@@ -72,15 +74,15 @@ public class StationController {
 		station.isBlackMarket = blackMarket;
 		station.isShipyard = shipyard;
 		station.isOutfitting = outfitting;
-		stationService.updateStation(station);
+		return stationService.updateStation(station);
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.PUT)
-	public void update(@RequestBody fr.jodev.elite.model.Station station) {
+	public @ResponseBody Station update(@RequestBody fr.jodev.elite.model.Station station) {
 		if (station.idStation == -1) {
 			throw new EmptyArgumentException("idStation");
 		}
-		stationService.updateStation(station);
+		return stationService.updateStation(station);
 	}
 	
 	@RequestMapping("/shipyard")

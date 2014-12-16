@@ -1,9 +1,7 @@
 package fr.jodev.elite.services.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +72,9 @@ public class StationServiceImpl implements StationService {
 		if (sys == null) {
 			throw new EmptyArgumentException("SolarSystem");
 		}
-		Set<Station> list = sys.getStations();
-		Iterator<Station> l = list.iterator();
-		while (l.hasNext()) {
-			if (l.next().getName().toLowerCase().equals(name.toLowerCase()))
+		List<Station> list = sys.getStations();
+		for(Station s : list) {
+			if (s.getName().toLowerCase().equals(name.toLowerCase()))
 				throw new SameNameException(Station.class.getSimpleName(), name);
 		}
 		Station s = new Station(sys, name);
@@ -87,7 +84,7 @@ public class StationServiceImpl implements StationService {
 
 	@Override
 	@Transactional
-	public void updateStation(long idStation, String name,
+	public Station updateStation(long idStation, String name,
 			boolean isMarket, boolean isBlackMarket,
 			boolean isShipyard, boolean isOutfitting) {
 		Station s = stationDAO.getById(idStation);
@@ -96,11 +93,13 @@ public class StationServiceImpl implements StationService {
 		s.setIsBlackMarket(isBlackMarket);
 		s.setIsShipyard(isShipyard);
 		s.setIsOutfitting(isOutfitting);
+		stationDAO.addStation(s);
+		return s;
 	}
 	
 	@Override
 	@Transactional
-	public void updateStation(fr.jodev.elite.model.Station station) {
+	public Station updateStation(fr.jodev.elite.model.Station station) {
 		Station s = stationDAO.getById(station.idStation);
 		try {
 			s.getIdStation();
@@ -125,6 +124,7 @@ public class StationServiceImpl implements StationService {
 			if (Constants.FALSE.toLowerCase().equals(station.isOutfitting.toLowerCase())) s.setIsOutfitting(false);
 		}
 		stationDAO.addStation(s);
+		return s;
 	}
 
 	@Override

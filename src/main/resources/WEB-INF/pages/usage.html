@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>EliteDDC</title>
-<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+ <meta charset="ISO-8859-1">
+ <title>Elite:Dangerous Data Collection</title>
+ <link rel="stylesheet" type="text/css" href="/css/elite.css" />
 </head>
 <body>
  <div class="header">
@@ -11,18 +11,14 @@
   <h1>Elite:Dangerous Data Collection - Web Service</h1>
  </div>
  <img src="http://www.elitedangerous.com/images/frontier-small.png" align="right"/>
+ 
  <br/><br/>
  <b>Usage:</b><br/>
  <table>
   <tr style="font-weight: bold">
    <td width="15%">Type of service</td><td width="20%">Function</td><td>Web Service URL</td><td width="20%">Return type</td></tr>
   <tr>
-   <td rowspan=5 style="vertical-align: text-top">Solar Systems</td>
-  </tr>
-  <tr>
-   <td>Creation</td>
-   <td>/solarsystem/create?name=&lt;name&gt;</td>
-   <td>Created solar system with ID</td>
+   <td rowspan=8 style="vertical-align: text-top">Solar Systems</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -33,6 +29,26 @@
    <td>Search by ID</td>
    <td>/solarsystem/&lt;id&gt;</td>
    <td>The select solar system or empty</td>
+  </tr>
+  <tr>
+   <td>Get Stations</td>
+   <td>/solarsystem/&lt;id&gt;/stations</td>
+   <td>Return a list of stations</td>
+  </tr>
+  <tr>
+   <td>Creation (GET)</td>
+   <td>/solarsystem/create?name=&lt;name&gt;</td>
+   <td>Created solar system with ID</td>
+  </tr>
+  <tr>
+   <td>Creation (POST, JSON)</td>
+   <td>/solarsystem/create<br/>method=POST, Content-Type: application/json<br>{"name":String,"x":Long,"y":Long,"z":Long}</td>
+   <td>Created solar system with ID</td>
+  </tr>
+  <tr>
+   <td>Update (PUT, JSON)</td>
+   <td>/solarsystem/update<br/>method=POST, Content-Type: application/json<br>{"idSolarSystem":Long,"name":String,"x":Long,"y":Long,"z":Long}</td>
+   <td>The updated solar system</td>
   </tr>
   <tr>
    <td rowspan=12 style="vertical-align: text-top">Stations</td>
@@ -77,12 +93,12 @@
    <td>/station/update?id=&lt;id&gt;&amp;name=&lt;name&gt;<br/>
     &nbsp;&nbsp;&nbsp;&amp;market=&lt;false/true&gt; &amp;blackMarket=&lt;false/true&gt;<br/>
     &nbsp;&nbsp;&amp;shipyard=&lt;false/true&gt; &amp;outfitting=&lt;false/true&gt;</td>
-   <td>nothing</td>
+   <td>The updated station</td>
   </tr>
   <tr>
    <td>Update (PUT,JSON)</td>
    <td>/station/update<br/>method=PUT, Content-Type: application/json<br>{"idStation":Long,"idSolarSystem":Long,"name":String,"isBlackMarket":boolean,<br/>"isMarket":boolean,"isShipyard":boolean,"isOutfitting":boolean}</td>
-   <td>nothing</td>
+   <td>The updated station</td>
   </tr>
   <tr>
    <td>Add a buyable ship</td>

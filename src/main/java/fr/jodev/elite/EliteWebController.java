@@ -12,6 +12,16 @@ public class EliteWebController {
 		return "redirect:/pages/usage.html";
 	}
 
+	@RequestMapping(value="/html", method=RequestMethod.GET)
+	public String html() {
+		return "redirect:/pages/menu.html";
+	}
+
+	@RequestMapping(value="/findSolarSystem")
+	public String findSolarSystem() {
+		return "findSolarSystem";
+	}
+
 //	@RequestMapping("/error.html")
 //	public String error(HttpServletRequest request, Model model) {
 //		System.out.println(">>>>>>>>>>>>> Il est passé par ici !");

@@ -1,7 +1,9 @@
 package fr.jodev.elite.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.jodev.elite.dao.SystemDAO;
 import fr.jodev.elite.entities.SolarSystem;
+import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.SameNameException;
 import fr.jodev.elite.exceptions.SolarSystemNotFoundException;
 import fr.jodev.elite.services.SystemService;
@@ -23,12 +26,42 @@ public class SystemServiceImpl implements SystemService {
 	@Override
 	@Transactional
 	public SolarSystem createSolarSystem(String name) {
-		SolarSystem sys = new SolarSystem(name);
 		List<SolarSystem> list = getByName(name);
 		for (SolarSystem s : list) {
 			if (s.getName().toLowerCase().equals(name.toLowerCase()))
 				throw new SameNameException(SolarSystem.class.getSimpleName(), name);
 		}
+		SolarSystem sys = new SolarSystem(name);
+		systemDAO.addSolarSystem(sys);
+		return sys;
+	}
+	
+	@Override
+	@Transactional
+	public SolarSystem createSolarSystem(String name, Long x, Long y, Long z) {
+		List<SolarSystem> list = getByName(name);
+		for (SolarSystem s : list) {
+			if (s.getName().toLowerCase().equals(name.toLowerCase()))
+				throw new SameNameException(SolarSystem.class.getSimpleName(), name);
+		}
+		SolarSystem sys = new SolarSystem(name, x, y, z);
+		systemDAO.addSolarSystem(sys);
+		return sys;
+	}
+	
+	@Override
+	@Transactional
+	public SolarSystem updateSystem(fr.jodev.elite.model.SolarSystem system) {
+		SolarSystem sys = systemDAO.getById(system.idSolarSystem);
+		try {
+			sys.getIdSolarSystem();
+		} catch (ObjectNotFoundException e) {
+			throw new SolarSystemNotFoundException(system.idSolarSystem);
+		}
+		if (system.name != null && !system.name.isEmpty()) sys.setName(system.name);
+		if (system.x != null) sys.setX(system.x);
+		if (system.y != null) sys.setY(system.y);
+		if (system.z != null) sys.setZ(system.z);
 		systemDAO.addSolarSystem(sys);
 		return sys;
 	}
@@ -60,5 +93,15 @@ public class SystemServiceImpl implements SystemService {
 			throw new SolarSystemNotFoundException(id);
 		}
 		return sys;
+	}
+
+	@Override
+	@Transactional
+	public List<Station> getStations(long id) {
+		SolarSystem sys = getById(id);
+		List<Station> list = sys.getStations();
+		List<Station> ret = new ArrayList<Station>();
+		for (Station s : list) ret.add(s);
+		return ret;
 	}
 }

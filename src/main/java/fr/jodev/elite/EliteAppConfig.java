@@ -140,7 +140,8 @@ public class EliteAppConfig  extends WebMvcConfigurerAdapter {
 //	}
 	
 	/**
-	 * Static pages view resolver.
+	 * Static pages view resolver. <br/>
+	 * Not needed if Thymeleaf is included.
 	 */
 //	@Bean
 //    public UrlBasedViewResolver getUrlViewResolver() {

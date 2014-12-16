@@ -21,6 +21,14 @@
 		<b>URL:</b> <span th:text="${#httpServletRequest.requestURL}">Request
 			URL</span>
 	</p>
+	
+	<p th:if="${errorCode}">
+		<b>Error Code :</b> <span th:text="${errorCode}">404</span>
+	</p>
+	
+	<p th:if="${errorMessage}">
+		<b>Error Message :</b> <span th:text="${errorMessage}">Not Found</span>
+	</p>
 
 	<p th:if="${timestamp}" id='created'>
 		<b>Occurred:</b> <span th:text="${timestamp}">Timestamp</span>
@@ -33,16 +41,18 @@
 
 	<!--/* ${ex} is set by ourSimpleMappingExceptionResolver,
 	       ${exception} or ${message} are set internally by Spring Boot. */-->
-	<div
+	<!-- <div
 		th:if="${exception} or ${exception} or (${message} and ${message.length() != 0})">
 		<b>Cause:</b> <span th:if="${exception}" th:text="${exception.message}">exception
 			...</span> <span th:if="${exception}" th:text="${exception.message}">exception
 			...</span> <span th:if="${message} and ${message.length() != 0}"
 			th:text="${message}">message ...</span>
-	</div>
+	</div> -->
+	
+	<div th:utext="'Exception: ' + ${exception}" th:remove="tag"></div>
 	
 	<p>
-		You are seeing this error page because your request is not known.
+		You are seeing this error page because your request is not known or provoke an unprocessed error.
 	</p>
 </body>
 </html>

@@ -62,8 +62,8 @@ public class SystemAndStationTests {
 	
 		// Goods test
 		GoodsService gserv = (GoodsService)ctx.getBean("goodsServiceImpl");
-		gserv.updateGoods(1, 30, 1200, 15689, 2, 3);
-		gserv.updateGoods(1, 52, 6005, 500, 1, 1);
+		gserv.updateGoods(idsta, 30, 1200, 15689, 2, 3);
+		gserv.updateGoods(idsta, 52, 6005, 500, 1, 1);
 		logger.info("Added Goods to "+sta.getName()+" market.");
 		
 		((ConfigurableApplicationContext)ctx).close();

@@ -14,30 +14,26 @@ import fr.jodev.elite.entities.SolarSystem;
 
 @Repository("systemDAO")
 @Scope("singleton")
-public class SystemDAOImpl implements SystemDAO {
+public class SystemDAOImpl extends AbstractDAO implements SystemDAO {
 
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected void setSessionFactory(SessionFactory sessionFactory) {
+		super.sessionFactory = sessionFactory;
+	};
 
 	@Override
 	public void addSolarSystem(SolarSystem sys) {
-		Session session = sessionFactory.getCurrentSession();
-		session.save(sys);
+		saveOrUpdate(sys);
 	}
 	
 	@Override
 	public void removeSolarSystem(SolarSystem sys) {
-		Session session = sessionFactory.getCurrentSession();
-		session.delete(sys);
+		delete(sys);
 	}
 
 	@Override
 	public SolarSystem getById(long id) {
-		Session session = sessionFactory.getCurrentSession();
-		SolarSystem sys = null;
-		sys = (SolarSystem)session.load(SolarSystem.class, id);
-		session.update(sys);
-		return sys;
+		return (SolarSystem)find(SolarSystem.class, id);
 	}
 	
 	@Override

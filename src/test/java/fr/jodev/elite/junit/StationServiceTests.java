@@ -4,7 +4,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.Before;
@@ -71,12 +70,12 @@ public class StationServiceTests extends AbstractTransactionalJUnit4SpringContex
 	@Test
 	@Transactional
 	public void testStationsAndSolarSystem() throws Exception {
-		Set<Station> set = sys.getStations();
-		final int size = set.size();
+		List<Station> list = sys.getStations();
+		final int size = list.size();
 		Station s = stationService.createStation(sys.getIdSolarSystem(), "Sol3");
 		stationService.createStation(sys.getIdSolarSystem(), "Luna2");
-		set = sys.getStations();
-		assertTrue(set.size() == size + 2);
+		list = sys.getStations();
+		assertTrue(list.size() == size + 2);
 		assertTrue(s.getParentSolarSystem() == sys);
 	}
 	
