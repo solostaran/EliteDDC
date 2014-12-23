@@ -22,6 +22,10 @@ import fr.jodev.elite.exceptions.SameNameException;
 import fr.jodev.elite.exceptions.SolarSystemNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
 
+/**
+ * Source code based on <a href="http://mvc-exceptions-v2.cfapps.io/">Spring MVC Exceptions v2 Demo</a>
+ * @author JRD
+ */
 @ControllerAdvice
 public class GlobalExceptionHandlingController {
 	

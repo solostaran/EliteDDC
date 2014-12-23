@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>EliteDDC Find SolarSystem</title>
+<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+</head>
+<body>
+	<div class="header">
+		<img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" />
+		<h1>Elite:Dangerous Data Collection - Find Solar System</h1>
+	</div>
+	<br />
+	<br />
+	<div class="eddcform">
+		<form method="post" action="/web/findsystem">
+			<label for="name" th:text="#{solarsystem}">Solar System</label> <input
+				name="name" type="text" /> <input type="submit"
+				th:value="#{buttonfindweb}" name="web" /> <input type="submit"
+				th:value="#{buttonfindjson}" name="json" />
+		</form>
+	</div>
+	<br />
+	<div th:if="${systems != null}" class="eddclist">
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{name}">Name</th>
+					<th>X</th>
+					<th>Y</th>
+					<th>Z</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="sys : ${systems}">
+					<td><a href="/solarsystem" th:text="${{sys.name}}"
+						th:href="@{|/solarsystem/${sys.idSolarSystem}|}"
+						style="width: 500px;">default name</a></td>
+					<td th:text="${{sys.x}}"></td>
+					<td th:text="${{sys.y}}"></td>
+					<td th:text="${{sys.z}}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

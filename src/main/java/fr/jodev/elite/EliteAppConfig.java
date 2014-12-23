@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
@@ -179,4 +180,11 @@ public class EliteAppConfig  extends WebMvcConfigurerAdapter {
 //        r.setWarnLogCategory("ELITE.MvcLogger");     // No default
 //        return r;
 //    }
+	
+	@Bean(name="messageSource")
+	public ResourceBundleMessageSource getStringsResources() {
+		ResourceBundleMessageSource ret = new ResourceBundleMessageSource();
+		ret.setBasename("locale/Strings");
+		return ret;
+	}
 }

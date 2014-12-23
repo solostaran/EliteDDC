@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="ISO-8859-1" />
+ <title>EliteDDC All Buyable Ships</title>
+ <link rel="stylesheet" type="text/css" href="/css/elite.css" />
+</head>
+<body>
+ <div class="header">
+  <img src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" />
+  <h1>Elite:Dangerous Data Collection - All Buyable Ships</h1>
+ </div>
+ <img src="http://www.elitedangerous.com/images/frontier-small.png" align="right"/><br/>
+ <br/><br/>
+ <div class="eddclist">
+	 <table>
+	  <thead>
+	   <tr>
+	    <th th:text="#{name}">Name</th>
+	    <th th:text="#{price}">Price</th>
+	    <th th:text="#{mass}">Mass</th>
+	    <th th:text="#{defaultminrange}">Default min range</th>
+	    <th th:text="#{defaultmaxrange}">Default max range</th>
+	   </tr>
+	  </thead>
+	   <tr th:each="s : ${ships}">
+	    <td th:text="${{s.name}}">*</td>
+	    <td th:text="${{s.price}}"></td>
+	    <td th:text="${{s.mass}}+' '+#{unitton}"></td>
+	    <td><span th:if="${{s.defaultMinRange}} != 0" th:text="${{s.defaultMinRange}}+' '+#{unitly}"></span></td>
+	    <td><span th:if="${{s.defaultMaxRange}} != 0" th:text="${{s.defaultMaxRange}}+' '+#{unitly}"></span></td>
+	   </tr>
+	  <tbody>
+	  </tbody>
+	 </table>
+ </div>
+</body>
+</html>
