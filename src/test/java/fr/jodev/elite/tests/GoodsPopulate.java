@@ -17,7 +17,7 @@ public class GoodsPopulate {
 	
 	private static final String [] listCategories = {"Chemicals", "Consumer items",
 		"Foods", "Industrial materials", "Legal drugs", "Machinery", "Medicines", "Metals",
-		"Minerals","Technology","Textiles","Waste","Weapons"};
+		"Minerals","Slaves", "Technology","Textiles","Waste","Weapons"};
 	
 	private static void populateCategories() {
 		final int nbcat = listCategories.length;
@@ -41,6 +41,7 @@ public class GoodsPopulate {
 	static final String [] listMedicines = {"Agri-medicines","Basic medicines","Combat stabilisers","Performance enhancers","Progenitor cells" };
 	static final String [] listMetals = {"Aluminium","Beryllium","Cobalt","Copper","Gallium","Gold","Indium","Lithium","Palladium","Platinum","Silver","Tantalum","Titanium","Uranium" };
 	static final String [] listMinerals = {"Bauxite","Bertrandite","Coltan","Gallite","Indite","Lepidolite","Rutile","Uraninite" };
+	static final String [] listSlaves = {"Imperial slaves", "Slaves"};
 	static final String [] listTechnology = {"Advanced catalysers","Animal monitors","Aquaponic systems","Auto-fabricators","Bioreducing lichen","Computer components","H.E. suits","Land enrichment systems","Resonating separators","Robotics" };
 	static final String [] listTextiles = {"Leather","Natural fabrics","Synthetic fabrics" };
 	static final String [] listWaste = {"Biowaste","Chemical waste","Scrap" };
@@ -57,6 +58,7 @@ public class GoodsPopulate {
 		populateCategory(id++, listMedicines);
 		populateCategory(id++, listMetals);
 		populateCategory(id++, listMinerals);
+		populateCategory(id++, listSlaves);
 		populateCategory(id++, listTechnology);
 		populateCategory(id++, listTextiles);
 		populateCategory(id++, listWaste);

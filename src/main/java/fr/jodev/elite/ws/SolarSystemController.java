@@ -34,15 +34,15 @@ public class SolarSystemController {
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public @ResponseBody SolarSystem create(@RequestBody fr.jodev.elite.model.SolarSystem system) {
-		if (system.name == null || system.name.isEmpty()) {
+		if (system.getName() == null || system.getName().isEmpty()) {
 			throw new EmptyArgumentException("name");
 		}
-		return systemService.createSolarSystem(system.name, system.x, system.y, system.z);
+		return systemService.createSolarSystem(system.getName(), system.getX(), system.getY(), system.getZ());
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.PUT)
 	public @ResponseBody SolarSystem update(@RequestBody fr.jodev.elite.model.SolarSystem system) {
-		if (system.idSolarSystem == -1) {
+		if (system.getIdSolarSystem() == -1) {
 			throw new EmptyArgumentException("idSolarSystem");
 		}
 		return systemService.updateSystem(system);

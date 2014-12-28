@@ -45,13 +45,13 @@ public class StationController {
 	
 	@RequestMapping(value="/create", method=RequestMethod.POST)
 	public Station create(@RequestBody fr.jodev.elite.model.Station station) {
-		if (station.idSolarSystem == -1) {
+		if (station.parentSolarSystem == -1) {
 			throw new EmptyArgumentException("idSolarSystem");
 		}
 		if (station.name == null || station.name.isEmpty()) {
 			throw new EmptyArgumentException("name");
 		}
-		Station ret = stationService.createStation(station.idSolarSystem, station.name);
+		Station ret = stationService.createStation(station.parentSolarSystem, station.name);
 		station.idStation = ret.getIdStation();
 		stationService.updateStation(station);
 		return ret;

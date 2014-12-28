@@ -38,7 +38,7 @@ public class SystemServiceImpl implements SystemService {
 	
 	@Override
 	@Transactional
-	public SolarSystem createSolarSystem(String name, Long x, Long y, Long z) {
+	public SolarSystem createSolarSystem(String name, Double x, Double y, Double z) {
 		List<SolarSystem> list = getByName(name);
 		for (SolarSystem s : list) {
 			if (s.getName().toLowerCase().equals(name.toLowerCase()))
@@ -52,16 +52,16 @@ public class SystemServiceImpl implements SystemService {
 	@Override
 	@Transactional
 	public SolarSystem updateSystem(fr.jodev.elite.model.SolarSystem system) {
-		SolarSystem sys = systemDAO.getById(system.idSolarSystem);
+		SolarSystem sys = systemDAO.getById(system.getIdSolarSystem());
 		try {
 			sys.getIdSolarSystem();
 		} catch (ObjectNotFoundException e) {
-			throw new SolarSystemNotFoundException(system.idSolarSystem);
+			throw new SolarSystemNotFoundException(system.getIdSolarSystem());
 		}
-		if (system.name != null && !system.name.isEmpty()) sys.setName(system.name);
-		if (system.x != null) sys.setX(system.x);
-		if (system.y != null) sys.setY(system.y);
-		if (system.z != null) sys.setZ(system.z);
+		if (system.getName() != null && !system.getName().isEmpty()) sys.setName(system.getName());
+		if (system.getX() != null) sys.setX(system.getX());
+		if (system.getY() != null) sys.setY(system.getY());
+		if (system.getZ() != null) sys.setZ(system.getZ());
 		systemDAO.addSolarSystem(sys);
 		return sys;
 	}

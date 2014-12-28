@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Show Station</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function hideMessage()
+    {
+    	document.getElementById("message").style.visibility = "hidden";
+    }
+    </script>
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Show Station</h1>
+	</div>
+	<br/><br/><br/>
+	<div th:if="${updated != null}" id="message" class="eddclisttitle">This station has just been updated : <span th:text="${updated}"></span><br/></div>
+	<div th:if="${created != null}" id="message" class="eddclisttitle">This station has just been created : <span th:text="${created}"></span><br/></div>
+	<script>setTimeout("hideMessage()", 5000);</script>
+	<div th:if="${system != null}" class="eddclisttitle">
+		<span th:text="#{parentsolarsystem}+' = '">Parent Solar System = </span>
+		<a href="/html/station" th:text="${{system.name}}" th:href="@{|/html/showsystem/${system.idSolarSystem}|}"></a>
+	</div>
+	<br />
+	<div th:if="${station != null}" class="eddcform">
+		<form action="#" th:action="@{/html/updatestation}" th:object="${station}" method="post">
+			<input type="hidden" th:field="*{idStation}" />
+			<input type="hidden" id="parentSolarSystem" name="parentSolarSystem" th:value="${system.idSolarSystem}" />
+			<label for="name" th:text="#{name}">Name</label>
+			<input type="text" th:field="*{name}" />
+			<br/>
+			<input type="checkbox" th:field="*{isMarket}" />
+			<label for="market" th:text="#{market}">Market</label> <a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}" th:href="@{|/html/showmarket/${station.idStation}|}">Show Market</a>
+			<br/>
+			<input type="checkbox" th:field="*{isBlackMarket}" />
+			<label for="blackmarket" th:text="#{blackmarket}">Black Market</label>
+			<br/>
+			<input type="checkbox" th:field="*{isShipyard}" />
+			<label for="shipyard" th:text="#{shipyard}">Shipyard</label>
+			<br/>
+			<input type="checkbox" th:field="*{isOutfitting}" />
+			<label for="outfitting" th:text="#{outfitting}">Outfitting</label>
+			<input type="submit" th:value="#{update}" />
+		</form>
+	</div>
+</body>
+</html>

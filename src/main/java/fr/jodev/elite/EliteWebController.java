@@ -1,16 +1,27 @@
 package fr.jodev.elite;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.jodev.elite.entities.SolarSystem;
+import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.model.GoodsForDisplay;
+import fr.jodev.elite.model.Priority;
+import fr.jodev.elite.model.SupplyOrDemand;
+import fr.jodev.elite.services.GoodsCategoryService;
+import fr.jodev.elite.services.GoodsDesignationService;
+import fr.jodev.elite.services.GoodsService;
 import fr.jodev.elite.services.ShipBuyableService;
+import fr.jodev.elite.services.StationService;
 import fr.jodev.elite.services.SystemService;
 
 @Controller
@@ -20,9 +31,19 @@ public class EliteWebController {
 	private SystemService systemService;
 	
 	@Autowired
+	private StationService stationService;
+	
+	@Autowired
 	private ShipBuyableService shipBuyableService;
 	
-	private List<SolarSystem> listSystems;
+	@Autowired
+	private GoodsCategoryService goodsCategoryService;
+	
+	@Autowired
+	private GoodsDesignationService goodsDesignationService;
+	
+	@Autowired
+	private GoodsService goodsService;
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String usage() {
@@ -34,9 +55,16 @@ public class EliteWebController {
 		return "redirect:/pages/menu.html";
 	}
 	
-	@RequestMapping(value="/web/findsystem")
+	@RequestMapping(value="/html/allships")
+	public ModelAndView allShips() {
+		ModelAndView mav = new ModelAndView("allShips");
+	    mav.addObject("ships", shipBuyableService.getAll());
+	    return mav;
+	}
+	
+	@RequestMapping(value="/html/findsystem")
 	public ModelAndView findSolarSystem(
-			@RequestParam(value="name", required=false, defaultValue="$") String name,
+			@RequestParam(value="name", required=false, defaultValue="") String name,
 			@RequestParam(value="web", required=false, defaultValue="") String web,
 			@RequestParam(value="json", required=false, defaultValue="") String json) {
 		ModelAndView mav;
@@ -45,22 +73,109 @@ public class EliteWebController {
 			mav.addObject("name", name);
 		}
 		else {
-			if ("$".equals(name)) {
+			List<SolarSystem> listSystems = null;
+			if (name.isEmpty()) {
 				listSystems = null;
 			} else {
 				listSystems = systemService.getByName(name);
 			}
-			mav = new ModelAndView("findSystem");
-			mav.addObject("systems", listSystems);
+			if (listSystems != null && listSystems.size() == 1) {
+				mav = new ModelAndView("showSystem");
+				SolarSystem sys = listSystems.get(0);
+				mav.addObject("system", sys);
+				mav.addObject("stations", systemService.getStations(sys.getIdSolarSystem()));
+			} else {
+				mav = new ModelAndView("findSystem");
+				mav.addObject("systems", listSystems);
+				mav.addObject("reqname",name);
+			}
 		}
 	    return mav;
 	}
 	
-	@RequestMapping(value="/web/allships")
-	public ModelAndView allShips() {
-		ModelAndView mav = new ModelAndView("allShips");
-	    mav.addObject("ships", shipBuyableService.getAll());
-	    return mav;
+	@RequestMapping(value="/html/showsystem/{id}")
+	public ModelAndView showSolarSystem(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("showSystem");
+		mav.addObject("system", systemService.getById(id));
+		mav.addObject("stations", systemService.getStations(id));
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/createsystem")
+	public ModelAndView createSolarSystem(
+			@RequestParam(value="name", required=true) String name) {
+		ModelAndView mav = null;
+		List<SolarSystem> listSystems = systemService.getByName(name);
+		if (name == null || name.isEmpty() || listSystems.size() > 0) {
+			mav = new ModelAndView("findSystem");
+			mav.addObject("systems", listSystems);
+			mav.addObject("reqname", name);
+		} else {
+			mav = new ModelAndView("showSystem");
+			SolarSystem sys = systemService.createSolarSystem(name);
+			mav.addObject("system", sys);
+			mav.addObject("stations", systemService.getStations(sys.getIdSolarSystem()));
+			mav.addObject("created", DateNumberSerializer.getDate());
+		}
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/updatesystem")
+	public ModelAndView updateSolarSystem(
+			final fr.jodev.elite.model.SolarSystem system) {
+		SolarSystem sys = systemService.updateSystem(system);
+		ModelAndView mav = new ModelAndView("showSystem");
+		mav.addObject("system", sys);
+		mav.addObject("stations", systemService.getStations(sys.getIdSolarSystem()));
+		mav.addObject("updated", DateNumberSerializer.getDate());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/showstation/{id}")
+	public ModelAndView showStation(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("showStation");
+		Station sta = stationService.getById(id);
+		mav.addObject("station", sta);
+		mav.addObject("system", sta.getParentSolarSystem());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/createstation")
+	public ModelAndView createStation(
+			@RequestParam(value="parentSolarSystem", required=true) Long id,
+			@RequestParam(value="name", required=true) String name) {
+		Station sta = stationService.createStation(id, name);
+		ModelAndView mav = new ModelAndView("showStation");
+		mav.addObject("station", sta);
+		mav.addObject("system", sta.getParentSolarSystem());
+		mav.addObject("created", DateNumberSerializer.getDate());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/updatestation")
+	public ModelAndView updateStation(
+			final fr.jodev.elite.model.Station station) {
+		System.out.println("id="+station.idStation+",parent="+station.parentSolarSystem);
+		Station sta = stationService.updateStation(station);
+		ModelAndView mav = new ModelAndView("showStation");
+		mav.addObject("station", sta);
+		mav.addObject("system", sta.getParentSolarSystem());
+		mav.addObject("updated", DateNumberSerializer.getDate());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/showmarket/{id}")
+	public ModelAndView showMarket(@PathVariable Long id) {
+		Station sta = stationService.getById(id);
+		ModelAndView mav = new ModelAndView("showMarket");
+		mav.addObject("station", sta);
+//		List<Goods> list = goodsService.getStationMarket(id);
+//		mav.addObject("market", list);
+//		mav.addObject("categories", goodsCategoryService.getAll());
+//		mav.addObject("designations", goodsDesignationService.getAll());
+		List<GoodsForDisplay> listfull = goodsService.getStationMarketFull(id);
+		mav.addObject("fullmarket", listfull);
+		return mav;
 	}
 
 //	@RequestMapping("/error.html")
@@ -80,4 +195,14 @@ public class EliteWebController {
 //	public List<ShipBuyable> populateSystems() {
 //		return shipBuyableService.getAll();
 //	}
+	
+	@ModelAttribute("allSoD")
+	public List<SupplyOrDemand> populateSoD() {
+		return Arrays.asList(SupplyOrDemand.ALL);
+	}
+	
+	@ModelAttribute("allPriorities")
+	public List<Priority> populatePriorities() {
+		return Arrays.asList(Priority.ALL);
+	}
 }

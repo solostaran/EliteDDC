@@ -8,21 +8,26 @@
 </head>
 <body>
 	<div class="header">
-		<img
-			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" />
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
 		<h1>Elite:Dangerous Data Collection - Find Solar System</h1>
 	</div>
 	<br />
 	<br />
+	<br />
 	<div class="eddcform">
-		<form method="post" action="/web/findsystem">
-			<label for="name" th:text="#{solarsystem}">Solar System</label> <input
-				name="name" type="text" /> <input type="submit"
-				th:value="#{buttonfindweb}" name="web" /> <input type="submit"
-				th:value="#{buttonfindjson}" name="json" />
+		<form method="post" action="/html/findsystem">
+			<label for="name" th:text="#{solarsystem}">Solar System</label>
+			<input name="name" type="text" th:value="${reqname}" />
+			<input type="submit" th:value="#{buttonfindweb}" name="web" />
+			<input type="submit" th:value="#{buttonfindjson}" name="json" />
 		</form>
 	</div>
 	<br />
+	<div th:if="${reqname} != ''" class="eddclisttitle">
+		<span th:text="#{listsystems}"></span>
+	</div>
+	<br/>
 	<div th:if="${systems != null}" class="eddclist">
 		<table>
 			<thead>
@@ -36,7 +41,7 @@
 			<tbody>
 				<tr th:each="sys : ${systems}">
 					<td><a href="/solarsystem" th:text="${{sys.name}}"
-						th:href="@{|/solarsystem/${sys.idSolarSystem}|}"
+						th:href="@{|/html/showsystem/${sys.idSolarSystem}|}"
 						style="width: 500px;">default name</a></td>
 					<td th:text="${{sys.x}}"></td>
 					<td th:text="${{sys.y}}"></td>
@@ -44,6 +49,16 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<br />
+	<div th:if="${reqname} != ''" class="eddcform">
+		<span th:text="#{createsolarsystem}">Create a Solar System :</span>
+		<br />
+		<form action="#" th:action="@{/html/createsystem}" method="post">
+			<label for="name" th:text="#{name}">Name</label>
+			<input type="text" id="name" name="name" th:value="${reqname}" />
+			<input type="submit" th:value="#{buttoncreate}" />
+		</form>
 	</div>
 </body>
 </html>

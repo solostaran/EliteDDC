@@ -32,11 +32,11 @@ public class SolarSystem {
 	private String name;
 	
 	@Column(nullable=true)
-	private Long X = null;
+	private Double X = null;
 	@Column(nullable=true)
-	private Long Y = null;
+	private Double Y = null;
 	@Column(nullable=true)
-	private Long Z = null;
+	private Double Z = null;
 	
 	@JsonIgnore
 	@OneToMany(targetEntity=Station.class, mappedBy="parentSolarSystem", cascade=CascadeType.ALL)
@@ -46,7 +46,7 @@ public class SolarSystem {
 	public SolarSystem(String name) {
 		this.name = name;
 	}
-	public SolarSystem(String name, Long x, Long y, Long z) {
+	public SolarSystem(String name, Double x, Double y, Double z) {
 		this(name);
 		X = x;
 		Y = y;
@@ -82,26 +82,31 @@ public class SolarSystem {
 	}
 	
 //	@JsonSerialize(using=LongNullableSerializer.class)
-	public Long getX() {
+	public Double getX() {
 		return X;
 	}
-	public void setX(Long x) {
+	public void setX(Double x) {
 		X = x;
 	}
 	
 //	@JsonSerialize(using=LongNullableSerializer.class)
-	public Long getY() {
+	public Double getY() {
 		return Y;
 	}
-	public void setY(Long y) {
+	public void setY(Double y) {
 		Y = y;
 	}
 	
 //	@JsonSerialize(using=LongNullableSerializer.class)
-	public Long getZ() {
+	public Double getZ() {
 		return Z;
 	}
-	public void setZ(Long z) {
+	public void setZ(Double z) {
 		Z = z;
+	}
+	
+	@Override
+	public String toString() {
+		return name+",x="+X+",y="+Y+",z="+Z;
 	}
 }

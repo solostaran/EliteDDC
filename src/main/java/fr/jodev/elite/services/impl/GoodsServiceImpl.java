@@ -1,5 +1,9 @@
 package fr.jodev.elite.services.impl;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.ObjectNotFoundException;
@@ -16,6 +20,9 @@ import fr.jodev.elite.entities.GoodsDesignation;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.GoodsDesignationNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
+import fr.jodev.elite.model.GoodsForDisplay;
+import fr.jodev.elite.model.Priority;
+import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsService;
 
 @Service
@@ -42,6 +49,32 @@ public class GoodsServiceImpl implements GoodsService {
 	public List<Goods> getStationMarket(long idStation) {
 		Station s = stationDAO.getById(idStation);
 		return goodsDAO.getByStation(s);
+	}
+	
+	@Override
+	@Transactional
+	public List<GoodsForDisplay> getStationMarketFull(long idStation) {
+		Station s = stationDAO.getById(idStation);
+		List<Goods> list = goodsDAO.getByStation(s);
+		List<GoodsDesignation> fullList = goodsDesignationDAO.getAll();
+		List<GoodsForDisplay> ret = new ArrayList<GoodsForDisplay>();
+		for (GoodsDesignation gd : fullList) {
+			GoodsForDisplay temp = new GoodsForDisplay();
+			temp.category = gd.getCategory().getName();
+			temp.designation = gd.getName();
+			for (Goods g : list) {
+				if (g.getGoodsDesignation().getIdGoodsDesignation() == gd.getIdGoodsDesignation()) {
+					DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+					temp.lastUpdated = df.format(new Date(g.getLastUpdated()));
+					temp.number = g.getNumber();
+					temp.price = g.getPrice();
+					temp.priority = Priority.forValue(g.getPriority());
+					temp.supplyOrDemand = SupplyOrDemand.forValue(g.getSupplyOrDemand());
+				}
+			}
+			ret.add(temp);
+		}
+		return ret;
 	}
 
 	@Override
@@ -75,5 +108,4 @@ public class GoodsServiceImpl implements GoodsService {
 	public void updateGoods(fr.jodev.elite.model.Goods goods) {
 		updateGoods(goods.idStation, goods.idDesignation, goods.price, goods.number, goods.supplyOrDemand, goods.priority);
 	}
-
 }

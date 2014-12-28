@@ -133,4 +133,9 @@ public class Station {
 			stationShipyard.remove(ship);
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return name+",market="+isMarket+",blackmarket="+isBlackMarket+",shipyard="+isShipyard+",outfitting="+isOutfitting;
+	}
 }

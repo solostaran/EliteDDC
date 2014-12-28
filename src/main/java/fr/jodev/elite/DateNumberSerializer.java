@@ -23,4 +23,9 @@ public class DateNumberSerializer extends StdSerializer<Long> {
 		String out = df.format(new Date(date));
 		json.writeString(out);
 	}
+	
+	public static String getDate() {
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return df.format(new Date());
+	}
 }

@@ -21,14 +21,21 @@ table {
   top: 20px;
 }
 
+div.eddclisttitle {
+	padding: 10px 10px;
+	background-color: #edae40;
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
 div.eddclist {
     
 }
 
 div.eddclist > table {
-  /* width: 90%; */
-  border: 1px solid #000;
-  border-collapse: collapse;
+	/* width: 90%; */
+	border: 1px solid #000;
+	border-collapse: collapse;
 }
 
 div.eddclist > table > tbody > tr > td, div.eddclist > table > thead > tr > th {
@@ -75,4 +82,25 @@ div.eddcform > form > input {
 	padding: 5px 10px;
 	border: 1px solid #000;
 	border-collapse: collapse;
+}
+
+div.eddcform > form > input[type=submit] {
+	background-color: #ffcb77;
+	float:right;
+	margin-right: 5px;
+    /* clear:both; */
+}
+
+div.eddcform > form > input[type=number] {
+	size:8;
+}
+
+div.eddcform > form > input[type=checkbox] {
+	margin-top: 5px;
+}
+
+
+
+div.eddcform > form > label {
+	padding: 0px 10px;
 }

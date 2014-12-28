@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Show SolarSystem</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function hideMessage()
+    {
+    	document.getElementById("message").style.visibility = "hidden";
+    }
+
+    function showConfirm()
+    {
+        return confirm("Create : "+document.getElementById("createname").value+" ?");
+	}
+	</script>
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Show Solar System</h1>
+	</div>
+	<br/><br/><br />
+	<div th:if="${updated != null}" id="message" class="eddclisttitle">This solar system has just been updated : <span th:text="${updated}"></span></div>
+	<div th:if="${created != null}" id="message" class="eddclisttitle">This solar system has just been created : <span th:text="${created}"></span></div>
+	<script>setTimeout("hideMessage()", 5000);</script>
+	<div th:if="${system != null}" class="eddcform">
+		<form action="#" th:action="@{/html/updatesystem}" th:object="${system}" method="post">
+			<input type="hidden" th:field="*{idSolarSystem}" />
+			<label for="name" th:text="#{name}">Name</label>
+			<input type="text" th:field="*{name}" />
+			<br/><br/><span th:text="#{coordinates}">Coordinates</span>
+			<label for="x">X</label>
+			<input type="number" step="0.2" th:field="*{x}" />
+			<label for="z">Z</label>
+			<input type="number" step="0.2" th:field="*{z}" />
+			<label for="y">Y</label>
+			<input type="number" step="0.2" th:field="*{y}" />
+			<input type="submit" th:value="#{update}" />
+		</form>
+	</div>
+	<br />
+	<div th:if="${not #lists.isEmpty(stations)}" class="eddclisttitle">
+		<span th:text="#{liststations}"></span>
+	</div>
+	<br/>
+	<div th:if="${not #lists.isEmpty(stations)}" class="eddclist">
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{name}">Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="sta : ${stations}">
+					<td><a href="/station" th:text="${{sta.name}}"
+						th:href="@{|/html/showstation/${sta.idStation}|}"
+						style="width: 500px;">default name</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br/>
+	<div class="eddcform">
+		<span th:text="#{createstation}">Create Station :</span>
+		<br/>
+		<form onSubmit="return showConfirm();" action="#" th:action="@{/html/createstation}" method="post">
+			<input type="hidden" name="parentSolarSystem" th:value="${system.idSolarSystem}" />
+			<label for="createname" th:text="#{name}">Name</label>
+			<input type="text" id="createname" name="name" />
+			<input type="submit" th:value="#{buttoncreate}" value="Create" />
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1" />
+<title>EliteDDC Show Market</title>
+<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Show Market</h1>
+	</div>
+	<br/><br/><br/>
+	<div th:if="${station != null}" class="eddclisttitle">
+		<span th:text="#{station.markettitle}">List of goods in this station</span>
+		<a href="/html/showstation" th:text="${{station.name}}" th:href="@{|/html/showstation/${station.idStation}|}"></a>
+	</div>
+	<br />
+	<!-- <div class="eddclist">
+		<table>
+			<thead>
+				<tr>
+					<th>Category</th>
+					<th>Designation</th>
+					<th>Supply/Demand</th>
+					<th>Priority</th>
+					<th>Price</th>
+					<th>Number</th>
+					<th>Last Updated</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr th:each="des : ${designations}">
+				<td th:text="${categories[__${des.category.idGoodsCategory - 1}__].name}" ></td>
+				<td th:text="${{des.name}}"></td>
+			</tr>
+			</tbody>
+		</table>
+	</div> -->
+	<div class="eddclist">
+		
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{goods.title.category}">Category</th>
+					<th th:text="#{goods.title.designation}">Designation</th>
+					<th th:text="#{goods.title.sod}">S/D</th>
+					<th th:text="#{goods.title.priority}">Priority</th>
+					<th th:text="#{goods.title.price}">Price</th>
+					<th th:text="#{goods.title.number}">Number</th>
+					<th th:text="#{lastupdated}">Last Updated</th>
+				</tr>
+			</thead>
+			<tbody>
+			<tr th:each="g : ${fullmarket}">
+				<td th:text="${{g.category}}" ></td>
+				<td th:text="${{g.designation}}"></td>
+				<td>
+					<select>
+						<option th:each="sod : ${allSoD}" th:value="${sod.value}" th:text="#{${'goods.sod.'+sod.name}}" th:selected="${g.supplyOrDemand.value == sod.value}" />
+					</select>
+				</td>
+				<td>
+					<select>
+						<option th:each="p : ${allPriorities}" th:value="${p.value}" th:text="#{${'goods.priority.'+p.name}}" th:selected="${g.priority.value == p.value}" />
+					</select>
+				</td>
+				<td>
+					<input type="number" th:value="${g.price}" />
+				</td>
+				<td>
+					<input type="number" th:value="${g.number}" />
+				</td>
+				<td th:text="${{g.lastUpdated}}"></td>
+			</tr>
+			</tbody>
+		</table>
+		
+	</div>
+</body>
+</html>
