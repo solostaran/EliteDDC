@@ -53,7 +53,7 @@ public class BuyableShipsPopulate {
 		// Populate Sidewinder
 		long idship = populateShip("Sidewinder", 32000L, 25, 7.56f, 7.79f);
 		final int[][] listSwSlots = {{1,1},{1,1},{2,0},{2,0},
-				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,1},
+				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,2},
 				{11,2},{11,2},{11,1}
 		};
 		populateSlots(idship, listSwSlots);
@@ -61,7 +61,7 @@ public class BuyableShipsPopulate {
 		// Populate Eagle
 		idship = populateShip("Eagle", 44800L, 50, 8.27f, 8.76f);
 		final int [][] listEgSlots = {{1,1},{1,1},{1,1},{2,0},
-				{3,8},{4,2},{5,3},{6,3},{7,1},{8,2},{9,2},{10,2},
+				{3,8},{4,2},{5,3},{6,3},{7,1},{8,2},{9,2},{10,4},
 				{11,3},{11,2},{11,1}
 		};
 		populateSlots(idship, listEgSlots);
@@ -69,7 +69,7 @@ public class BuyableShipsPopulate {
 		// Populate Hauler
 		idship = populateShip("Hauler", 52720L, 14, 9.87f, 10.91f);
 		final int [][] listHaSlots = {{1,1},{2,0},{2,0},
-				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,2},
+				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,4},
 				{11,3},{11,3},{11,2},{11,1}
 		};
 		populateSlots(idship, listHaSlots);
@@ -77,7 +77,7 @@ public class BuyableShipsPopulate {
 		// Populate Viper
 		idship = populateShip("Viper", 142931L, 60, 6.92f, 7.12f);
 		final int [][] listViSlots = {{1,1},{1,1},{1,2},{1,2},{2,0},{2,0},
-				{3,8},{4,3},{5,3},{6,3},{7,2},{8,3},{9,3},{10,2},
+				{3,8},{4,3},{5,3},{6,3},{7,2},{8,3},{9,3},{10,4},
 				{11,3},{11,3},{11,2},{11,1}
 		};
 		populateSlots(idship, listViSlots);
@@ -85,7 +85,7 @@ public class BuyableShipsPopulate {
 		// Populate Cobra Mk3
 		idship = populateShip("Cobra Mk3", 279718L, 180, 9.78f, 10.46f);
 		final int [][] listCbSlots = {{1,1},{1,1},{1,2},{1,2},{2,0},{2,0},
-				{3,8},{4,4},{5,4},{6,4},{7,3},{8,3},{9,3},{10,8},
+				{3,8},{4,4},{5,4},{6,4},{7,3},{8,3},{9,3},{10,16},
 				{11,4},{11,4},{11,4},{11,2},{11,2},{11,2}
 		};
 		populateSlots(idship, listCbSlots);
@@ -93,7 +93,7 @@ public class BuyableShipsPopulate {
 		// Populate Type-6 Transporter
 		idship = populateShip("Type-6 Transporter", 1045945L, 155, 0, 0);
 		final int [][] listT6Slots = {{1,1},{1,1},{2,0},{2,0},{2,0},
-				{10,8},
+				{10,16},
 				{11,5},{11,5},{11,4},{11,4},{11,3},{11,2},{11,2}
 		};
 		populateSlots(idship, listT6Slots);
@@ -101,7 +101,7 @@ public class BuyableShipsPopulate {
 		// Populate Asp
 		idship = populateShip("ASP", 6661153L, 280, 0, 0);
 		final int [][] listAspSlots = {{1,1},{1,1},{1,1},{1,1},{1,2},{1,2},{2,0},{2,0},{2,0},{2,0},
-				{10,16},
+				{10,32},
 				{11,6},{11,6},{11,5},{11,3},{11,3},{11,3},{11,2},{11,2}
 		};
 		populateSlots(idship, listAspSlots);
@@ -109,15 +109,31 @@ public class BuyableShipsPopulate {
 		// Populate Federal Dropship
 		idship = populateShip("Federal Dropship", 37814205L, 580, 0, 0);
 		final int [][] listFdsSlots = {{1,2},{1,2},{1,2},{1,2},{1,3},{2,0},{2,0},{2,0},{2,0},
-				{10,8},
+				{10,16},
 				{11,6},{11,5},{11,5},{11,4},{11,3},{11,3},{11,2}
 		};
 		populateSlots(idship, listFdsSlots);
+		
+		// Populate Type-7 Transporter
+		idship = populateShip("Type-7 Transport", 17472252L, 420, 0, 0);
+		final int [][] listT7Slots = {{1,1},{1,1},{1,1},{1,1},{2,0},{2,0},{2,0},{2,0},
+				{10,32},
+				{11,6},{11,6},{11,5},{11,5},{11,4},{11,4},{11,2},{11,2}
+		};
+		populateSlots(idship, listT7Slots);
+		
+		// Populate Python
+		idship = populateShip("Python", 56978179L, 350, 0, 0);
+		final int [][] listPytSlots = {{1,2},{1,2},{1,3},{1,3},{1,3},{2,0},{2,0},{2,0},{2,0},
+				{10,32},
+				{11,6},{11,6},{11,6},{11,5},{11,5},{11,4},{11,3},{11,3},{11,2}
+		};
+		populateSlots(idship, listPytSlots);
 
 		// Populate Lakon Type-9
 		idship = populateShip("Lakon Type-9 Heavy", 76500000L, 1000, 0, 0);
 		final int [][] listL9Slots = {{1,1},{1,1},{1,2},{1,2},{1,2},{2,0},{2,0},{2,0},{2,0},
-				{10,16},
+				{10,64},
 				{11,8},{11,7},{11,6},{11,5},{11,4},{11,4},{11,3},{11,3},{11,2}
 		};
 		populateSlots(idship, listL9Slots);
@@ -126,7 +142,7 @@ public class BuyableShipsPopulate {
 		// Populate Anaconda
 		idship = populateShip("Anaconda", 146969451L, 400, 0, 0);
 		final int [][] listAnaSlots = {{1,1},{1,1},{1,2},{1,2},{1,3},{1,3},{1,3},{1,4},{2,0},{2,0},{2,0},{2,0},{2,0},{2,0},{2,0},{2,0},
-				{10,16},
+				{10,32},
 				{11,7},{11,6},{11,6},{11,6},{11,5},{11,5},{11,5},{11,4},{11,4},{11,4},{11,2}
 		};
 		populateSlots(idship, listAnaSlots);

@@ -1,24 +1,24 @@
 package fr.jodev.elite.model;
 
 public class GoodsForDisplay {
-	public String category;
-	public String designation;
-	public int price = -1;
-	public long number = -1L;
+	public long category;
+	public long designation;
+	public int price = 0;
+	public long number = 0L;
 	public SupplyOrDemand supplyOrDemand = SupplyOrDemand.NONE;
 	public Priority priority = Priority.NONE;
 	public String lastUpdated;
 	
-	public String getCategory() {
+	public long getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(long category) {
 		this.category = category;
 	}
-	public String getDesignation() {
+	public long getDesignation() {
 		return designation;
 	}
-	public void setDesignation(String designation) {
+	public void setDesignation(long designation) {
 		this.designation = designation;
 	}
 	public int getPrice() {

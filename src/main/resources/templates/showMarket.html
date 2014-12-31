@@ -2,9 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1" />
-<title>EliteDDC Show Market</title>
-<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Show Market</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function hideMessage()
+    {
+    	document.getElementById("message").style.visibility = "hidden";
+    }
+    </script>
 </head>
 <body>
 	<div class="header">
@@ -13,34 +19,16 @@
 		<h1>Elite:Dangerous Data Collection - Show Market</h1>
 	</div>
 	<br/><br/><br/>
+	<div th:if="${updated != null}" id="message" class="eddclisttitle">This station has just been updated : <span th:text="${updated}"></span><br/></div>
+	<script>setTimeout("hideMessage()", 5000);</script>
 	<div th:if="${station != null}" class="eddclisttitle">
 		<span th:text="#{station.markettitle}">List of goods in this station</span>
 		<a href="/html/showstation" th:text="${{station.name}}" th:href="@{|/html/showstation/${station.idStation}|}"></a>
 	</div>
 	<br />
-	<!-- <div class="eddclist">
-		<table>
-			<thead>
-				<tr>
-					<th>Category</th>
-					<th>Designation</th>
-					<th>Supply/Demand</th>
-					<th>Priority</th>
-					<th>Price</th>
-					<th>Number</th>
-					<th>Last Updated</th>
-				</tr>
-			</thead>
-			<tbody>
-			<tr th:each="des : ${designations}">
-				<td th:text="${categories[__${des.category.idGoodsCategory - 1}__].name}" ></td>
-				<td th:text="${{des.name}}"></td>
-			</tr>
-			</tbody>
-		</table>
-	</div> -->
 	<div class="eddclist">
-		
+		<form action="#" th:action="@{/html/updatemarket}" th:object="${market}" method="post">
+			<input type="hidden" th:field="*{idStation}" />
 		<table>
 			<thead>
 				<tr>
@@ -54,30 +42,32 @@
 				</tr>
 			</thead>
 			<tbody>
-			<tr th:each="g : ${fullmarket}">
-				<td th:text="${{g.category}}" ></td>
-				<td th:text="${{g.designation}}"></td>
+			<tr th:each="g,gStat : *{goods}">
+				<td><span th:text="${categories[__${g.category - 1}__].name}" ></span><input type="hidden" th:field="*{goods[__${gStat.index}__].category}" /></td>
+				<td><span th:text="${designations[__${g.designation - 1}__].name}"></span><input type="hidden" th:field="*{goods[__${gStat.index}__].designation}" /></td>
 				<td>
-					<select>
-						<option th:each="sod : ${allSoD}" th:value="${sod.value}" th:text="#{${'goods.sod.'+sod.name}}" th:selected="${g.supplyOrDemand.value == sod.value}" />
+					<select th:field="*{goods[__${gStat.index}__].supplyOrDemand}">
+						<option th:each="sod : ${allSoD}" th:value="${sod}" th:text="#{${'goods.sod.'+sod.name}}" />
 					</select>
 				</td>
 				<td>
-					<select>
-						<option th:each="p : ${allPriorities}" th:value="${p.value}" th:text="#{${'goods.priority.'+p.name}}" th:selected="${g.priority.value == p.value}" />
+					<select th:field="*{goods[__${gStat.index}__].priority}">
+						<option th:each="p : ${allPriorities}" th:value="${p}" th:text="#{${'goods.priority.'+p.name}}" th:selected="${g.priority == p}" />
 					</select>
 				</td>
 				<td>
-					<input type="number" th:value="${g.price}" />
+					<input type="number" th:field="*{goods[__${gStat.index}__].price}" />
 				</td>
 				<td>
-					<input type="number" th:value="${g.number}" />
+					<input type="number" th:field="*{goods[__${gStat.index}__].number}" />
 				</td>
 				<td th:text="${{g.lastUpdated}}"></td>
 			</tr>
 			</tbody>
 		</table>
-		
+		<br/>
+		<input type="submit" value="Update" th:value="#{buttonupdate}" />
+		</form>
 	</div>
 </body>
 </html>

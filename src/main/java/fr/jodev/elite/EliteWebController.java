@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
-import fr.jodev.elite.model.GoodsForDisplay;
 import fr.jodev.elite.model.Priority;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsCategoryService;
@@ -62,6 +61,14 @@ public class EliteWebController {
 	    return mav;
 	}
 	
+	@RequestMapping(value="/html/allsystems")
+	public ModelAndView allSystems() {
+		ModelAndView mav = new ModelAndView("allSystems");
+	    List<SolarSystem> list = systemService.getByName("");
+	    mav.addObject("systems", list);
+	    return mav;
+	}
+	
 	@RequestMapping(value="/html/findsystem")
 	public ModelAndView findSolarSystem(
 			@RequestParam(value="name", required=false, defaultValue="") String name,
@@ -75,6 +82,7 @@ public class EliteWebController {
 		else {
 			List<SolarSystem> listSystems = null;
 			if (name.isEmpty()) {
+//				listSystems = systemService.getByName(name);
 				listSystems = null;
 			} else {
 				listSystems = systemService.getByName(name);
@@ -165,16 +173,28 @@ public class EliteWebController {
 	}
 	
 	@RequestMapping(value="/html/showmarket/{id}")
-	public ModelAndView showMarket(@PathVariable Long id) {
+	public ModelAndView showMarket2(@PathVariable Long id) {
 		Station sta = stationService.getById(id);
 		ModelAndView mav = new ModelAndView("showMarket");
 		mav.addObject("station", sta);
-//		List<Goods> list = goodsService.getStationMarket(id);
-//		mav.addObject("market", list);
-//		mav.addObject("categories", goodsCategoryService.getAll());
-//		mav.addObject("designations", goodsDesignationService.getAll());
-		List<GoodsForDisplay> listfull = goodsService.getStationMarketFull(id);
-		mav.addObject("fullmarket", listfull);
+		mav.addObject("market", goodsService.getStationMarketFull(id));
+		mav.addObject("categories", goodsCategoryService.getAll());
+		mav.addObject("designations", goodsDesignationService.getAll());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/updatemarket")
+	public ModelAndView updateStation(
+			final fr.jodev.elite.model.StationMarket market) {
+		System.out.println("id="+market.idStation);
+		goodsService.updateGoods(market);
+		ModelAndView mav = new ModelAndView("showMarket");
+		Station sta = stationService.getById(market.idStation);
+		mav.addObject("station", sta);
+		mav.addObject("market", goodsService.getStationMarketFull(market.idStation));
+		mav.addObject("categories", goodsCategoryService.getAll());
+		mav.addObject("designations", goodsDesignationService.getAll());
+		mav.addObject("updated", DateNumberSerializer.getDate());
 		return mav;
 	}
 
@@ -191,18 +211,17 @@ public class EliteWebController {
 //		return "error.html";
 //	}
 	
-//	@ModelAttribute("allships")
-//	public List<ShipBuyable> populateSystems() {
-//		return shipBuyableService.getAll();
-//	}
+	private static final List<SupplyOrDemand> listSoD = Arrays.asList(SupplyOrDemand.ALL);
 	
 	@ModelAttribute("allSoD")
 	public List<SupplyOrDemand> populateSoD() {
-		return Arrays.asList(SupplyOrDemand.ALL);
+		return listSoD;
 	}
+	
+	private static final List<Priority> listPrio = Arrays.asList(Priority.ALL);
 	
 	@ModelAttribute("allPriorities")
 	public List<Priority> populatePriorities() {
-		return Arrays.asList(Priority.ALL);
+		return listPrio;
 	}
 }

@@ -22,6 +22,7 @@ import fr.jodev.elite.exceptions.GoodsDesignationNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
 import fr.jodev.elite.model.GoodsForDisplay;
 import fr.jodev.elite.model.Priority;
+import fr.jodev.elite.model.StationMarket;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsService;
 
@@ -53,15 +54,15 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Override
 	@Transactional
-	public List<GoodsForDisplay> getStationMarketFull(long idStation) {
+	public StationMarket getStationMarketFull(long idStation) {
 		Station s = stationDAO.getById(idStation);
 		List<Goods> list = goodsDAO.getByStation(s);
 		List<GoodsDesignation> fullList = goodsDesignationDAO.getAll();
 		List<GoodsForDisplay> ret = new ArrayList<GoodsForDisplay>();
 		for (GoodsDesignation gd : fullList) {
 			GoodsForDisplay temp = new GoodsForDisplay();
-			temp.category = gd.getCategory().getName();
-			temp.designation = gd.getName();
+			temp.category = gd.getCategory().getIdGoodsCategory();
+			temp.designation = gd.getIdGoodsDesignation();
 			for (Goods g : list) {
 				if (g.getGoodsDesignation().getIdGoodsDesignation() == gd.getIdGoodsDesignation()) {
 					DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -74,7 +75,10 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 			ret.add(temp);
 		}
-		return ret;
+		StationMarket market = new StationMarket();
+		market.idStation = idStation;
+		market.goods = ret;
+		return market;
 	}
 
 	@Override
@@ -96,10 +100,22 @@ public class GoodsServiceImpl implements GoodsService {
 			throw new GoodsDesignationNotFoundException(idGoodsDesignation);
 		}
 		Goods g = goodsDAO.addOrGet(s, gd);
-		if (price >= 0) g.setPrice(price);
-		if (number >= 0) g.setNumber(number);
-		if (supplyOrDemand >= 0 && supplyOrDemand <= 2) g.setSupplyOrDemand(supplyOrDemand);
-		if (priority >= 0 && priority <= 3) g.setPriority(priority);
+		if (supplyOrDemand < 0 || supplyOrDemand > 2) {
+			supplyOrDemand = g.getSupplyOrDemand();
+		}
+		if (supplyOrDemand == 0) {
+			g.setPriority(0);
+			g.setPrice(0);
+			g.setNumber(0L);
+		} else {
+			g.setSupplyOrDemand(supplyOrDemand);
+			if (price < 0) price = g.getPrice();
+			g.setPrice(price);
+			if (number < 0) number = g.getNumber();
+			g.setNumber(number);
+			if (priority < 0) priority = g.getPriority();
+			g.setPriority(priority);
+		}
 		goodsDAO.update(g);
 	}
 
@@ -107,5 +123,21 @@ public class GoodsServiceImpl implements GoodsService {
 	@Transactional
 	public void updateGoods(fr.jodev.elite.model.Goods goods) {
 		updateGoods(goods.idStation, goods.idDesignation, goods.price, goods.number, goods.supplyOrDemand, goods.priority);
+	}
+	
+	@Override
+	@Transactional
+	public void updateGoods(List<fr.jodev.elite.model.Goods> goods) {
+		for (fr.jodev.elite.model.Goods g : goods) {
+			updateGoods(g.idStation, g.idDesignation, g.price, g.number, g.supplyOrDemand, g.priority);
+		}
+	}
+
+	@Override
+	@Transactional
+	public void updateGoods(StationMarket market) {
+		for (GoodsForDisplay gfd : market.goods) {
+			updateGoods(market.idStation, gfd.designation, gfd.price, gfd.number, gfd.supplyOrDemand.getValue(), gfd.priority.getValue());
+		}
 	}
 }

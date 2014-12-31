@@ -2,9 +2,9 @@ package fr.jodev.elite.model;
 
 public enum SupplyOrDemand {
 	
-	NONE("none",'N', 0),
-	SUPPLY("supply", 'S', 1),
-	DEMAND("demand", 'D', 2);
+	NONE("NONE",'N', 0),
+	SUPPLY("SUPPLY", 'S', 1),
+	DEMAND("DEMAND", 'D', 2);
 	
 	public static final SupplyOrDemand[] ALL = { NONE, SUPPLY, DEMAND };
 	
@@ -39,11 +39,11 @@ public enum SupplyOrDemand {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null for SupplyOrDemand");
         }
-        if (name.toLowerCase().equals(NONE.getName())) {
+        if (name.toUpperCase().equals(NONE.getName())) {
             return NONE;
-        } else if (name.toLowerCase().equals(SUPPLY.getName())) {
+        } else if (name.toUpperCase().equals(SUPPLY.getName())) {
             return SUPPLY;
-        } else if (name.toLowerCase().equals(DEMAND.getName())) {
+        } else if (name.toUpperCase().equals(DEMAND.getName())) {
         	return DEMAND;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any SupplyOrDemand");

@@ -36,10 +36,10 @@ public class Goods {
 	@JsonIdentityReference(alwaysAsId=true)
 	private GoodsDesignation goodsDesignation;
 	
-	private int price;
-	private long number;
-	private int supplyOrDemand;
-	private int priority;
+	private int price = 0;
+	private long number = 0;
+	private int supplyOrDemand = 0;
+	private int priority = 0;
 	
 	@Column(nullable=false)
 	private long lastUpdated;

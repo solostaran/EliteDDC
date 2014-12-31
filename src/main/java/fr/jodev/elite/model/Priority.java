@@ -2,10 +2,10 @@ package fr.jodev.elite.model;
 
 public enum Priority {
 	
-	NONE("none", 'N', 0),
-	LOW("low", 'L', 1),
-	MEDIUM("medium", 'M', 2),
-	HIGH("high", 'H', 3);
+	NONE("NONE", 'N', 0),
+	LOW("LOW", 'L', 1),
+	MEDIUM("MEDIUM", 'M', 2),
+	HIGH("HIGH", 'H', 3);
 	
 	public static final Priority [] ALL = { NONE, LOW, MEDIUM, HIGH };
 	
@@ -33,13 +33,13 @@ public enum Priority {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null for SupplyOrDemand");
         }
-        if (name.toLowerCase().equals(NONE.getName())) {
+        if (name.toUpperCase().equals(NONE.getName())) {
             return NONE;
-        } else if (name.toLowerCase().equals(LOW.getName())) {
+        } else if (name.toUpperCase().equals(LOW.getName())) {
             return LOW;
-        } else if (name.toLowerCase().equals(MEDIUM.getName())) {
+        } else if (name.toUpperCase().equals(MEDIUM.getName())) {
         	return MEDIUM;
-        } else if (name.toLowerCase().equals(HIGH.getName())) {
+        } else if (name.toUpperCase().equals(HIGH.getName())) {
         	return HIGH;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any Priority");
@@ -54,5 +54,10 @@ public enum Priority {
 		default:
 			throw new IllegalArgumentException("Value \""+value+"\" does not correspond to any Priority");
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return getName();
 	}
 }

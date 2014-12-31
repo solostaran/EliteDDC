@@ -35,7 +35,8 @@
 			<input type="text" th:field="*{name}" />
 			<br/>
 			<input type="checkbox" th:field="*{isMarket}" />
-			<label for="market" th:text="#{market}">Market</label> <a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}" th:href="@{|/html/showmarket/${station.idStation}|}">Show Market</a>
+			<label for="market" th:text="#{market}">Market</label>
+			<a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}" th:href="@{|/html/showmarket/${station.idStation}|}">Show Market</a>
 			<br/>
 			<input type="checkbox" th:field="*{isBlackMarket}" />
 			<label for="blackmarket" th:text="#{blackmarket}">Black Market</label>
@@ -45,7 +46,7 @@
 			<br/>
 			<input type="checkbox" th:field="*{isOutfitting}" />
 			<label for="outfitting" th:text="#{outfitting}">Outfitting</label>
-			<input type="submit" th:value="#{update}" />
+			<input type="submit" th:value="#{buttonupdate}" />
 		</form>
 	</div>
 </body>
