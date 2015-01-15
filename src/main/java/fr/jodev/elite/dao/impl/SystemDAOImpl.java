@@ -46,10 +46,23 @@ public class SystemDAOImpl extends AbstractDAO implements SystemDAO {
 	@Override
 	public List<SolarSystem> getByName(String name) {
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "from SolarSystem sls where lower(sls.name) like '"+name.toLowerCase()+"%'";
+		final String hql = "from SolarSystem sls where lower(sls.name) like '"+name.toLowerCase()+"%'";
 //		String hql = "from SolarSystem where name = :name";
 		Query query = session.createQuery(hql);
 //		query.setParameter("name", name);
+		return (List<SolarSystem>)query.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SolarSystem> getByProximity(SolarSystem sys, float distance) {
+		Session session = sessionFactory.getCurrentSession();
+		if (sys.getX() == null || sys.getY() == null || sys.getZ() == null) return null;
+		final String hql = "from SolarSystem sls where (sls.X between "+
+				(sys.getX()-distance)+" and "+(sys.getX()+distance)+") and (sls.Y between "+
+				(sys.getY()-distance)+" and "+(sys.getY()+distance)+") and (sls.Z between "+
+				(sys.getZ()-distance)+" and "+(sys.getZ()+distance)+")";
+		Query query = session.createQuery(hql);
 		return (List<SolarSystem>)query.list();
 	}
 }

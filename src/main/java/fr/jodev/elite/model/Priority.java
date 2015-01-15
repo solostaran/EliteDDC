@@ -56,6 +56,15 @@ public enum Priority {
 		}
 	}
 	
+	public static Priority forAbrev(final char abrev) {
+		switch(abrev) {
+		case 'L': return LOW;
+		case 'M': return MEDIUM;
+		case 'H': return HIGH;
+		default: return NONE;
+		}
+	}
+	
 	@Override
 	public String toString() {
 		return getName();

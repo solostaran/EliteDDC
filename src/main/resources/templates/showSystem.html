@@ -74,5 +74,17 @@
 			<input type="submit" th:value="#{buttoncreate}" value="Create" />
 		</form>
 	</div>
+	<br/>
+	<div class="eddcform">
+		<span th:text="#{searchsystemprox}">Search solar systems by proximity :</span>
+		<br/>
+		<form action="#" th:action="@{/html/searchsystemprox}" method="post">
+			<input type="hidden" name="idSolarSystem" th:value="${system.idSolarSystem}" />
+			<input type="hidden" name="reqname" th:value="${system.name}" />
+			<label for="searchdist" th:text="#{systemprox.distance}">Distance</label>
+			<input type="number" id="searchdist" name="distance" />
+			<input type="submit" th:value="#{buttonfindweb}" value="Search" />
+		</form>
+	</div>
 </body>
 </html>

@@ -1,5 +1,9 @@
 package fr.jodev.elite.dao.impl;
 
+import static fr.jodev.elite.entities.GoodsCategoryComparator.ID_CATEGORY_SORT;
+import static fr.jodev.elite.entities.GoodsCategoryComparator.getComparator;
+
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -20,6 +24,8 @@ public class GoodsCategoryDAOImpl extends AbstractDAO implements
 		super.sessionFactory = sessionFactory;
 	};
 	
+	private List<GoodsCategory> listGc; // Cache with sorted entities
+	
 	@Override
 	public void add(GoodsCategory gc) {
 		saveOrUpdate(gc);
@@ -33,6 +39,9 @@ public class GoodsCategoryDAOImpl extends AbstractDAO implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<GoodsCategory> getAll() {
-		return (List<GoodsCategory>)findAll(GoodsCategory.class);
+		if (listGc == null)
+			listGc = (List<GoodsCategory>)findAll(GoodsCategory.class);
+			Collections.sort(listGc, getComparator(ID_CATEGORY_SORT));
+		return listGc;
 	}
 }

@@ -18,7 +18,7 @@
   <tr style="font-weight: bold">
    <td width="15%">Type of service</td><td width="20%">Function</td><td>Web Service URL</td><td width="20%">Return type</td></tr>
   <tr>
-   <td rowspan=8 style="vertical-align: text-top">Solar Systems</td>
+   <td rowspan=10 style="vertical-align: text-top">Solar Systems</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -28,7 +28,17 @@
   <tr>
    <td>Search by ID</td>
    <td>/solarsystem/&lt;id&gt;</td>
-   <td>The select solar system or empty</td>
+   <td>The selected solar system or empty</td>
+  </tr>
+  <tr>
+   <td>Search by proximity</td>
+   <td>/solarsystem/&lt;id&gt;/byprox?dist=&lt;distance&gt;</td>
+   <td>Selected solar system and others in a proximity cubic square</td>
+  </tr>
+  <tr>
+   <td>Search by proximity</td>
+   <td>/solarsystem/byprox<br/>Content-Type: application/json<br/>{"idSolarSystem":Long, "distance":Float}</td>
+   <td>Selected solar system and others in a proximity cubic square</td>
   </tr>
   <tr>
    <td>Get Stations</td>
@@ -51,7 +61,7 @@
    <td>The updated solar system</td>
   </tr>
   <tr>
-   <td rowspan=12 style="vertical-align: text-top">Stations</td>
+   <td rowspan=14 style="vertical-align: text-top">Stations</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -64,9 +74,19 @@
    <td>The selected station or empty</td>
   </tr>
   <tr>
-   <td>Get market goods</td>
+   <td>Get market goods (v1)</td>
    <td>/station/&lt;id&gt;/market</td>
    <td>List of goods in the station's market</td>
+  </tr>
+  <tr>
+   <td>Get market goods (v2)</td>
+   <td>/station/&lt;id&gt;/fullmarket</td>
+   <td>Station's market (station's id + goods)</td>
+  </tr>
+  <tr>
+   <td>Get market goods (v3)</td>
+   <td>/station/&lt;id&gt;/commodities</td>
+   <td>View friendly station's market<br/>(sorted by categories and subcategories)</td>
   </tr>
   <tr>
    <td>Get buyable ships</td>

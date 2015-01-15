@@ -101,6 +101,20 @@ public class EliteWebController {
 	    return mav;
 	}
 	
+	@RequestMapping(value="/html/searchsystemprox")
+	public ModelAndView searchSystemsByProximity(
+			@RequestParam(value="distance", required=false, defaultValue="") Long distance,
+			@RequestParam(value="idSolarSystem", required=false, defaultValue="") Long idSolarSystem,
+			@RequestParam(value="reqname", required=false, defaultValue="") String reqname) {
+		List<SolarSystem> listSystems = systemService.getByProximity(idSolarSystem, distance);
+		SolarSystem sys = systemService.getById(idSolarSystem);
+		ModelAndView mav = new ModelAndView("findSystem");
+		mav.addObject("systems", listSystems);
+		mav.addObject("system", sys);
+		mav.addObject("distance", distance);
+		return mav;
+	}
+	
 	@RequestMapping(value="/html/showsystem/{id}")
 	public ModelAndView showSolarSystem(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("showSystem");
@@ -173,11 +187,22 @@ public class EliteWebController {
 	}
 	
 	@RequestMapping(value="/html/showmarket/{id}")
-	public ModelAndView showMarket2(@PathVariable Long id) {
+	public ModelAndView showMarket(@PathVariable Long id) {
 		Station sta = stationService.getById(id);
 		ModelAndView mav = new ModelAndView("showMarket");
 		mav.addObject("station", sta);
 		mav.addObject("market", goodsService.getStationMarketFull(id));
+		mav.addObject("categories", goodsCategoryService.getAll());
+		mav.addObject("designations", goodsDesignationService.getAll());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/showcommodities/{id}")
+	public ModelAndView showCommodities(@PathVariable Long id) {
+		Station sta = stationService.getById(id);
+		ModelAndView mav = new ModelAndView("showCommodities");
+		mav.addObject("station", sta);
+		mav.addObject("market", goodsService.getCommodities2(id));
 		mav.addObject("categories", goodsCategoryService.getAll());
 		mav.addObject("designations", goodsDesignationService.getAll());
 		return mav;
@@ -192,6 +217,21 @@ public class EliteWebController {
 		Station sta = stationService.getById(market.idStation);
 		mav.addObject("station", sta);
 		mav.addObject("market", goodsService.getStationMarketFull(market.idStation));
+		mav.addObject("categories", goodsCategoryService.getAll());
+		mav.addObject("designations", goodsDesignationService.getAll());
+		mav.addObject("updated", DateNumberSerializer.getDate());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/updatecommodities")
+	public ModelAndView updateStation(
+			final fr.jodev.elite.model.Commodities2 market) {
+		System.out.println("id="+market.idStation);
+//		goodsService.updateGoods(market);
+		ModelAndView mav = new ModelAndView("showCommodities");
+		Station sta = stationService.getById(market.idStation);
+		mav.addObject("station", sta);
+		mav.addObject("market", goodsService.getCommodities2(market.idStation));
 		mav.addObject("categories", goodsCategoryService.getAll());
 		mav.addObject("designations", goodsDesignationService.getAll());
 		mav.addObject("updated", DateNumberSerializer.getDate());

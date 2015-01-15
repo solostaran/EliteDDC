@@ -10,4 +10,5 @@ public interface SystemDAO {
 	SolarSystem getById(long id);
 	SolarSystem getByIdNow(long id);
 	List<SolarSystem> getByName(String name);
+	List<SolarSystem> getByProximity(SolarSystem sys, float distance);
 }

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.jodev.elite.entities.Goods;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.EmptyArgumentException;
+import fr.jodev.elite.model.Commodities;
+import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.model.StationMarket;
 import fr.jodev.elite.services.GoodsService;
 import fr.jodev.elite.services.StationService;
 
@@ -113,5 +116,20 @@ public class StationController {
 	@RequestMapping("/{id}/market")
 	public List<Goods> getStationMarket(@PathVariable Long id) {
 		return goodsService.getStationMarket(id);
+	}
+	
+	@RequestMapping("/{id}/fullmarket")
+	public StationMarket getStationMarketFull(@PathVariable Long id) {
+		return goodsService.getStationMarketFull(id);
+	}
+	
+	@RequestMapping("/{id}/commodities")
+	public Commodities getCommodities(@PathVariable Long id) {
+		return goodsService.getCommodities(id);
+	}
+	
+	@RequestMapping("/{id}/commodities2")
+	public Commodities2 getCommodities2(@PathVariable Long id) {
+		return goodsService.getCommodities2(id);
 	}
 }

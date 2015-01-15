@@ -58,4 +58,12 @@ public enum SupplyOrDemand {
 			throw new IllegalArgumentException("Value \""+value+"\" does not correspond to any SupplyOrDemand");
 		}
 	}
+	
+	public static SupplyOrDemand forAbrev(final char abrev) {
+		switch(abrev) {
+		case 'S': return SUPPLY;
+		case 'D': return DEMAND;
+		default: return NONE;
+		}
+	}
 }

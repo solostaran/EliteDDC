@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Show Market</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function hideMessage()
+    {
+    	document.getElementById("message").style.visibility = "hidden";
+    }
+    </script>
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Show Market</h1>
+	</div>
+	<br/><br/><br/>
+	<div th:if="${updated != null}" id="message" class="eddclisttitle">This station has just been updated : <span th:text="${updated}"></span><br/></div>
+	<script>setTimeout("hideMessage()", 5000);</script>
+	<div th:if="${station != null}" class="eddclisttitle">
+		<span th:text="#{station.markettitle}">List of goods in this station</span>
+		<a href="/html/showstation" th:text="${{station.name}}" th:href="@{|/html/showstation/${station.idStation}|}"></a>
+	</div>
+	<br />
+	<div class="eddclist">
+		<form action="#" th:action="@{/html/updatecommodities}" th:object="${market}" method="post">
+		<input type="hidden" th:field="*{idStation}" />
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{goods.title.category}">Category</th>
+					<th th:text="#{goods.title.designation}">Designation</th>
+					<th th:text="#{goods.title.status}">Status</th>
+					<th th:text="#{goods.title.number}">Number</th>
+					<th th:text="#{lastupdated}">Last Updated</th>
+				</tr>
+			</thead>
+			<tbody th:each="cat,catStat : *{commodities}" >
+				<input type="hidden" th:field="*{commodities[__${catStat.index}__].idCategory}" />					
+				<tr th:each="g,gStat : ${cat.goods}">
+					<td><span th:text="${categories[__${cat.idCategory - 1}__].name}"></span></td>
+					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span>
+						<input type="hidden" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].idDesignation}" /></td>
+					<td><input type="text" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].status}" /></td>
+					<td><input type="number" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].number}" /></td>
+					<td th:text="${{g.lastUpdated}}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br/>
+		<input type="submit" value="Update" th:value="#{buttonupdate}" />
+		</form>
+	</div>
+</body>
+</html>

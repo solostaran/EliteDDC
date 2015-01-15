@@ -2,11 +2,11 @@ package fr.jodev.elite.model;
 
 import java.util.List;
 
-public class StationMarket {
+public class StationMarketSimplified {
 	public long idStation;
-	public List<GoodsForDisplay> goods;
+	public List<GoodsSimplified> goods;
 	
-	public StationMarket(long idStation) {
+	public StationMarketSimplified(long idStation) {
 		this.idStation = idStation;
 	}
 	
@@ -16,10 +16,10 @@ public class StationMarket {
 	public void setIdStation(long idStation) {
 		this.idStation = idStation;
 	}
-	public List<GoodsForDisplay> getGoods() {
+	public List<GoodsSimplified> getGoods() {
 		return goods;
 	}
-	public void setGoods(List<GoodsForDisplay> goods) {
+	public void setGoods(List<GoodsSimplified> goods) {
 		this.goods = goods;
 	}
 }

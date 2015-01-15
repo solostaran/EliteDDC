@@ -37,6 +37,7 @@
 			<input type="checkbox" th:field="*{isMarket}" />
 			<label for="market" th:text="#{market}">Market</label>
 			<a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}" th:href="@{|/html/showmarket/${station.idStation}|}">Show Market</a>
+			<a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}+' (simple)'" th:href="@{|/html/showcommodities/${station.idStation}|}">Show Commodities</a>
 			<br/>
 			<input type="checkbox" th:field="*{isBlackMarket}" />
 			<label for="blackmarket" th:text="#{blackmarket}">Black Market</label>

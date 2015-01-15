@@ -12,15 +12,23 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import fr.jodev.elite.dao.GoodsCategoryDAO;
 import fr.jodev.elite.dao.GoodsDAO;
 import fr.jodev.elite.dao.GoodsDesignationDAO;
 import fr.jodev.elite.dao.StationDAO;
 import fr.jodev.elite.entities.Goods;
+import fr.jodev.elite.entities.GoodsCategory;
 import fr.jodev.elite.entities.GoodsDesignation;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.GoodsDesignationNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
+import fr.jodev.elite.model.Commodities;
+import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.model.GoodsExtended;
 import fr.jodev.elite.model.GoodsForDisplay;
+import fr.jodev.elite.model.GoodsSimplified;
+import fr.jodev.elite.model.GoodsSubcategory;
+import fr.jodev.elite.model.GoodsSubcategory2;
 import fr.jodev.elite.model.Priority;
 import fr.jodev.elite.model.StationMarket;
 import fr.jodev.elite.model.SupplyOrDemand;
@@ -35,6 +43,9 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Autowired
 	private GoodsDesignationDAO goodsDesignationDAO;
+	
+	@Autowired
+	private GoodsCategoryDAO goodsCategoryDAO;
 	
 	@Autowired
 	private StationDAO stationDAO;
@@ -57,9 +68,9 @@ public class GoodsServiceImpl implements GoodsService {
 	public StationMarket getStationMarketFull(long idStation) {
 		Station s = stationDAO.getById(idStation);
 		List<Goods> list = goodsDAO.getByStation(s);
-		List<GoodsDesignation> fullList = goodsDesignationDAO.getAll();
+		List<GoodsDesignation> designations = goodsDesignationDAO.getAll();
 		List<GoodsForDisplay> ret = new ArrayList<GoodsForDisplay>();
-		for (GoodsDesignation gd : fullList) {
+		for (GoodsDesignation gd : designations) {
 			GoodsForDisplay temp = new GoodsForDisplay();
 			temp.category = gd.getCategory().getIdGoodsCategory();
 			temp.designation = gd.getIdGoodsDesignation();
@@ -75,10 +86,51 @@ public class GoodsServiceImpl implements GoodsService {
 			}
 			ret.add(temp);
 		}
-		StationMarket market = new StationMarket();
-		market.idStation = idStation;
+		StationMarket market = new StationMarket(idStation);
 		market.goods = ret;
 		return market;
+	}
+	
+	@Override
+	@Transactional
+	public Commodities getCommodities(long idStation) {
+		Station s = stationDAO.getById(idStation);
+		List<Goods> list = goodsDAO.getByStation(s);
+		List<GoodsCategory> listCat = goodsCategoryDAO.getAll();
+//		List<GoodsDesignation> listDes = goodsDesignationDAO.getAll();
+		Commodities ret = new Commodities(idStation);
+		for (GoodsCategory gc : listCat) {
+			GoodsSubcategory gsc = new GoodsSubcategory();
+			gsc.setIdCategory(gc.getIdGoodsCategory());
+//			gsc.setName(gc.getName());
+			ret.addSubcategory(gsc);
+		}
+		for (Goods g : list) {
+			GoodsExtended gws = new GoodsExtended(g);
+			int index = g.getGoodsDesignation().getCategory().getIdGoodsCategory().intValue();
+			ret.addGoods(index, gws);
+		}
+		return ret;
+	}
+	
+	@Override
+	@Transactional
+	public Commodities2 getCommodities2(long idStation) {
+		Station s = stationDAO.getById(idStation);
+		List<Goods> list = goodsDAO.getByStation(s);
+		List<GoodsCategory> listCat = goodsCategoryDAO.getAll();
+		Commodities2 ret = new Commodities2(idStation);
+		for (GoodsCategory gc : listCat) {
+			GoodsSubcategory2 gsc = new GoodsSubcategory2();
+			gsc.setIdCategory(gc.getIdGoodsCategory());
+			ret.addSubcategory(gsc);
+		}
+		for (Goods g : list) {
+			GoodsSimplified gs = new GoodsSimplified(g);
+			int index = g.getGoodsDesignation().getCategory().getIdGoodsCategory().intValue();
+			ret.addGoods(index, gs);
+		}
+		return ret;
 	}
 
 	@Override
@@ -139,5 +191,17 @@ public class GoodsServiceImpl implements GoodsService {
 		for (GoodsForDisplay gfd : market.goods) {
 			updateGoods(market.idStation, gfd.designation, gfd.price, gfd.number, gfd.supplyOrDemand.getValue(), gfd.priority.getValue());
 		}
+	}
+	
+	@Override
+	@Transactional
+	public void updateGoods(Commodities market) {
+		// TODO
+	}
+	
+	@Override
+	@Transactional
+	public void updateGoods(Commodities2 market) {
+		// TODO
 	}
 }

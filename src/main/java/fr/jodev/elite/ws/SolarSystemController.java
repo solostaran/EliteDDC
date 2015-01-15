@@ -65,4 +65,15 @@ public class SolarSystemController {
 	public @ResponseBody List<Station> getStations(@PathVariable Long id) {
 		return systemService.getStations(id);
 	}
+	
+	@RequestMapping("/{id}/byprox")
+	public @ResponseBody List<SolarSystem> getByProximity(@PathVariable Long id,
+			@RequestParam(value="dist", required=true) float distance) {
+		return systemService.getByProximity(id, distance);
+	}
+	
+	@RequestMapping("/byprox")
+	public @ResponseBody List<SolarSystem> getByProximity(@RequestBody fr.jodev.elite.model.SystemDistance sysdist) {
+		return systemService.getByProximity(sysdist.idSolarSystem, sysdist.distance);
+	}
 }

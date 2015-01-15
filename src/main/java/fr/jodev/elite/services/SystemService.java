@@ -13,4 +13,5 @@ public interface SystemService {
 	List<SolarSystem> getByName(String name);
 	SolarSystem getById(long id);
 	List<Station> getStations(long id);
+	List<SolarSystem> getByProximity(long id, float distance);
 }

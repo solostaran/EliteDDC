@@ -104,4 +104,11 @@ public class SystemServiceImpl implements SystemService {
 		for (Station s : list) ret.add(s);
 		return ret;
 	}
+
+	@Override
+	@Transactional
+	public List<SolarSystem> getByProximity(long id, float distance) {
+		SolarSystem sys = getById(id);
+		return systemDAO.getByProximity(sys, distance);
+	}
 }

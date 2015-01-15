@@ -2,9 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1" />
-<title>EliteDDC Find SolarSystem</title>
-<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Find SolarSystem</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function showConfirm()
+    {
+        return confirm("Create : "+document.getElementById("createname").value+" ?");
+	}
+	</script>
 </head>
 <body>
 	<div class="header">
@@ -12,10 +18,8 @@
 			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
 		<h1>Elite:Dangerous Data Collection - Find Solar System</h1>
 	</div>
-	<br />
-	<br />
-	<br />
-	<div class="eddcform">
+	<br /><br /><br />
+	<div th:if="${distance == null}" class="eddcform">
 		<form method="post" action="/html/findsystem">
 			<label for="name" th:text="#{solarsystem}">Solar System</label>
 			<input name="name" type="text" th:value="${reqname}" />
@@ -25,7 +29,7 @@
 	</div>
 	<br />
 	<div th:if="${reqname} != ''" class="eddclisttitle">
-		<span th:text="#{listsystems}"></span>
+		<span th:text="#{listsystems}"></span><span th:if="${distance != null}" th:text="#{systemprox.near}+' '+${distance}+' '+#{systemprox.ly}+' '+${system.name}"></span>
 	</div>
 	<br/>
 	<div th:if="${systems != null}" class="eddclist">
@@ -51,10 +55,10 @@
 		</table>
 	</div>
 	<br />
-	<div th:if="${reqname} != ''" class="eddcform">
+	<div th:if="${reqname} != '' and ${distance} == null" class="eddcform">
 		<span th:text="#{createsolarsystem}">Create a Solar System :</span>
 		<br />
-		<form action="#" th:action="@{/html/createsystem}" method="post">
+		<form onSubmit="return showConfirm();" action="#" th:action="@{/html/createsystem}" method="post">
 			<label for="name" th:text="#{name}">Name</label>
 			<input type="text" id="name" name="name" th:value="${reqname}" />
 			<input type="submit" th:value="#{buttoncreate}" />
