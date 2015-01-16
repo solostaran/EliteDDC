@@ -61,7 +61,7 @@
    <td>The updated solar system</td>
   </tr>
   <tr>
-   <td rowspan=14 style="vertical-align: text-top">Stations</td>
+   <td rowspan=15 style="vertical-align: text-top">Stations</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -87,6 +87,11 @@
    <td>Get market goods (v3)</td>
    <td>/station/&lt;id&gt;/commodities</td>
    <td>View friendly station's market<br/>(sorted by categories and subcategories)</td>
+  </tr>
+  <tr>
+   <td>Get market goods (v4)</td>
+   <td>/station/&lt;id&gt;/commodities2</td>
+   <td>View friendly station's market simplified<br/>(sorted by categories and subcategories)</td>
   </tr>
   <tr>
    <td>Get buyable ships</td>
@@ -162,7 +167,7 @@
    <td>List of outfit's slots</td>
   </tr>
   <tr>
-   <td rowspan=7 style="vertical-align: text-top">Goods</td>
+   <td rowspan=9 style="vertical-align: text-top">Goods</td>
   </tr>
   <tr>
    <td>Get all goods' categories</td>
@@ -193,9 +198,25 @@
   </tr>
   <tr>
    <td>Update goods (PUT,JSON)</td>
-   <td>/goods/update<br/>method=PUT, Content-Type: application/json<br/>
+   <td>/goods/updategoods<br/>method=PUT, Content-Type: application/json<br/>
     Body= List of Goods<br/>
     [{"idStation":Long, "idDesignation":Long, "price":Int,<br/>&nbsp;&nbsp;&nbsp;"number":Long, "supplyOrDemand":Int, "priority":Int},{...}]</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update goods (PUT,JSON)</td>
+   <td>/goods/updatecommodities<br/>method=PUT, Content-Type: application/json<br/>
+    Body= Commodities object<br/>
+    {"idStation":Long, "commodities":[{"idCategory":Long, "goods":[{"idDesignation":Long,"price":Int,"Number":Long,"supplyOrDemand":String,"Priority":String}]} ]}<br/>
+    supplyOrDemand=NONE/SUPPLY/DEMAND, priority=NONE/LOW/MEDIUM/HIGH</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update goods (PUT,JSON)</td>
+   <td>/goods/updatecommodities2<br/>method=PUT, Content-Type: application/json<br/>
+    Body= Commodities2 object<br/>
+    {"idStation":Long, "commodities":[{"idCategory":Long, "goods":[{"idDesignation":Long,"Number":Long,"status":String}]} ]}<br/>
+    status=N/S/D | N/L/M/H | Price(int) (example: "SH 821", "DL 222", "SM66")</td>
    <td>nothing</td>
   </tr>
  </table>

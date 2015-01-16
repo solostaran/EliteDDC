@@ -189,19 +189,31 @@ public class GoodsServiceImpl implements GoodsService {
 	@Transactional
 	public void updateGoods(StationMarket market) {
 		for (GoodsForDisplay gfd : market.goods) {
-			updateGoods(market.idStation, gfd.designation, gfd.price, gfd.number, gfd.supplyOrDemand.getValue(), gfd.priority.getValue());
+			updateGoods(market.idStation, gfd.designation, gfd.price,
+					gfd.number, gfd.supplyOrDemand.getValue(), gfd.priority.getValue());
 		}
 	}
 	
 	@Override
 	@Transactional
 	public void updateGoods(Commodities market) {
-		// TODO
+		for (GoodsSubcategory sub : market.commodities) {
+			for (GoodsExtended g : sub.goods) {
+				updateGoods(market.idStation, g.getIdDesignation(), g.getPrice(),
+						g.getNumber(), g.getSupplyOrDemand().getValue(), g.getPriority().getValue());
+			}
+		}
 	}
 	
 	@Override
 	@Transactional
 	public void updateGoods(Commodities2 market) {
-		// TODO
+		for (GoodsSubcategory2 sub : market.commodities) {
+			for (GoodsSimplified gs : sub.goods) {
+				GoodsExtended g = new GoodsExtended(gs);
+				updateGoods(market.idStation, g.getIdDesignation(), g.getPrice(),
+						g.getNumber(), g.getSupplyOrDemand().getValue(), g.getPriority().getValue());
+			}
+		}
 	}
 }

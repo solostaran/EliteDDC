@@ -12,6 +12,26 @@ public class GoodsExtended extends GoodsCommon {
 		this.setSupplyOrDemand(SupplyOrDemand.forValue(g.getSupplyOrDemand()));
 		this.setPriority(Priority.forValue(g.getPriority()));
 	}
+	public GoodsExtended(fr.jodev.elite.model.GoodsSimplified g) {
+		super(g);
+		String str = g.getStatus().trim();
+		if (!str.isEmpty()) {
+			SupplyOrDemand sod = SupplyOrDemand.forAbrev(str.charAt(0));
+			this.setSupplyOrDemand(sod);
+			try {
+				if (sod != SupplyOrDemand.NONE) {
+					Priority p = Priority.forAbrev(str.charAt(1));
+					this.setPriority(p);
+					int i=2;
+					while (!Character.isDigit(str.charAt(i++))) {}
+					str = str.substring(i-1);
+					this.setPrice(Integer.parseInt(str));
+				}
+			}
+			catch(IndexOutOfBoundsException e) {}
+			catch(NumberFormatException e) {}
+		}
+	}
 	
 	public int getPrice() {
 		return price;

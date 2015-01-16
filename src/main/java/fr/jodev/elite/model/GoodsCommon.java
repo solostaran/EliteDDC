@@ -16,6 +16,11 @@ public abstract class GoodsCommon {
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		this.setLastUpdated(df.format(new Date(g.getLastUpdated())));
 	}
+	public GoodsCommon(GoodsCommon g) {
+		this.setIdDesignation(g.getIdDesignation());
+		this.setLastUpdated(g.getLastUpdated());
+		this.setNumber(g.getNumber());
+	}
 	
 	public long getIdDesignation() {
 		return idDesignation;

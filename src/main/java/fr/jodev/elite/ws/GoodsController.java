@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.jodev.elite.entities.Goods;
 import fr.jodev.elite.entities.GoodsCategory;
 import fr.jodev.elite.entities.GoodsDesignation;
+import fr.jodev.elite.model.Commodities;
+import fr.jodev.elite.model.Commodities2;
 import fr.jodev.elite.services.GoodsCategoryService;
 import fr.jodev.elite.services.GoodsDesignationService;
 import fr.jodev.elite.services.GoodsService;
@@ -59,10 +61,20 @@ public class GoodsController {
 		goodsService.updateGoods(idStation, idGoodsDesignation, price, number, supplyOrDemand, priority);
 	}
 	
-	@RequestMapping(value="/update", method=RequestMethod.PUT)
+	@RequestMapping(value="/updategoods", method=RequestMethod.PUT)
 	public void update(@RequestBody List<fr.jodev.elite.model.Goods> list) {
 		for (fr.jodev.elite.model.Goods g : list) {
 			goodsService.updateGoods(g);
 		}
+	}
+	
+	@RequestMapping(value="/updatecommodities", method=RequestMethod.PUT)
+	public void update2(@RequestBody Commodities market) {
+		goodsService.updateGoods(market);
+	}
+	
+	@RequestMapping(value="/updatecommodities2", method=RequestMethod.PUT)
+	public void update2(@RequestBody Commodities2 market) {
+		goodsService.updateGoods(market);
 	}
 }

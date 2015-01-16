@@ -223,11 +223,11 @@ public class EliteWebController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/html/updatecommodities")
-	public ModelAndView updateStation(
+	@RequestMapping(value="/html/updatecommodities2")
+	public ModelAndView updateCommodities2(
 			final fr.jodev.elite.model.Commodities2 market) {
 		System.out.println("id="+market.idStation);
-//		goodsService.updateGoods(market);
+		goodsService.updateGoods(market);
 		ModelAndView mav = new ModelAndView("showCommodities");
 		Station sta = stationService.getById(market.idStation);
 		mav.addObject("station", sta);
