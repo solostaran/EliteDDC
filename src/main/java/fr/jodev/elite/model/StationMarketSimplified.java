@@ -6,6 +6,7 @@ public class StationMarketSimplified {
 	public long idStation;
 	public List<GoodsSimplified> goods;
 	
+	public StationMarketSimplified() {}
 	public StationMarketSimplified(long idStation) {
 		this.idStation = idStation;
 	}

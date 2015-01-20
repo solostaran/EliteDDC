@@ -3,8 +3,10 @@ package fr.jodev.elite.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NaturalId;
@@ -32,6 +35,11 @@ public class Station {
 	@NaturalId(mutable=true)
 	@Column(nullable=false)
 	private String name;
+	
+	/**
+	 * Distance from point of arrival.
+	 */
+	private int distance;
 
 	private boolean isShipyard;
 	private boolean isOutfitting;
@@ -56,14 +64,14 @@ public class Station {
 //	@JsonIdentityReference(alwaysAsId=true)
 	@JsonIgnore
 	private List<ShipBuyable> stationShipyard = new ArrayList<ShipBuyable>();
+	
+	@OneToMany(targetEntity=Goods.class, mappedBy="station", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JsonIgnore
+	private List<Goods> goods = new ArrayList<Goods>();
 
 	protected Station() {}
-	protected Station(String name) {
-		this();
-		this.name = name;
-	}
 	public Station(SolarSystem sys, String name) {
-		this(name);
+		this.name = name;
 		sys.addStation(this);
 	}
 
@@ -82,6 +90,13 @@ public class Station {
 		this.name = name;
 	}
 
+	public int getDistance() {
+		return distance;
+	}
+	public void setDistance(int distance) {
+		this.distance = distance;
+	}
+	
 	public boolean getIsShipyard() {
 		return isShipyard;
 	}
@@ -132,6 +147,13 @@ public class Station {
 		if (stationShipyard.contains(ship)) {
 			stationShipyard.remove(ship);
 		}
+	}
+	
+	public List<Goods> getGoods() {
+		return goods;
+	}
+	protected void setGoods(List<Goods> goods) {
+		this.goods = goods;
 	}
 	
 	@Override

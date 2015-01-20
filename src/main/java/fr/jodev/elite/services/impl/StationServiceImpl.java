@@ -81,14 +81,25 @@ public class StationServiceImpl implements StationService {
 		stationDAO.addStation(s);
 		return s;
 	}
+	
+	@Override
+	@Transactional
+	public Station createStation(fr.jodev.elite.model.Station station) {
+		if (station == null) throw new NullPointerException("Cannot create a station with null parameter !");
+		Station ret = createStation(station.getParentSolarSystem(), station.getName());
+		station.setIdStation(ret.getIdStation());
+		ret = updateStation(station);
+		return ret;
+	}
 
 	@Override
 	@Transactional
-	public Station updateStation(long idStation, String name,
+	public Station updateStation(long idStation, String name, int distance,
 			boolean isMarket, boolean isBlackMarket,
 			boolean isShipyard, boolean isOutfitting) {
 		Station s = stationDAO.getById(idStation);
 		if (name != null && !name.isEmpty()) s.setName(name);
+		if (distance > 0) s.setDistance(distance);
 		s.setIsMarket(isMarket);
 		s.setIsBlackMarket(isBlackMarket);
 		s.setIsShipyard(isShipyard);
@@ -107,6 +118,7 @@ public class StationServiceImpl implements StationService {
 			throw new StationNotFoundException(station.idStation);
 		}
 		if (station.name != null && !station.name.isEmpty()) s.setName(station.name);
+		if (station.distance > 0) s.setDistance(station.distance);
 		if (station.isMarket != null) {
 			if (Constants.TRUE.toLowerCase().equals(station.isMarket.toLowerCase())) s.setIsMarket(true);
 			if (Constants.FALSE.toLowerCase().equals(station.isMarket.toLowerCase())) s.setIsMarket(false);
@@ -127,6 +139,12 @@ public class StationServiceImpl implements StationService {
 		return s;
 	}
 
+	@Override
+	@Transactional
+	public void removeStationById(long id) {
+		stationDAO.removeStationById(id);
+	}
+	
 	@Override
 	@Transactional
 	public void addShipBuyable(long idStation, long idShipBuyable) {

@@ -80,6 +80,12 @@ public class SolarSystem {
 		}
 	}
 	
+	public void removeStation(Station station) {
+		if (stations.contains(station)) {
+			stations.remove(station);
+		}
+	}
+	
 	public List<Station> getStations() {
 		return stations;
 	}

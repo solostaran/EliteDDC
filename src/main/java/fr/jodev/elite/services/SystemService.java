@@ -9,7 +9,7 @@ public interface SystemService {
 	SolarSystem createSolarSystem(String name);
 	SolarSystem createSolarSystem(String name, Double x, Double y, Double z);
 	SolarSystem updateSystem(fr.jodev.elite.model.SolarSystem system);
-	void deleteSolarSystem(SolarSystem sys);
+	void removeSolarSystemById(long id);
 	List<SolarSystem> getByName(String name);
 	SolarSystem getById(long id);
 	List<Station> getStations(long id);

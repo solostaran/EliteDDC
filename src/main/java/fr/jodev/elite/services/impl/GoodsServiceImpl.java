@@ -31,6 +31,7 @@ import fr.jodev.elite.model.GoodsSubcategory;
 import fr.jodev.elite.model.GoodsSubcategory2;
 import fr.jodev.elite.model.Priority;
 import fr.jodev.elite.model.StationMarket;
+import fr.jodev.elite.model.StationMarketSimplified;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsService;
 
@@ -60,7 +61,10 @@ public class GoodsServiceImpl implements GoodsService {
 	@Transactional
 	public List<Goods> getStationMarket(long idStation) {
 		Station s = stationDAO.getById(idStation);
-		return goodsDAO.getByStation(s);
+		List<Goods> list = s.getGoods();
+		List<Goods> ret = new ArrayList<Goods>();
+		for (Goods g : list) ret.add(g);
+		return ret;
 	}
 	
 	@Override
@@ -191,6 +195,16 @@ public class GoodsServiceImpl implements GoodsService {
 		for (GoodsForDisplay gfd : market.goods) {
 			updateGoods(market.idStation, gfd.designation, gfd.price,
 					gfd.number, gfd.supplyOrDemand.getValue(), gfd.priority.getValue());
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void updateGoods(StationMarketSimplified market) {
+		for (GoodsSimplified gs : market.goods) {
+			GoodsExtended g = new GoodsExtended(gs);
+			updateGoods(market.idStation, g.getIdDesignation(), g.getPrice(),
+					g.getNumber(), g.getSupplyOrDemand().getValue(), g.getPriority().getValue());
 		}
 	}
 	

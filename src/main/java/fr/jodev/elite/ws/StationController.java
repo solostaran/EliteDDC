@@ -54,15 +54,13 @@ public class StationController {
 		if (station.name == null || station.name.isEmpty()) {
 			throw new EmptyArgumentException("name");
 		}
-		Station ret = stationService.createStation(station.parentSolarSystem, station.name);
-		station.idStation = ret.getIdStation();
-		stationService.updateStation(station);
-		return ret;
+		return stationService.createStation(station);
 	}
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public @ResponseBody Station update(@RequestParam(value="id",required=true) long idStation,
 			@RequestParam(value="name",required=false, defaultValue="") String name,
+			@RequestParam(value="distance",required=false, defaultValue="0") int distance,
 			@RequestParam(value="isMarket",required=false, defaultValue="") String market,
 			@RequestParam(value="isBlackmarket",required=false, defaultValue="") String blackMarket,
 			@RequestParam(value="isShipyard",required=false, defaultValue="") String shipyard,
@@ -73,6 +71,7 @@ public class StationController {
 		fr.jodev.elite.model.Station station = new fr.jodev.elite.model.Station();
 		station.idStation = idStation;
 		station.name = name;
+		station.distance = distance;
 		station.isMarket = market;
 		station.isBlackMarket = blackMarket;
 		station.isShipyard = shipyard;
@@ -86,6 +85,11 @@ public class StationController {
 			throw new EmptyArgumentException("idStation");
 		}
 		return stationService.updateStation(station);
+	}
+	
+	@RequestMapping("/remove")
+	public void removeById(@RequestParam(value="id", required=true) Long id) {
+		stationService.removeStationById(id);
 	}
 	
 	@RequestMapping("/shipyard")

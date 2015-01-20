@@ -14,6 +14,7 @@ import fr.jodev.elite.entities.GoodsCategory;
 import fr.jodev.elite.entities.GoodsDesignation;
 import fr.jodev.elite.model.Commodities;
 import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.model.StationMarketSimplified;
 import fr.jodev.elite.services.GoodsCategoryService;
 import fr.jodev.elite.services.GoodsDesignationService;
 import fr.jodev.elite.services.GoodsService;
@@ -66,6 +67,11 @@ public class GoodsController {
 		for (fr.jodev.elite.model.Goods g : list) {
 			goodsService.updateGoods(g);
 		}
+	}
+	
+	@RequestMapping(value="/updatemarket2", method=RequestMethod.PUT)
+	public void update(@RequestBody StationMarketSimplified market) {
+		goodsService.updateGoods(market);
 	}
 	
 	@RequestMapping(value="/updatecommodities", method=RequestMethod.PUT)

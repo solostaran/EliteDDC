@@ -3,6 +3,7 @@ package fr.jodev.elite.model;
 public class Station {
 	public long idStation = -1;
 	public String name = null;
+	public int distance = 0;
 	public long parentSolarSystem = -1;
 	public String isShipyard = null;
 	public String isOutfitting = null;
@@ -20,6 +21,12 @@ public class Station {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getDistance() {
+		return distance;
+	}
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 	public long getParentSolarSystem() {
 		return parentSolarSystem;

@@ -54,6 +54,11 @@ public class SolarSystemController {
 		return systemService.getByName(name);
 	}
 	
+	@RequestMapping("/remove")
+	public void removeById(@RequestParam(value = "id", required = true) Long id) {
+		systemService.removeSolarSystemById(id);
+	}
+	
 	@RequestMapping("/{id}")
 //	public SolarSystem getById(@RequestParam(value = "id", required = true) Long id) {
 	public @ResponseBody SolarSystem getById(@PathVariable Long id) {

@@ -9,6 +9,7 @@ public interface StationDAO {
 	void addStation(Station s);
 	Station getById(long id);
 	Station getByIdNow(long id);
+	void removeStationById(long id);
 	List<Station> getByName(String name);
 	void addShipBuyable(Station s, ShipBuyable ship);
 	void removeShipBuyable(Station s, ShipBuyable ship);	

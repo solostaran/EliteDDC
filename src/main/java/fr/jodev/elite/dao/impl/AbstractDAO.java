@@ -33,7 +33,7 @@ public class AbstractDAO {
         } catch (HibernateException e) {
             handleException(e);
         } finally {
-//            HibernateFactory.close(session);
+        	endOperation();
         }
     }
 
@@ -45,8 +45,24 @@ public class AbstractDAO {
         } catch (HibernateException e) {
             handleException(e);
         } finally {
-//            HibernateFactory.close(session);
+        	endOperation();
         }
+    }
+    
+    
+    protected void deleteById(Class<?> clazz, Long id) {
+    	Object obj = null;
+    	try {
+    		startOperation();
+    		obj = session.load(clazz, id);
+    		if (obj != null) {
+    			session.delete(obj);
+    		}
+    	} catch (HibernateException e) {
+            handleException(e);
+    	} finally {
+    		endOperation();
+      }
     }
     
     protected Object get(Class<?> clazz, Long id) {
@@ -57,7 +73,7 @@ public class AbstractDAO {
         } catch (HibernateException e) {
             handleException(e);
         } finally {
-//            HibernateFactory.close(session);
+        	endOperation();
         }
         return obj;
     }
@@ -71,7 +87,7 @@ public class AbstractDAO {
         } catch (HibernateException e) {
             handleException(e);
         } finally {
-//            HibernateFactory.close(session);
+        	endOperation();
         }
         return obj;
     }
@@ -86,7 +102,7 @@ public class AbstractDAO {
         } catch (HibernateException e) {
             handleException(e);
         } finally {
-//            HibernateFactory.close(session);
+        	endOperation();
         }
         return objects;
     }
@@ -102,5 +118,9 @@ public class AbstractDAO {
     	session = sessionFactory.getCurrentSession();
 //        tx = session.beginTransaction();
     	tx = session.getTransaction();
+    }
+    
+    protected void endOperation() {
+//    	HibernateFactory.close(session);
     }
 }

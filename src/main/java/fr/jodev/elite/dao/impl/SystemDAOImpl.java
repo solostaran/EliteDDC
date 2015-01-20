@@ -30,6 +30,14 @@ public class SystemDAOImpl extends AbstractDAO implements SystemDAO {
 	public void removeSolarSystem(SolarSystem sys) {
 		delete(sys);
 	}
+	
+	/**
+	 * Remove a solar system and its references.
+	 */
+	@Override
+	public void removeSolarSystemById(long id) {
+		deleteById(SolarSystem.class, id);
+	}
 
 	@Override
 	public SolarSystem getById(long id) {
@@ -38,14 +46,14 @@ public class SystemDAOImpl extends AbstractDAO implements SystemDAO {
 	
 	@Override
 	public SolarSystem getByIdNow(long id) {
-		Session session = sessionFactory.getCurrentSession();
-		return (SolarSystem)session.get(SolarSystem.class, id);
+		return (SolarSystem)get(SolarSystem.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<SolarSystem> getByName(String name) {
 		Session session = sessionFactory.getCurrentSession();
+		name = name.replaceAll("'", "''");
 		final String hql = "from SolarSystem sls where lower(sls.name) like '"+name.toLowerCase()+"%'";
 //		String hql = "from SolarSystem where name = :name";
 		Query query = session.createQuery(hql);

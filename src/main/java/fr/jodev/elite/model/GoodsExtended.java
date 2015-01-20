@@ -16,13 +16,22 @@ public class GoodsExtended extends GoodsCommon {
 		super(g);
 		String str = g.getStatus().trim();
 		if (!str.isEmpty()) {
+			if (Character.isDigit(str.charAt(0))) {
+				setPrice(Integer.parseInt(str));
+				return;
+			}
 			SupplyOrDemand sod = SupplyOrDemand.forAbrev(str.charAt(0));
 			this.setSupplyOrDemand(sod);
+			str = str.substring(1);
 			try {
 				if (sod != SupplyOrDemand.NONE) {
-					Priority p = Priority.forAbrev(str.charAt(1));
+					if (Character.isDigit(str.charAt(0))) {
+						setPrice(Integer.parseInt(str));
+						return;
+					}
+					Priority p = Priority.forAbrev(str.charAt(0));
 					this.setPriority(p);
-					int i=2;
+					int i=1;
 					while (!Character.isDigit(str.charAt(i++))) {}
 					str = str.substring(i-1);
 					this.setPrice(Integer.parseInt(str));

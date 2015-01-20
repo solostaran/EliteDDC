@@ -69,12 +69,13 @@ public class GoodsDAOImpl extends AbstractDAO implements GoodsDAO {
 		saveOrUpdate(g);
 	}
 
-	@SuppressWarnings("unchecked")
+//	@SuppressWarnings("unchecked")
 	@Override
 	public List<Goods> getByStation(Station station) {
-		Session session = sessionFactory.getCurrentSession();
-		List<Goods> list = session.createQuery("from Goods g where g.station = :station")
-			.setParameter("station", station).list();
+//		Session session = sessionFactory.getCurrentSession();
+//		List<Goods> list = session.createQuery("from Goods g where g.station = :station")
+//			.setParameter("station", station).list();
+		List<Goods> list = station.getGoods();
 		return list;
 	}
 

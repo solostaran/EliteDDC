@@ -68,8 +68,8 @@ public class SystemServiceImpl implements SystemService {
 	
 	@Override
 	@Transactional
-	public void deleteSolarSystem(SolarSystem sys) {
-		systemDAO.removeSolarSystem(sys);
+	public void removeSolarSystemById(long id) {
+		systemDAO.removeSolarSystemById(id);
 	};
 
 	@Override

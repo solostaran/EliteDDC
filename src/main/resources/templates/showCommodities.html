@@ -46,7 +46,7 @@
 					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span>
 						<input type="hidden" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].idDesignation}" /></td>
 					<td><input type="text" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].status}" /></td>
-					<td><input type="number" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].number}" /></td>
+					<td><input type="number" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].number}" tabindex="-1" /></td>
 					<td th:text="${{g.lastUpdated}}"></td>
 				</tr>
 			</tbody>

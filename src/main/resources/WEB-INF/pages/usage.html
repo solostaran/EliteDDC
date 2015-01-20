@@ -18,7 +18,7 @@
   <tr style="font-weight: bold">
    <td width="15%">Type of service</td><td width="20%">Function</td><td>Web Service URL</td><td width="20%">Return type</td></tr>
   <tr>
-   <td rowspan=10 style="vertical-align: text-top">Solar Systems</td>
+   <td rowspan=11 style="vertical-align: text-top">Solar Systems</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -61,7 +61,12 @@
    <td>The updated solar system</td>
   </tr>
   <tr>
-   <td rowspan=15 style="vertical-align: text-top">Stations</td>
+   <td>Remove</td>
+   <td>/solarsystem/remove?id=&lt;solar system id&gt;<br/>method=*, attribute name="id"</td>
+   <td>Delete a solar system and everything depending on it</td>
+  </tr>
+  <tr>
+   <td rowspan=16 style="vertical-align: text-top">Stations</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -105,24 +110,30 @@
   </tr>
   <tr>
    <td>Creation (GET, SolarSystem ID required)</td>
-   <td>/station/create?id=&lt;solarsystemid&gt;</td>
+   <td>/station/create?id=&lt;solar system id&gt;</td>
    <td>Created station with ID</td>
   </tr>
   <tr>
    <td>Creation (POST,JSON)</td>
-   <td>/station/create<br/>method=POST, Content-Type: application/json<br>{"idSolarSystem","name","isBlackMarket","isMarket","isShipyard","isOutfitting"}</td>
+   <td>/station/create<br/>method=POST, Content-Type: application/json<br>{"parentSolarSystem","name","isBlackMarket","isMarket","isShipyard","isOutfitting"}</td>
    <td>Created station with ID</td>
   </tr>
   <tr>
+   <td>Remove</td>
+   <td>/station/remove?id=&lt;station id&gt;<br/>method=*, attribute name="id"</td>
+   <td>Remove a station and everything depending on it</td>
+  </tr>
+  <tr>
    <td>Update (GET)</td>
-   <td>/station/update?id=&lt;id&gt;&amp;name=&lt;name&gt;<br/>
+   <td>/station/update?id=&lt;id&gt;&amp;name=&lt;name&gt;&amp;distance=&lt;distance in Ls&gt;<br/>
     &nbsp;&nbsp;&nbsp;&amp;market=&lt;false/true&gt; &amp;blackMarket=&lt;false/true&gt;<br/>
     &nbsp;&nbsp;&amp;shipyard=&lt;false/true&gt; &amp;outfitting=&lt;false/true&gt;</td>
    <td>The updated station</td>
   </tr>
   <tr>
    <td>Update (PUT,JSON)</td>
-   <td>/station/update<br/>method=PUT, Content-Type: application/json<br>{"idStation":Long,"idSolarSystem":Long,"name":String,"isBlackMarket":boolean,<br/>"isMarket":boolean,"isShipyard":boolean,"isOutfitting":boolean}</td>
+   <td>/station/update<br/>method=PUT, Content-Type: application/json<br>
+   {"idStation":Long, "idSolarSystem":Long, "name":String, "distance":Int,<br/>&nbsp;"isBlackMarket":boolean, "isMarket":boolean, "isShipyard":boolean, "isOutfitting":boolean}</td>
    <td>The updated station</td>
   </tr>
   <tr>
@@ -167,7 +178,7 @@
    <td>List of outfit's slots</td>
   </tr>
   <tr>
-   <td rowspan=9 style="vertical-align: text-top">Goods</td>
+   <td rowspan=10 style="vertical-align: text-top">Goods</td>
   </tr>
   <tr>
    <td>Get all goods' categories</td>
@@ -201,6 +212,14 @@
    <td>/goods/updategoods<br/>method=PUT, Content-Type: application/json<br/>
     Body= List of Goods<br/>
     [{"idStation":Long, "idDesignation":Long, "price":Int,<br/>&nbsp;&nbsp;&nbsp;"number":Long, "supplyOrDemand":Int, "priority":Int},{...}]</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update goods (PUT,JSON)</td>
+   <td>/goods/updatemarketsimple<br/>method=PUT, Content-Type: application/json<br/>
+    Body= StationMarketSimplified object<br/>
+    {"idStation":Long, "goods":[{"idDesignation":Long,"Number":Long,"status":String}]}<br/>
+    status=N/S/D | N/L/M/H | Price(int) (example: "SH 821", "DL 222", "SM66")</td>
    <td>nothing</td>
   </tr>
   <tr>

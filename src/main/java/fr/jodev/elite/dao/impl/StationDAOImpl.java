@@ -36,17 +36,28 @@ public class StationDAOImpl extends AbstractDAO implements StationDAO {
 	
 	@Override
 	public Station getByIdNow(long id) {
-		Session session = sessionFactory.getCurrentSession();
-		return (Station)session.get(Station.class, id);
+//		Session session = sessionFactory.getCurrentSession();
+		return (Station)get(Station.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Station> getByName(String name) {
 		Session session = sessionFactory.getCurrentSession();
+		name = name.replaceAll("'", "''");
 		String hql = "from Station s where lower(s.name) like '"+name.toLowerCase()+"%'";
 		Query query = session.createQuery(hql);
 		return (List<Station>)query.list();
+	}
+	
+	/**
+	 * Remove the station and its references.
+	 */
+	@Override
+	public void removeStationById(long id) {
+		Station sta =(Station)find(Station.class, id);
+		sta.getParentSolarSystem().removeStation(sta);
+		deleteById(Station.class, id);
 	}
 
 	@Override
@@ -62,5 +73,4 @@ public class StationDAOImpl extends AbstractDAO implements StationDAO {
 		s.removeShipBuyable(ship);
 		session.update(s);
 	}
-
 }

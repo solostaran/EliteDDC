@@ -8,7 +8,10 @@ public class GoodsSimplified extends GoodsCommon {
 		super(g);
 		StringBuffer temp = new StringBuffer();
 		if (g.getSupplyOrDemand() <= 0) {
-			this.setStatus(new String());
+			if (g.getPrice() > 0)
+				this.setStatus(String.valueOf(g.getPrice()));
+			else
+				this.setStatus(new String());
 		} else {
 			temp.append(SupplyOrDemand.forValue(g.getSupplyOrDemand()).getAbrev());
 			temp.append(Priority.forValue(g.getPriority()).getAbrev());

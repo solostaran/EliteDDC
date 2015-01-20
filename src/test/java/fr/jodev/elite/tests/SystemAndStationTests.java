@@ -30,7 +30,7 @@ public class SystemAndStationTests {
 		// System test
 		SystemService sysserv = (SystemService)ctx.getBean("systemServiceImpl");
 		
-		SolarSystem sys = sysserv.createSolarSystem("Carne666");
+		SolarSystem sys = sysserv.createSolarSystem("_Carne666");
 		logger.info("System added : "+sys.getIdSolarSystem());
 		
 		List<SolarSystem> list = sysserv.getByName("Carne");
@@ -39,13 +39,13 @@ public class SystemAndStationTests {
 		// Station test
 		StationService staserv = (StationService)ctx.getBean("stationServiceImpl");
 		
-		Station sta = staserv.createStation(sys.getIdSolarSystem(), "TestTotal1");
+		Station sta = staserv.createStation(sys.getIdSolarSystem(), "_TestTotal1");
 		logger.info("Station added : "+sta.getIdStation());
-		sta = staserv.createStation(sys.getIdSolarSystem(), "TestEsso2");
+		sta = staserv.createStation(sys.getIdSolarSystem(), "_TestEsso2");
 		final long idsta = sta.getIdStation();
 		logger.info("Station added : "+idsta);
 		
-		staserv.updateStation(idsta, sta.getName(), true, false, true, false);
+		staserv.updateStation(idsta, sta.getName(), 0, true, false, true, false);
 		
 		List<Station> lista = staserv.getByName("Test");
 		logger.info("Get StationByName(Test) : size of list = "+lista.size());

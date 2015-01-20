@@ -153,6 +153,13 @@ public class EliteWebController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/html/removesystem")
+	public ModelAndView removeSolarSystem(@RequestParam(value="id", required=true) Long id) {
+		systemService.removeSolarSystemById(id);
+		ModelAndView mav = new ModelAndView("findSystem");
+		return mav;
+	}
+	
 	@RequestMapping(value="/html/showstation/{id}")
 	public ModelAndView showStation(@PathVariable Long id) {
 		ModelAndView mav = new ModelAndView("showStation");
@@ -186,6 +193,16 @@ public class EliteWebController {
 		return mav;
 	}
 	
+	@RequestMapping(value="/html/removestation")
+	public ModelAndView removeStation(@RequestParam(value="id", required=true) Long id) {
+		long idSystem = stationService.getById(id).getParentSolarSystem().getIdSolarSystem();
+		stationService.removeStationById(id);
+		ModelAndView mav = new ModelAndView("showSystem");
+		mav.addObject("system", systemService.getById(idSystem));
+		mav.addObject("stations", systemService.getStations(idSystem));
+		return mav;
+	}
+	
 	@RequestMapping(value="/html/showmarket/{id}")
 	public ModelAndView showMarket(@PathVariable Long id) {
 		Station sta = stationService.getById(id);
@@ -211,7 +228,6 @@ public class EliteWebController {
 	@RequestMapping(value="/html/updatemarket")
 	public ModelAndView updateStation(
 			final fr.jodev.elite.model.StationMarket market) {
-		System.out.println("id="+market.idStation);
 		goodsService.updateGoods(market);
 		ModelAndView mav = new ModelAndView("showMarket");
 		Station sta = stationService.getById(market.idStation);
@@ -226,7 +242,6 @@ public class EliteWebController {
 	@RequestMapping(value="/html/updatecommodities2")
 	public ModelAndView updateCommodities2(
 			final fr.jodev.elite.model.Commodities2 market) {
-		System.out.println("id="+market.idStation);
 		goodsService.updateGoods(market);
 		ModelAndView mav = new ModelAndView("showCommodities");
 		Station sta = stationService.getById(market.idStation);

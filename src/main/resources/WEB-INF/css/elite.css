@@ -21,6 +21,15 @@ table {
   top: 20px;
 }
 
+.footer input {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 5px 10px;
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
 div.eddclisttitle {
 	padding: 10px 10px;
 	background-color: #edae40;

@@ -6,6 +6,7 @@ public class StationMarket {
 	public long idStation;
 	public List<GoodsForDisplay> goods;
 	
+	public StationMarket() {};
 	public StationMarket(long idStation) {
 		this.idStation = idStation;
 	}

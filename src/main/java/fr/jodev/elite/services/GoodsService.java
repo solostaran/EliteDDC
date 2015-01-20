@@ -6,6 +6,7 @@ import fr.jodev.elite.entities.Goods;
 import fr.jodev.elite.model.Commodities;
 import fr.jodev.elite.model.Commodities2;
 import fr.jodev.elite.model.StationMarket;
+import fr.jodev.elite.model.StationMarketSimplified;
 
 public interface GoodsService {
 	Goods get(long idStation, long idGoodsDesignation);
@@ -17,6 +18,7 @@ public interface GoodsService {
 	void updateGoods(fr.jodev.elite.model.Goods goods);
 	void updateGoods(List<fr.jodev.elite.model.Goods> goods);
 	void updateGoods(StationMarket market);
+	void updateGoods(StationMarketSimplified market);
 	void updateGoods(Commodities market);
 	void updateGoods(Commodities2 market);
 }

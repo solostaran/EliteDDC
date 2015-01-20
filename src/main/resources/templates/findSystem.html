@@ -6,9 +6,9 @@
 	<title>EliteDDC Find SolarSystem</title>
 	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
 	<script type="text/javascript">
-    function showConfirm()
-    {
-        return confirm("Create : "+document.getElementById("createname").value+" ?");
+	function showConfirm()
+	{
+		return confirm("Create : "+document.getElementById("createname").value+" ?");
 	}
 	</script>
 </head>
@@ -59,8 +59,8 @@
 		<span th:text="#{createsolarsystem}">Create a Solar System :</span>
 		<br />
 		<form onSubmit="return showConfirm();" action="#" th:action="@{/html/createsystem}" method="post">
-			<label for="name" th:text="#{name}">Name</label>
-			<input type="text" id="name" name="name" th:value="${reqname}" />
+			<label for="createname" th:text="#{name}">Name</label>
+			<input type="text" id="createname" name="name" th:value="${reqname}" />
 			<input type="submit" th:value="#{buttoncreate}" />
 		</form>
 	</div>

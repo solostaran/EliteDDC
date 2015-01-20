@@ -11,9 +11,13 @@
     	document.getElementById("message").style.visibility = "hidden";
     }
 
-    function showConfirm()
+    function createConfirm()
     {
         return confirm("Create : "+document.getElementById("createname").value+" ?");
+	}
+    function deleteConfirm()
+    {
+        return confirm("Delete : "+document.getElementById("deletename").value+" ?");
 	}
 	</script>
 </head>
@@ -52,6 +56,7 @@
 			<thead>
 				<tr>
 					<th th:text="#{name}">Name</th>
+					<th th:text="#{arrivaldistance}">Distance</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,6 +64,8 @@
 					<td><a href="/station" th:text="${{sta.name}}"
 						th:href="@{|/html/showstation/${sta.idStation}|}"
 						style="width: 500px;">default name</a></td>
+					<td th:if="${sta.distance} == 0" th:text="#{unknown}">unknown</td>
+					<td th:if="${sta.distance} != 0" th:text="${sta.distance}">unknown</td>
 				</tr>
 			</tbody>
 		</table>
@@ -67,7 +74,7 @@
 	<div class="eddcform">
 		<span th:text="#{createstation}">Create Station :</span>
 		<br/>
-		<form onSubmit="return showConfirm();" action="#" th:action="@{/html/createstation}" method="post">
+		<form onSubmit="return createConfirm();" action="#" th:action="@{/html/createstation}" method="post">
 			<input type="hidden" name="parentSolarSystem" th:value="${system.idSolarSystem}" />
 			<label for="createname" th:text="#{name}">Name</label>
 			<input type="text" id="createname" name="name" />
@@ -84,6 +91,13 @@
 			<label for="searchdist" th:text="#{systemprox.distance}">Distance</label>
 			<input type="number" id="searchdist" name="distance" />
 			<input type="submit" th:value="#{buttonfindweb}" value="Search" />
+		</form>
+	</div>
+	<div class="footer">
+		<form onSubmit="return deleteConfirm();" th:action="@{/html/removesystem}" method="post">
+			<input type="hidden" id="deletename" name="name" th:value="${system.name}" value="Current Solar System" />
+			<input type="hidden" id="deleteid" name="id" th:value="${system.idSolarSystem}" value="-1" />
+			<input type="submit" th:value="#{buttondelete}" value="Delete" />
 		</form>
 	</div>
 </body>

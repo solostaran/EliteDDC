@@ -10,6 +10,10 @@
     {
     	document.getElementById("message").style.visibility = "hidden";
     }
+    function deleteConfirm()
+    {
+        return confirm("Delete : "+document.getElementById("deletename").value+" ?");
+	}
     </script>
 </head>
 <body>
@@ -33,6 +37,8 @@
 			<input type="hidden" id="parentSolarSystem" name="parentSolarSystem" th:value="${system.idSolarSystem}" />
 			<label for="name" th:text="#{name}">Name</label>
 			<input type="text" th:field="*{name}" />
+			<label for="distance" th:text="#{arrivaldistance}">Distance from point of arrival</label>
+			<input type="text" th:field="*{distance}" />
 			<br/>
 			<input type="checkbox" th:field="*{isMarket}" />
 			<label for="market" th:text="#{market}">Market</label>
@@ -48,6 +54,13 @@
 			<input type="checkbox" th:field="*{isOutfitting}" />
 			<label for="outfitting" th:text="#{outfitting}">Outfitting</label>
 			<input type="submit" th:value="#{buttonupdate}" />
+		</form>
+	</div>
+	<div class="footer">
+		<form onSubmit="return deleteConfirm();" th:action="@{/html/removestation}" method="post">
+			<input type="hidden" id="deletename" name="name" th:value="${station.name}" value="Current Solar System" />
+			<input type="hidden" id="deleteid" name="id" th:value="${station.idStation}" value="-1" />
+			<input type="submit" th:value="#{buttondelete}" value="Delete" />
 		</form>
 	</div>
 </body>
