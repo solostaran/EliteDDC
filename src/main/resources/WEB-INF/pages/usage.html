@@ -178,7 +178,7 @@
    <td>List of outfit's slots</td>
   </tr>
   <tr>
-   <td rowspan=10 style="vertical-align: text-top">Goods</td>
+   <td rowspan=12 style="vertical-align: text-top">Goods</td>
   </tr>
   <tr>
    <td>Get all goods' categories</td>
@@ -237,6 +237,16 @@
     {"idStation":Long, "commodities":[{"idCategory":Long, "goods":[{"idDesignation":Long,"Number":Long,"status":String}]} ]}<br/>
     status=N/S/D | N/L/M/H | Price(int) (example: "SH 821", "DL 222", "SM66")</td>
    <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Search goods by proximity</td>
+   <td>/solarsystem/&lt;id&gt;/marketprox?dist=&lt;distance&gt;</td>
+   <td>Selected goods (commodities) in a solar system proximity cubic square</td>
+  </tr>
+  <tr>
+   <td>Search goods by proximity</td>
+   <td>/solarsystem/marketprox<br/>Content-Type: application/json<br/>{"idSolarSystem":Long, "distance":Float}</td>
+   <td>Selected goods (commodities) in a solar system proximity cubic square</td>
   </tr>
  </table>
 </body>

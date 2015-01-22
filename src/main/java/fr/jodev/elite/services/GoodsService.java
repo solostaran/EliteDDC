@@ -21,4 +21,5 @@ public interface GoodsService {
 	void updateGoods(StationMarketSimplified market);
 	void updateGoods(Commodities market);
 	void updateGoods(Commodities2 market);
+	List<Commodities2> getByProximity(long idSolarSystem, float distance);
 }

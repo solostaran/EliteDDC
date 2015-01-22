@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.model.Commodities2;
 import fr.jodev.elite.model.Priority;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsCategoryService;
@@ -216,10 +217,22 @@ public class EliteWebController {
 	
 	@RequestMapping(value="/html/showcommodities/{id}")
 	public ModelAndView showCommodities(@PathVariable Long id) {
-		Station sta = stationService.getById(id);
+//		Station sta = stationService.getById(id);
 		ModelAndView mav = new ModelAndView("showCommodities");
-		mav.addObject("station", sta);
+//		mav.addObject("station", sta);
 		mav.addObject("market", goodsService.getCommodities2(id));
+		mav.addObject("categories", goodsCategoryService.getAll());
+		mav.addObject("designations", goodsDesignationService.getAll());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/comparemarkets")
+	public ModelAndView compareMarkets(
+			@RequestParam(value="idSolarSystem", required=true) Long idSolarSystem,
+			@RequestParam(value="distance", required=true) float distance) {
+		List<Commodities2> commodities = goodsService.getByProximity(idSolarSystem, distance);
+		ModelAndView mav = new ModelAndView("compareMarkets");
+		mav.addObject("markets", commodities);
 		mav.addObject("categories", goodsCategoryService.getAll());
 		mav.addObject("designations", goodsDesignationService.getAll());
 		return mav;

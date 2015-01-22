@@ -4,6 +4,11 @@ public class GoodsSimplified extends GoodsCommon {
 	public String status;
 	
 	public GoodsSimplified() {}
+	public GoodsSimplified(long idDesignation) {
+		setIdDesignation(idDesignation);
+		lastUpdated = new String();
+		status = new String();
+	}
 	public GoodsSimplified(fr.jodev.elite.entities.Goods g) {
 		super(g);
 		StringBuffer temp = new StringBuffer();

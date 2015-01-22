@@ -19,6 +19,7 @@ import fr.jodev.elite.dao.StationDAO;
 import fr.jodev.elite.entities.Goods;
 import fr.jodev.elite.entities.GoodsCategory;
 import fr.jodev.elite.entities.GoodsDesignation;
+import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.GoodsDesignationNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
@@ -34,6 +35,7 @@ import fr.jodev.elite.model.StationMarket;
 import fr.jodev.elite.model.StationMarketSimplified;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsService;
+import fr.jodev.elite.services.SystemService;
 
 @Service
 @Scope("singleton")
@@ -50,6 +52,9 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Autowired
 	private StationDAO stationDAO;
+	
+	@Autowired
+	private SystemService systemService;
 
 	@Override
 	@Transactional
@@ -117,23 +122,53 @@ public class GoodsServiceImpl implements GoodsService {
 		return ret;
 	}
 	
+	/**
+	 * Return station goods (create empty ones if not in database).
+	 */
 	@Override
 	@Transactional
 	public Commodities2 getCommodities2(long idStation) {
 		Station s = stationDAO.getById(idStation);
+		SolarSystem sys = s.getParentSolarSystem();
 		List<Goods> list = goodsDAO.getByStation(s);
 		List<GoodsCategory> listCat = goodsCategoryDAO.getAll();
+		List<GoodsDesignation> listDes = goodsDesignationDAO.getAll();
 		Commodities2 ret = new Commodities2(idStation);
+		ret.setIdSolarSystem(sys.getIdSolarSystem());
+		ret.setSolarSystemName(sys.getName());
+		ret.setStationName(s.getName());
+		// Create a list of categories
 		for (GoodsCategory gc : listCat) {
 			GoodsSubcategory2 gsc = new GoodsSubcategory2();
 			gsc.setIdCategory(gc.getIdGoodsCategory());
 			ret.addSubcategory(gsc);
 		}
-		for (Goods g : list) {
-			GoodsSimplified gs = new GoodsSimplified(g);
-			int index = g.getGoodsDesignation().getCategory().getIdGoodsCategory().intValue();
-			ret.addGoods(index, gs);
+		// Add a list of designations to each category (and fill in with goods' data)
+		for (int indexDes = 0, index = 0; indexDes < listDes.size(); indexDes++) {
+			GoodsSimplified gs = null;
+			int indexCat = listDes.get(indexDes).getCategory().getIdGoodsCategory().intValue();
+			if (index < list.size()) {
+				Goods g = list.get(index);
+				if (g.getGoodsDesignation().getIdGoodsDesignation().intValue() == indexDes+1) {
+					// goods present in the database
+					gs = new GoodsSimplified(g);
+					index++;
+				} else {
+					// create empty goods
+					gs = new GoodsSimplified(indexDes+1);
+				}
+			} else {
+				// end of list filled with empty goods
+				gs = new GoodsSimplified(indexDes+1);
+			}
+			ret.addGoods(indexCat, gs);
 		}
+		// A simple one, only with goods in the database
+//		for (Goods g : list) {
+//			GoodsSimplified gs = new GoodsSimplified(g);
+//			int index = g.getGoodsDesignation().getCategory().getIdGoodsCategory().intValue();
+//			ret.addGoods(index, gs);
+//		}
 		return ret;
 	}
 
@@ -229,5 +264,18 @@ public class GoodsServiceImpl implements GoodsService {
 						g.getNumber(), g.getSupplyOrDemand().getValue(), g.getPriority().getValue());
 			}
 		}
+	}
+
+	@Override
+	@Transactional
+	public List<Commodities2> getByProximity(long idSolarSystem, float distance) {
+		List<SolarSystem> listSys = systemService.getByProximity(idSolarSystem, distance);
+		List<Commodities2> ret = new ArrayList<Commodities2>();
+		for (SolarSystem sys : listSys) {
+			for (Station s : sys.getStations()) {
+				ret.add(getCommodities2(s.getIdStation()));
+			}
+		}
+		return ret;
 	}
 }

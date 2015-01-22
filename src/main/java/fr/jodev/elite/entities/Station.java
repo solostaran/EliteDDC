@@ -155,6 +155,9 @@ public class Station {
 	protected void setGoods(List<Goods> goods) {
 		this.goods = goods;
 	}
+	public void addGoods(Goods g) {
+		if (!goods.contains(g)) goods.add(g);
+	}
 	
 	@Override
 	public String toString() {

@@ -39,21 +39,31 @@
 			<input type="text" th:field="*{name}" />
 			<label for="distance" th:text="#{arrivaldistance}">Distance from point of arrival</label>
 			<input type="text" th:field="*{distance}" />
-			<br/>
+			<br/><br/>
 			<input type="checkbox" th:field="*{isMarket}" />
 			<label for="market" th:text="#{market}">Market</label>
 			<a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}" th:href="@{|/html/showmarket/${station.idStation}|}">Show Market</a>
 			<a style="margin-right: 50px;" th:if="${station.isMarket}" th:text="#{station.showmarket}+' (simple)'" th:href="@{|/html/showcommodities/${station.idStation}|}">Show Commodities</a>
-			<br/>
+			<br/><br/>
 			<input type="checkbox" th:field="*{isBlackMarket}" />
 			<label for="blackmarket" th:text="#{blackmarket}">Black Market</label>
-			<br/>
+			<br/><br/>
 			<input type="checkbox" th:field="*{isShipyard}" />
 			<label for="shipyard" th:text="#{shipyard}">Shipyard</label>
-			<br/>
+			<br/><br/>
 			<input type="checkbox" th:field="*{isOutfitting}" />
 			<label for="outfitting" th:text="#{outfitting}">Outfitting</label>
 			<input type="submit" th:value="#{buttonupdate}" />
+		</form>
+	</div>
+	<br/>
+	<div class="eddcform" th:if="${station.isMarket == true}">
+		<span th:text="#{systemprox.comparemarkets}">Compare markets by proximity</span>
+		<form action="#" th:action="@{/html/comparemarkets}" method="post">
+			<input type="hidden" name="idSolarSystem" th:value="${system.idSolarSystem}" />
+			<label for="distancemarket" th:text="#{systemprox.distance}"></label>
+			<input type="number" id="distancemarket" name="distance" />
+			<input type="submit" th:value="#{buttonsearch}" />
 		</form>
 	</div>
 	<div class="footer">

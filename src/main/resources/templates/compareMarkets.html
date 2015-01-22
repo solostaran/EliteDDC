@@ -19,31 +19,34 @@
 		<h1>Elite:Dangerous Data Collection - Show Market</h1>
 	</div>
 	<br/><br/><br/>
-	<div th:if="${updated != null}" id="message" class="eddclisttitle">This station has just been updated : <span th:text="${updated}"></span><br/></div>
-	<script>setTimeout("hideMessage()", 5000);</script>
-	<div th:if="${market != null}" class="eddclisttitle">
-		<span th:text="#{station.markettitle}">List of goods in this station</span>
-		<a href="/html/showstation" th:text="${{market.stationName}}" th:href="@{|/html/showstation/${market.idStation}|}"></a>
-		&nbsp;(<span th:text="#{solarsystem}+' : '"></span>
-		<a href="/html/showsystem" th:text="${{market.solarSystemName}}" th:href="@{|/html/showsystem/${market.idSolarSystem}|}"></a>)
+	<div class="eddclisttitle">
+		<span th:text="#{systemprox.comparemarkets}">Compare markets</span>
 	</div>
 	<br />
-	<div class="eddclist">
-		<form action="#" th:action="@{/html/updatecommodities2}" th:object="${market}" method="post">
-		<input type="hidden" th:field="*{idStation}" />
+	<div class="eddclist" th:if="${not #lists.isEmpty(markets)}">
 		<table>
 			<thead>
 				<tr>
+					<th></th>
+					<th th:each="market : ${markets}"><a th:href="@{|/html/showsystem/${market.idSolarSystem}|}" th:text="${market.solarSystemName}"></a></th>
+				</tr>
+				<tr>
 					<!-- <th th:text="#{goods.title.category}">Category</th> -->
 					<th th:text="#{goods.title.designation}">Designation</th>
-					<th th:text="#{goods.title.status}">Status</th>
-					<th th:text="#{goods.title.number}">Number</th>
-					<th th:text="#{lastupdated}">Last Updated</th>
+					<th th:each="market : ${markets}"><a th:href="@{|/html/showstation/${market.idStation}|}" th:text="${market.stationName}"></a></th>
 				</tr>
 			</thead>
-			<tbody th:each="cat,catStat : *{commodities}" >
-				<tr><td colspan="4"><input type="hidden" th:field="*{commodities[__${catStat.index}__].idCategory}" />
-					<h3 th:text="${categories[__${cat.idCategory - 1}__].name}"></h3></td></tr>					
+			<tbody th:each="cat,catStat : ${categories}">
+				<tr><td th:colspan="${#lists.size(markets) + 1}"><h3 th:text="${cat.name}"></h3></td></tr>
+				<tr th:each="g,gStat : ${markets[0].commodities[__${catStat.index}__].goods}">
+					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span></td>
+					<td th:each="market : ${markets}">
+						<span th:text="${market.commodities[__${catStat.index}__].goods[__${gStat.index}__].status}"></span>
+					</td>
+				</tr>
+			</tbody>
+			<!-- <tbody th:each="cat,catStat : *{commodities}" >
+				<tr><td colspan="4"><h2 th:text="${categories[__${cat.idCategory - 1}__].name}"></h2></td></tr>					
 				<tr th:each="g,gStat : ${cat.goods}">
 					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span>
 						<input type="hidden" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].idDesignation}" /></td>
@@ -51,11 +54,9 @@
 					<td><input type="number" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].number}" tabindex="-1" /></td>
 					<td th:text="${{g.lastUpdated}}"></td>
 				</tr>
-			</tbody>
+				<tr><td colspan="4"><hr/></td></tr>
+			</tbody> -->
 		</table>
-		<br/>
-		<input type="submit" value="Update" th:value="#{buttonupdate}" />
-		</form>
 	</div>
 </body>
 </html>

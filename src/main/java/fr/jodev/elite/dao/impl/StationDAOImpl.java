@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import fr.jodev.elite.dao.GoodsDAO;
 import fr.jodev.elite.dao.StationDAO;
 import fr.jodev.elite.entities.ShipBuyable;
 import fr.jodev.elite.entities.Station;
@@ -18,6 +19,9 @@ import fr.jodev.elite.entities.Station;
 public class StationDAOImpl extends AbstractDAO implements StationDAO {
 	
 	@Autowired
+	private GoodsDAO goodsDAO;
+	
+	@Autowired
 	protected void setSessionFactory(SessionFactory sessionFactory) {
 		super.sessionFactory = sessionFactory;
 	};
@@ -25,6 +29,7 @@ public class StationDAOImpl extends AbstractDAO implements StationDAO {
 	@Override
 	public void addStation(Station s) {
 		saveOrUpdate(s);
+//		goodsDAO.initialize(s);
 	}
 
 	@Override

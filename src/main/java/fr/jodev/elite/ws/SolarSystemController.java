@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.exceptions.EmptyArgumentException;
+import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.services.GoodsService;
 import fr.jodev.elite.services.SystemService;
 
 
@@ -23,6 +25,9 @@ public class SolarSystemController {
 	
 	@Autowired
 	private SystemService systemService;
+	
+	@Autowired
+	private GoodsService goodsService;
 	
 	@RequestMapping(value="/create", method=RequestMethod.GET)
 	public @ResponseBody SolarSystem create(@RequestParam(value = "name", required = true) String name) {
@@ -77,8 +82,19 @@ public class SolarSystemController {
 		return systemService.getByProximity(id, distance);
 	}
 	
+	@RequestMapping("/{id}/marketprox")
+	public @ResponseBody List<Commodities2> getMarketByProximity(@PathVariable Long id,
+			@RequestParam(value="dist", required=true) float distance) {
+		return goodsService.getByProximity(id, distance);
+	}
+	
 	@RequestMapping("/byprox")
 	public @ResponseBody List<SolarSystem> getByProximity(@RequestBody fr.jodev.elite.model.SystemDistance sysdist) {
 		return systemService.getByProximity(sysdist.idSolarSystem, sysdist.distance);
+	}
+	
+	@RequestMapping("/marketprox")
+	public @ResponseBody List<Commodities2> getMarketByProximity(@RequestBody fr.jodev.elite.model.SystemDistance sysdist) {
+		return goodsService.getByProximity(sysdist.idSolarSystem, sysdist.distance);
 	}
 }
