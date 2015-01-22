@@ -32,6 +32,14 @@ public class GoodsSimplified extends GoodsCommon {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public String begin() {
+		if (status == null || status.isEmpty()) return new String();
+		String ret =  "_"+status.substring(0,1);
+		if (status.charAt(1) != 'L' && status.charAt(1) != 'M' && status.charAt(1) != 'H') ret += 'L';
+		else ret += status.charAt(1);
+		return ret;
+	}
 
 	public String toString() {
 		StringBuffer ret = new StringBuffer();

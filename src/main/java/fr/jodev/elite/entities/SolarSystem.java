@@ -92,6 +92,9 @@ public class SolarSystem {
 	protected void setStations(List<Station> stations) {
 		this.stations = stations;
 	}
+	public int getNbStations() {
+		return stations.size();
+	}
 	
 //	@JsonSerialize(using=LongNullableSerializer.class)
 	public Double getX() {

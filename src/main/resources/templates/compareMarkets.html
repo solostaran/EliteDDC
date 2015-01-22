@@ -41,7 +41,7 @@
 				<tr th:each="g,gStat : ${markets[0].commodities[__${catStat.index}__].goods}">
 					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span></td>
 					<td th:each="market : ${markets}">
-						<span th:text="${market.commodities[__${catStat.index}__].goods[__${gStat.index}__].status}"></span>
+						<span th:class="${market.commodities[__${catStat.index}__].goods[__${gStat.index}__].begin()}" th:text="${market.commodities[__${catStat.index}__].goods[__${gStat.index}__].status}"></span>
 					</td>
 				</tr>
 			</tbody>

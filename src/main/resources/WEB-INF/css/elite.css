@@ -30,6 +30,25 @@ table {
 	border-collapse: collapse;
 }
 
+span[class^=_DH] {
+	background-color: #ff5555;
+}
+span[class^=_SH] {
+	background-color: #55ff55;
+}
+span[class^=_DM] {
+	background-color: #ff9999;
+}
+span[class^=_SM] {
+	background-color: #99ff99;
+}
+span[class^=_DL] {
+	background-color: #ffcccc;
+}
+span[class^=_SL] {
+	background-color: #ccffcc;
+}
+
 div.eddclisttitle {
 	padding: 10px 10px;
 	background-color: #edae40;
