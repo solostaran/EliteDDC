@@ -9,3 +9,7 @@ When the server is launched, you can access a Usage html page here : http://{ser
 
 Usage:
 I provided some html pages (Thymeleaf views), which are not optimized but it is a start : http://{serverhost}:8080/html/menu
+
+Database:
+By default, without a valid 'dbconfig.json' file, it creates a local H2 database in the execution directory. I tested it with MySql and H2, it could work with SQLite but not a this time and H2 has better performances in my tests.
+I provided some 'dbconfig.json' files as database configuration examples (H2, MySql and SQLite).
