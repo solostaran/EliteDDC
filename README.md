@@ -11,9 +11,10 @@ Here is a compiled version with a small H2 database : https://www.dropbox.com/s/
 
 <pre>Launch:</pre>
 Console launch if you want a trace (EliteWebService.bat launcher provided for windows).<br/>
-When the server is launched, you can access a Usage html page here : ```http://{localhost/serverhost}:8080/```
 
 <pre>Usage:</pre>
+When the server is launched, you can access a Usage html page here : ```http://{localhost/serverhost}:8080/```.<br/>
+This page describes the entries of the WebService.
 I provided some html pages (Thymeleaf views) which are not optimized, but it is a start : ```http://{localhost/serverhost}:8080/html```
 
 <pre>Database:</pre>
