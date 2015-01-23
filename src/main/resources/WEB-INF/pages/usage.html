@@ -13,8 +13,8 @@
  <img src="http://www.elitedangerous.com/images/frontier-small.png" align="right"/>
  
  <br/><br/>
- <b>Usage:</b><br/>
- <table>
+ <h3>Usage:</h3><br/>
+ <table class="eddctable"><tbody>
   <tr style="font-weight: bold">
    <td width="15%">Type of service</td><td width="20%">Function</td><td>Web Service URL</td><td width="20%">Return type</td></tr>
   <tr>
@@ -66,7 +66,7 @@
    <td>Delete a solar system and everything depending on it</td>
   </tr>
   <tr>
-   <td rowspan=16 style="vertical-align: text-top">Stations</td>
+   <td rowspan=19 style="vertical-align: text-top">Stations</td>
   </tr>
   <tr>
    <td>Search by name</td>
@@ -80,7 +80,7 @@
   </tr>
   <tr>
    <td>Get market goods (v1)</td>
-   <td>/station/&lt;id&gt;/market</td>
+   <td>/station/&lt;id&gt;/simplemarket</td>
    <td>List of goods in the station's market</td>
   </tr>
   <tr>
@@ -100,13 +100,18 @@
   </tr>
   <tr>
    <td>Get buyable ships</td>
+   <td>/station/shipyard?idStation=&lt;station's id&gt;</td>
+   <td>List of buyable ships in the station</td>
+  </tr>
+  <tr>
+   <td>Get station's shipyard</td>
    <td>/station/&lt;id&gt;/shipyard</td>
    <td>List of buyable ships in the station</td>
   </tr>
   <tr>
-   <td>Get buyable ships</td>
-   <td>/station/shipyard?idstation=&lt;id&gt;</td>
-   <td>List of buyable ships in the station</td>
+  	<td>Get station's shipyard (full data)</td>
+  	<td>/station/&lt;id&gt;/fullshipyard</td>
+  	<td>View friendly shipyard info</td>
   </tr>
   <tr>
    <td>Creation (GET, SolarSystem ID required)</td>
@@ -139,6 +144,18 @@
   <tr>
    <td>Add a buyable ship</td>
    <td>/station/addship?idstation=&lt;id&gt;&amp;idship=&lt;id&gt;</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Add a list of buyable ships to the shipyard</td>
+   <td>/station/addships<br/>method=POST, Content-Type: application/json<br/>
+   {"idStation":Long, "ships":[Long]}</td>
+   <td>nothing</td>
+  </tr>
+  <tr>
+   <td>Update the station's shipyard</td>
+   <td>/station/updateshipyard<br/>method=POST, Content-Type: application/json<br/>
+   {"idStation":Long, "ships":[{"idBuyableShip":Long, "checked":Boolean}]}</td>
    <td>nothing</td>
   </tr>
   <tr>
@@ -248,6 +265,6 @@
    <td>/solarsystem/marketprox<br/>Content-Type: application/json<br/>{"idSolarSystem":Long, "distance":Float}</td>
    <td>Selected goods (commodities) in a solar system proximity cubic square</td>
   </tr>
- </table>
+ </tbody></table>
 </body>
 </html>

@@ -67,9 +67,8 @@ public class StationDAOImpl extends AbstractDAO implements StationDAO {
 
 	@Override
 	public void addShipBuyable(Station s, ShipBuyable ship) {
-		Session session = sessionFactory.getCurrentSession();
 		s.addShipBuyable(ship);
-		session.update(s);
+		saveOrUpdate(s);
 	}
 
 	@Override

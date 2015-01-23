@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
+import fr.jodev.elite.model.StationShipyard;
 
 public interface StationService {
 	Station createStation(long idSolarSystem, String name);
@@ -17,4 +18,6 @@ public interface StationService {
 	void addShipBuyable(long idStation, long idShipBuyable);
 	void removeShipBuyable(long idStation, long idShipBuyable);
 	List<Long> getShipBuyables(long idStation);
+	StationShipyard getShipyard(long idStation);
+	StationShipyard updateShipyard(StationShipyard shipyard);
 }

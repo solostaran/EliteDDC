@@ -17,6 +17,7 @@ import fr.jodev.elite.exceptions.EmptyArgumentException;
 import fr.jodev.elite.model.Commodities;
 import fr.jodev.elite.model.Commodities2;
 import fr.jodev.elite.model.StationMarket;
+import fr.jodev.elite.model.StationShipyard;
 import fr.jodev.elite.services.GoodsService;
 import fr.jodev.elite.services.StationService;
 
@@ -102,6 +103,13 @@ public class StationController {
 		stationService.addShipBuyable(idStation, idShipBuyable);
 	}
 	
+	@RequestMapping(value="/addships", method=RequestMethod.POST)
+	public void addShipsBuyable(@RequestBody fr.jodev.elite.model.StationShipyardSimplified shipyard) {
+		for (Long i : shipyard.ships) {
+			stationService.addShipBuyable(shipyard.idStation, i);
+		}
+	}
+	
 	@RequestMapping("/removeship")
 	public void removeShipBuyable(@RequestParam(value="idstation", required=true) long idStation, @RequestParam(value="idship", required=true) long idShipBuyable) {
 		stationService.removeShipBuyable(idStation, idShipBuyable);
@@ -117,8 +125,13 @@ public class StationController {
 		return stationService.getShipBuyables(id);
 	}
 	
-	@RequestMapping("/{id}/market")
-	public List<Goods> getStationMarket(@PathVariable Long id) {
+	@RequestMapping("/{id}/fullshipyard")
+	public StationShipyard getShipyardfull(@PathVariable Long id) {
+		return stationService.getShipyard(id);
+	}
+	
+	@RequestMapping("/{id}/simplemarket")
+	public List<Goods> getStationMarketSimple(@PathVariable Long id) {
 		return goodsService.getStationMarket(id);
 	}
 	

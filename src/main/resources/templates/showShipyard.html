@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Show Market</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+    function hideMessage()
+    {
+    	document.getElementById("message").style.visibility = "hidden";
+    }
+    </script>
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Show Shipyard</h1>
+	</div>
+	<br/><br/><br/>
+	<div th:if="${updated != null}" id="message" class="eddclisttitle">This station has just been updated : <span th:text="${updated}"></span><br/></div>
+	<script>setTimeout("hideMessage()", 5000);</script>
+	<div th:if="${shipyard != null}" class="eddclisttitle">
+		<span th:text="#{station.shipyardtitle}">List of buyable ships in this station</span>
+		<a href="/html/showstation" th:text="${shipyard.stationName}" th:href="@{|/html/showstation/${shipyard.idStation}|}"></a>
+		&nbsp;(<span th:text="#{solarsystem}+' : '"></span>
+		<a href="/html/showsystem" th:text="${shipyard.solarSystemName}" th:href="@{|/html/showsystem/${shipyard.idSolarSystem}|}"></a>)
+	</div>
+	<br />
+	<div>
+		<form action="#" th:action="@{/html/updateshipyard}" th:object="${shipyard}" method="post">
+		<input type="hidden" th:field="*{idStation}" />
+		<input type="hidden" th:field="*{stationName}" />
+		<input type="hidden" th:field="*{idSolarSystem}" />
+		<input type="hidden" th:field="*{solarSystemName}" />
+		<table class="eddctable">
+			<thead>
+				<tr>
+					<th th:text="#{shipyard.buyable}">Buyable</th>
+					<th th:text="#{ship.name}">Name</th>
+					<th th:text="#{price}">Price</th>
+					<th th:text="#{mass}">Mass</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="ship,shipStat : *{ships}">
+					<td>
+						<input type="checkbox" th:field="*{ships[__${shipStat.index}__].checked}" />
+						<input type="hidden" th:field="*{ships[__${shipStat.index}__].idShipBuyable}" />
+					</td>
+					<td th:text="${shipsbuyable[ship.idShipBuyable - 1].name}"></td>
+					<td th:text="${shipsbuyable[ship.idShipBuyable - 1].price}"></td>
+					<td th:text="${shipsbuyable[ship.idShipBuyable - 1].mass}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br/>
+		<input type="submit" value="Update" th:value="#{buttonupdate}" />
+		</form>
+	</div>
+	<!-- <div class="eddclist">
+		<form action="#" th:action="@{/html/updatecommodities2}" th:object="${market}" method="post">
+		<input type="hidden" th:field="*{idStation}" />
+		<table>
+			<thead>
+				<tr>
+					<th th:text="#{goods.title.designation}">Designation</th>
+					<th th:text="#{goods.title.status}">Status</th>
+					<th th:text="#{goods.title.number}">Number</th>
+					<th th:text="#{lastupdated}">Last Updated</th>
+				</tr>
+			</thead>
+			<tbody th:each="cat,catStat : *{commodities}" >
+				<tr><td colspan="4"><input type="hidden" th:field="*{commodities[__${catStat.index}__].idCategory}" />
+					<h3 th:text="${categories[__${cat.idCategory - 1}__].name}"></h3></td></tr>					
+				<tr th:each="g,gStat : ${cat.goods}">
+					<td><span th:text="${designations[__${g.idDesignation - 1}__].name}"></span>
+						<input type="hidden" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].idDesignation}" /></td>
+					<td><input type="text" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].status}" /></td>
+					<td><input type="number" th:field="*{commodities[__${catStat.index}__].goods[__${gStat.index}__].number}" tabindex="-1" /></td>
+					<td th:text="${{g.lastUpdated}}"></td>
+				</tr>
+			</tbody>
+		</table>
+		<br/>
+		<input type="submit" value="Update" th:value="#{buttonupdate}" />
+		</form>
+	</div> -->
+</body>
+</html>

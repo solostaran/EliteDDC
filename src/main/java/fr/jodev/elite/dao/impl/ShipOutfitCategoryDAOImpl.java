@@ -1,7 +1,7 @@
 package fr.jodev.elite.dao.impl;
 
-import static fr.jodev.elite.entities.OutfitCategoryComparator.ID_SORT;
-import static fr.jodev.elite.entities.OutfitCategoryComparator.getComparator;
+import static fr.jodev.elite.entities.ShipOutfitCategoryComparator.ID_SORT;
+import static fr.jodev.elite.entities.ShipOutfitCategoryComparator.getComparator;
 
 import java.util.Collections;
 import java.util.List;

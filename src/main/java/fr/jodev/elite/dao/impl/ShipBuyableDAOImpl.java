@@ -1,5 +1,9 @@
 package fr.jodev.elite.dao.impl;
 
+import static fr.jodev.elite.entities.ShipBuyableComparator.ID_SORT;
+import static fr.jodev.elite.entities.ShipBuyableComparator.getComparator;
+
+import java.util.Collections;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
@@ -42,6 +46,8 @@ public class ShipBuyableDAOImpl extends AbstractDAO implements ShipBuyableDAO {
 //		Session session = sessionFactory.getCurrentSession();
 //		String hql = "from ShipBuyable";
 //		Query query = session.createQuery(hql);
-		return (List<ShipBuyable>)findAll(ShipBuyable.class);
+		List<ShipBuyable> ret = (List<ShipBuyable>)findAll(ShipBuyable.class);
+		Collections.sort(ret, getComparator(ID_SORT));
+		return ret;
 	}
 }

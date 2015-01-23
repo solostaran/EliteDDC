@@ -31,22 +31,26 @@ table {
 }
 
 span[class^=_DH] {
-	background-color: #ff5555;
+	background-color: #ff7777;
+	font-size: 120%;
 }
 span[class^=_SH] {
 	background-color: #55ff55;
+	font-size: 120%;
 }
 span[class^=_DM] {
-	background-color: #ff9999;
+	background-color: #ffaaaa;
 }
 span[class^=_SM] {
 	background-color: #99ff99;
 }
 span[class^=_DL] {
 	background-color: #ffcccc;
+	font-size: 80%;
 }
 span[class^=_SL] {
 	background-color: #ccffcc;
+	font-size: 80%;
 }
 
 div.eddclisttitle {
@@ -54,6 +58,26 @@ div.eddclisttitle {
 	background-color: #edae40;
 	border: 1px solid #000;
 	border-collapse: collapse;
+}
+
+table.eddctable {
+	border: 1px solid #000;
+	border-collapse: collapse;
+}
+
+table.eddctable > tbody > tr > td, table.eddctable > thead > tr > td {
+	padding: 2px 10px;
+	border-left: 1px dotted #000000;
+	vertical-align: top;
+	line-height: 20px;
+}
+
+table.eddctable > tbody > tr,  table.eddctable > thead > tr {
+	border-bottom: 1px solid #000000;
+}
+
+table.eddctable th {
+  background-color: #edae40;
 }
 
 div.eddclist {

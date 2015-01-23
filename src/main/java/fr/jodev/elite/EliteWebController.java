@@ -265,6 +265,23 @@ public class EliteWebController {
 		mav.addObject("updated", DateNumberSerializer.getDate());
 		return mav;
 	}
+	
+	@RequestMapping(value="/html/showshipyard/{id}")
+	public ModelAndView showShipyard(@PathVariable Long id) {
+		ModelAndView mav = new ModelAndView("showShipyard");
+		mav.addObject("shipyard", stationService.getShipyard(id));
+		mav.addObject("shipsbuyable", shipBuyableService.getAll());
+		return mav;
+	}
+	
+	@RequestMapping(value="/html/updateshipyard")
+	public ModelAndView updateShipyard(final fr.jodev.elite.model.StationShipyard shipyard) {
+		ModelAndView mav = new ModelAndView("showShipyard");
+		mav.addObject("shipyard", stationService.updateShipyard(shipyard));
+		mav.addObject("shipsbuyable", shipBuyableService.getAll());
+		mav.addObject("updated", DateNumberSerializer.getDate());
+		return mav;
+	}
 
 //	@RequestMapping("/error.html")
 //	public String error(HttpServletRequest request, Model model) {

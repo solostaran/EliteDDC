@@ -20,6 +20,8 @@ import fr.jodev.elite.exceptions.EmptyArgumentException;
 import fr.jodev.elite.exceptions.SameNameException;
 import fr.jodev.elite.exceptions.SolarSystemNotFoundException;
 import fr.jodev.elite.exceptions.StationNotFoundException;
+import fr.jodev.elite.model.ShipBuyableChecked;
+import fr.jodev.elite.model.StationShipyard;
 import fr.jodev.elite.services.StationService;
 
 @Service
@@ -170,5 +172,36 @@ public class StationServiceImpl implements StationService {
 		for (ShipBuyable ship : list)
 			ret.add(ship.getIdShipBuyable());
 		return ret;
+	}
+
+	@Override
+	@Transactional
+	public StationShipyard getShipyard(long idStation) {
+		Station s = stationDAO.getById(idStation);
+		List<ShipBuyable> fulllist = shipBuyableDAO.getAll();
+		List<ShipBuyable> list = s.getStationShipyard();
+		StationShipyard ret = new StationShipyard(idStation);
+		ret.setStationName(s.getName());
+		ret.setIdSolarSystem(s.getParentSolarSystem().getIdSolarSystem());
+		ret.setSolarSystemName(s.getParentSolarSystem().getName());
+		for (ShipBuyable sb : fulllist) {
+			ShipBuyableChecked sbc = new ShipBuyableChecked(sb.getIdShipBuyable());
+			for (ShipBuyable l : list) if (l.getIdShipBuyable().equals(sbc.idShipBuyable)) sbc.checked = true;
+			ret.addShipBuyableChecked(sbc);
+		}
+		return ret;
+	}
+
+	@Override
+	@Transactional
+	public StationShipyard updateShipyard(StationShipyard shipyard) {
+		for (ShipBuyableChecked sbc : shipyard.getShips()) {
+			if (sbc.getChecked() == true) {
+				addShipBuyable(shipyard.idStation, sbc.getIdShipBuyable());
+			} else {
+				removeShipBuyable(shipyard.idStation, sbc.getIdShipBuyable());
+			}
+		}
+		return getShipyard(shipyard.idStation);
 	}
 }

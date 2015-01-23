@@ -44,14 +44,17 @@ public class BuyableShipsPopulate {
 	}
 
 	private static void populateSlots(long idship, int[][] listSlots) {
+		if (listSlots == null) return;
 		for (int i = 0; i < listSlots.length; i++) {
 			shipBuyableService.addSlotToShip(idship, listSlots[i][0], listSlots[i][1]);
 		}
 	}
 
 	private static void populateBuyableShips() {
+		long idship;
+	
 		// Populate Sidewinder
-		long idship = populateShip("Sidewinder", 32000L, 25, 7.56f, 7.79f);
+		idship = populateShip("Sidewinder", 32000L, 25, 7.56f, 7.79f);
 		final int[][] listSwSlots = {{1,1},{1,1},{2,0},{2,0},
 				{3,8},{4,2},{5,2},{6,2},{7,1},{8,1},{9,1},{10,2},
 				{11,2},{11,2},{11,1}
@@ -146,6 +149,17 @@ public class BuyableShipsPopulate {
 				{11,7},{11,6},{11,6},{11,6},{11,5},{11,5},{11,5},{11,4},{11,4},{11,4},{11,2}
 		};
 		populateSlots(idship, listAnaSlots);
+	
+		// Populate Adder
+		idship = populateShip("Adder", 87808L, 35, 8.47f, 9.12f);
+		final int [][] listAddSlots = {{1,1},{1,1},{1,2},{2,0},{2,0},
+				{10,8},
+				{11,3},{11,3},{11,2},{11,2},{11,1}
+		};
+		populateSlots(idship, listAddSlots);
+		
+		// Populate Orca
+		idship = populateShip("Orca", 0L, 0, 0f, 0f);
 	}
 
 	public static void main(String[] args) {

@@ -7,7 +7,7 @@ import java.util.Comparator;
  * @author JRD
  * @see <a href="http://stackoverflow.com/questions/1421322/how-do-i-sort-a-list-with-multiple-sort-parameters#1421537">How do I sort a list with multiple sort parameters ?</a>
  */
-public enum OutfitCategoryComparator implements Comparator<ShipOutfitCategory> {
+public enum ShipOutfitCategoryComparator implements Comparator<ShipOutfitCategory> {
 	ID_SORT {
 		public int compare(ShipOutfitCategory soc1, ShipOutfitCategory soc2) {
 			return Long.valueOf(soc1.getIdShipOutfitCategory()).compareTo(soc2.getIdShipOutfitCategory());
@@ -21,10 +21,10 @@ public enum OutfitCategoryComparator implements Comparator<ShipOutfitCategory> {
 		};
 	}
 
-	public static Comparator<ShipOutfitCategory> getComparator(final OutfitCategoryComparator... multipleOptions) {
+	public static Comparator<ShipOutfitCategory> getComparator(final ShipOutfitCategoryComparator... multipleOptions) {
 		return new Comparator<ShipOutfitCategory>() {
 			public int compare(ShipOutfitCategory soc1, ShipOutfitCategory soc2) {
-				for (OutfitCategoryComparator option : multipleOptions) {
+				for (ShipOutfitCategoryComparator option : multipleOptions) {
 					int result = option.compare(soc1, soc2);
 					if (result != 0) {
 						return result;

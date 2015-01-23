@@ -50,6 +50,7 @@
 			<br/><br/>
 			<input type="checkbox" th:field="*{isShipyard}" />
 			<label for="shipyard" th:text="#{shipyard}">Shipyard</label>
+			<a style="margin-right: 50px;" th:if="${station.isShipyard}" th:text="#{station.showshipyard}" th:href="@{|/html/showshipyard/${station.idStation}|}">Show shipyard</a>
 			<br/><br/>
 			<input type="checkbox" th:field="*{isOutfitting}" />
 			<label for="outfitting" th:text="#{outfitting}">Outfitting</label>
