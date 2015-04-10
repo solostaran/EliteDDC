@@ -33,13 +33,13 @@ public enum Priority {
         if (name == null) {
             throw new IllegalArgumentException("Name cannot be null for SupplyOrDemand");
         }
-        if (name.toUpperCase().equals(NONE.getName())) {
+        if (NONE.getName().startsWith(name.toUpperCase())) {
             return NONE;
-        } else if (name.toUpperCase().equals(LOW.getName())) {
+        } else if (LOW.getName().startsWith(name.toUpperCase())) {
             return LOW;
-        } else if (name.toUpperCase().equals(MEDIUM.getName())) {
+        } else if (MEDIUM.getName().startsWith(name.toUpperCase())) {
         	return MEDIUM;
-        } else if (name.toUpperCase().equals(HIGH.getName())) {
+        } else if (HIGH.getName().startsWith(name.toUpperCase())) {
         	return HIGH;
         }
         throw new IllegalArgumentException("Name \"" + name + "\" does not correspond to any Priority");

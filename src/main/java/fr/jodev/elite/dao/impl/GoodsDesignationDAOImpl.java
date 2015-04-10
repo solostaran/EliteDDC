@@ -47,4 +47,14 @@ public class GoodsDesignationDAOImpl extends AbstractDAO implements
 		return listGd;
 	}
 
+	@Override
+	public GoodsDesignation getByName(String designation) {
+		getAll();
+		for (GoodsDesignation gd : listGd) {
+			if (gd.getName().equalsIgnoreCase(designation))
+				return gd;
+		}
+		return null;
+	}
+
 }

@@ -1,10 +1,12 @@
 package fr.jodev.elite.services;
 
+import java.io.File;
 import java.util.List;
 
 import fr.jodev.elite.entities.Goods;
 import fr.jodev.elite.model.Commodities;
 import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.model.CsvParsingErrors;
 import fr.jodev.elite.model.StationMarket;
 import fr.jodev.elite.model.StationMarketSimplified;
 
@@ -21,5 +23,6 @@ public interface GoodsService {
 	void updateGoods(StationMarketSimplified market);
 	void updateGoods(Commodities market);
 	void updateGoods(Commodities2 market);
+	CsvParsingErrors updateGoods(File localCsvFile);
 	List<Commodities2> getByProximity(long idSolarSystem, float distance);
 }

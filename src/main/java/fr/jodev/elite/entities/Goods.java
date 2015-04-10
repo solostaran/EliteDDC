@@ -42,7 +42,7 @@ public class Goods {
 	private int priority = 0;
 	
 	@Column(nullable=false)
-	private long lastUpdated;
+	private long lastUpdated = 0;
 	
 	protected Goods() {}
 	public Goods(Station station, GoodsDesignation gd) {

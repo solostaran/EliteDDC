@@ -1,7 +1,15 @@
 package fr.jodev.elite;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +18,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.jodev.elite.entities.SolarSystem;
 import fr.jodev.elite.entities.Station;
 import fr.jodev.elite.model.Commodities2;
+import fr.jodev.elite.model.CsvParsingErrors;
 import fr.jodev.elite.model.Priority;
 import fr.jodev.elite.model.SupplyOrDemand;
 import fr.jodev.elite.services.GoodsCategoryService;
@@ -281,6 +292,81 @@ public class EliteWebController {
 		mav.addObject("shipsbuyable", shipBuyableService.getAll());
 		mav.addObject("updated", DateNumberSerializer.getDate());
 		return mav;
+	}
+	
+	@RequestMapping(value="/html/uploadocr")
+	public ModelAndView uploadOcrFile() {
+		ModelAndView mav = new ModelAndView("uploadocr");
+		return mav;
+	}
+	
+	private static Logger logger = Logger.getLogger("ELITE");
+	
+	@RequestMapping(value="/html/uploadFile", method = RequestMethod.POST)
+	public ModelAndView htmlUploadFileHandler(@RequestParam("file") MultipartFile file) {
+		ModelAndView mav = new ModelAndView("uploadocr");
+		mav.addObject("csvparsingerrors", storeAndParseCsvFile(file));
+		return mav;
+	}
+	
+	@RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    public @ResponseBody CsvParsingErrors uploadFileHandler(@RequestParam("file") MultipartFile file) {
+		return storeAndParseCsvFile(file);
+    }
+	/**
+	 * Sequence number for filenames, it manages concurrency
+	 */
+	private AtomicInteger numseq = new AtomicInteger(1);
+	
+	private CsvParsingErrors storeAndParseCsvFile(MultipartFile file) {
+		CsvParsingErrors ret = new CsvParsingErrors();
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+ 
+                // Creating the directory to store file
+                String rootPath = System.getProperty("TEMP");
+                
+                if (rootPath == null) rootPath = new File("D:\\temp\\encode").getAbsolutePath().toString();
+                else logger.info("Temporary files directory="+rootPath);
+                File dir = new File(rootPath + File.separator + "tmpFiles");
+                if (!dir.exists())
+                    dir.mkdirs();
+                
+                // Filename
+                DateFormat df = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+                String filename = "FileToProcess-" + df.format(new Date()) + "-"
+	                + numseq.getAndIncrement() + "-" + file.getOriginalFilename();
+ 
+                // Create the file on server
+                final File serverFile = new File(dir.getAbsolutePath()
+                        + File.separator + filename);
+                BufferedOutputStream stream = new BufferedOutputStream(
+                        new FileOutputStream(serverFile));
+                stream.write(bytes);
+                stream.close();
+ 
+                logger.info("OCR import file : " + serverFile.getAbsolutePath());
+                
+                if (filename.endsWith(".csv")) {
+//	                new Thread(new Runnable()  {
+//						@Override
+//						public void run() {
+							ret = goodsService.updateGoods(serverFile);
+//						}
+//	                }).start();
+                } else {
+                	serverFile.delete();
+                }
+ 
+                ret.setMessage("You successfully uploaded file=" + file.getOriginalFilename());
+            } catch (Exception e) {
+                ret.setMessage("You failed to upload " + file.getOriginalFilename() + " => " + e.getMessage());
+            }
+        } else {
+           ret.setMessage("You failed to upload " + file.getOriginalFilename() + " because the file was empty.");
+        }
+        return ret;
 	}
 
 //	@RequestMapping("/error.html")

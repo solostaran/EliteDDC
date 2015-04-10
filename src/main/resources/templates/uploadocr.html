@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>EliteDDC Upload OCR file</title>
+	<link rel="stylesheet" type="text/css" href="/css/elite.css" />
+	<script type="text/javascript">
+	function showConfirm()
+	{
+		return confirm("Create : "+document.getElementById("createname").value+" ?");
+	}
+	</script>
+</head>
+<body>
+	<div class="header">
+		<a href="/html"><img
+			src="http://img4.wikia.nocookie.net/__cb20140302021500/elite-dangerous/images/thumb/b/bc/EliteDangerousLogo2.png/100px-11,182,0,170-EliteDangerousLogo2.png" /></a>
+		<h1>Elite:Dangerous Data Collection - Upload OCR file</h1>
+	</div>
+	<br /><br /><br />
+	<div class="eddcform">
+		<form method="post" action="/uploadFile" enctype="multipart/form-data">
+			<!-- <label for="name" th:text="#{name}">Name :</label>
+			<input type="text" name="name" /> -->
+			<label for="file" th:text="#{upload.text}">Choose file to upload :</label>
+			<input name="file" type="file"  th:value="#{upload.choose}" />&nbsp;
+			<input type="submit" th:value="#{upload.submit}" />
+		</form>
+	</div>
+
+</body>
+</html>

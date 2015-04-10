@@ -41,7 +41,7 @@ public class GoodsDAOImpl extends AbstractDAO implements GoodsDAO {
 			.uniqueResult();
 		if (ret == null) {
 			ret = new Goods(station, gd);
-			update(ret);
+			saveOrUpdate(ret);
 		}
 		return ret;
 	}
