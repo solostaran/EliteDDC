@@ -29,7 +29,7 @@
 	</parent>
 
 	<dependencies>
-
+		<!-- Hibernate as ORM -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -40,6 +40,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.6.Final</version>
 		</dependency>
+		<!-- Tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -52,6 +53,8 @@
 			<version>${spring.framework.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Main Spring modules -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -67,7 +70,12 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.framework.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
 		
+		<!-- Spring Boot as Starter -->
 		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -83,6 +91,8 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        
+        <!-- Object/XML mapping with Jackson -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -98,49 +108,6 @@
 			<artifactId>jackson-annotations</artifactId>
 			<version>2.4.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-        
-		<!--  
-		<dependency>
-			<groupId>hsqldb</groupId>
-			<artifactId>hsqldb</artifactId>
-			<version>1.8.0.10</version>
-		</dependency>
- 		-->
-		<!-- <dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.7</version>
-		</dependency>  -->
-		
- 		<!-- <dependency>
-    		<groupId>javax.servlet</groupId>
-    		<artifactId>jstl</artifactId>
-    		<version>1.2</version>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.glassfish.web</groupId>
-		    <artifactId>jstl-impl</artifactId>
-		    <version>1.2</version>
-		    <exclusions>
-		        <exclusion>
-		            <artifactId>servlet-api</artifactId>
-		            <groupId>javax.servlet</groupId>
-		        </exclusion>
-		        <exclusion>
-		            <artifactId>jsp-api</artifactId>
-		            <groupId>javax.servlet.jsp</groupId>
-		        </exclusion>
-		        <exclusion>
-		            <artifactId>jstl-api</artifactId>
-		            <groupId>javax.servlet.jsp.jstl</groupId>
-	        	</exclusion>
-	    	</exclusions>
-		</dependency>  -->
 		
 		<!-- Tell Spring Boot to setup Thymeleaf for page rendering. -->
 		<dependency>
@@ -148,6 +115,7 @@
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
 		
+		<!-- Commons -->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
@@ -175,6 +143,7 @@
 			<version>2.6.1</version>
 		</dependency>
 		
+		<!-- Databases connectors -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -185,17 +154,63 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.8.7</version>
 		</dependency>
+		
+		<!-- Optionnal memory spy -->
 		<dependency>
 			<groupId>net.spy</groupId>
 			<artifactId>spymemcached</artifactId>
 			<version>2.11.2</version>
 		</dependency>
 		
+		<!-- Reading CSV files -->
 		<dependency>
         	<groupId>com.googlecode.jcsv</groupId>
         	<artifactId>jcsv</artifactId>
         	<version>1.4.0</version>
 		</dependency>
+		
+<!--  
+	<dependency>
+		<groupId>hsqldb</groupId>
+		<artifactId>hsqldb</artifactId>
+		<version>1.8.0.10</version>
+	</dependency>
+-->
+<!-- 
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>1.7.7</version>
+	</dependency>
+ -->
+<!--
+	<dependency>
+   		<groupId>javax.servlet</groupId>
+   		<artifactId>jstl</artifactId>
+   		<version>1.2</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.glassfish.web</groupId>
+	    <artifactId>jstl-impl</artifactId>
+	    <version>1.2</version>
+	    <exclusions>
+	        <exclusion>
+	            <artifactId>servlet-api</artifactId>
+	            <groupId>javax.servlet</groupId>
+	        </exclusion>
+	        <exclusion>
+	            <artifactId>jsp-api</artifactId>
+	            <groupId>javax.servlet.jsp</groupId>
+	        </exclusion>
+	        <exclusion>
+	            <artifactId>jstl-api</artifactId>
+	            <groupId>javax.servlet.jsp.jstl</groupId>
+        	</exclusion>
+    	</exclusions>
+	</dependency>
+-->
+		
 	</dependencies>
 
 	<build>

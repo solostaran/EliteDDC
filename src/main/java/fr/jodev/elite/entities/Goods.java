@@ -46,8 +46,8 @@ public class Goods {
 	
 	protected Goods() {}
 	public Goods(Station station, GoodsDesignation gd) {
-		this.setStation(station);
-		this.setGoodsDesignation(gd);
+		this.station = station;
+		this.goodsDesignation = gd;
 	}
 	
 	public Long getIdGoods() {

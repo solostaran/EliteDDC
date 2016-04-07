@@ -89,15 +89,15 @@ public class EliteAppConfig  extends WebMvcConfigurerAdapter {
     }
 	
 //	@Bean
-//    public InternalResourceViewResolver getInternalResourceViewResolver() {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
-//        resolver.setPrefix("/WEB-INF/jsp/");
-//        resolver.setSuffix(".jsp");
-//        resolver.setViewNames("*jsp");
-//        resolver.setOrder(2);
-//        return resolver;
-//    }
+//	public InternalResourceViewResolver getInternalResourceViewResolver() {
+//		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//		resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
+//		resolver.setPrefix("/WEB-INF/jsp/");
+//		resolver.setSuffix(".jsp");
+//		resolver.setViewNames("*jsp");
+//		resolver.setOrder(2);
+//		return resolver;
+//	}
 	
 	/**
 	 * Needed to modify the default Thymeleaf configuration.

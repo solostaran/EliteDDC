@@ -60,10 +60,10 @@ public class GlobalExceptionHandlingController {
 //	}
 	
 	/**
-	 * Exception handler to a JSON Exception Object.
+	 * Exception handler for my own exceptions
 	 * @param req the request that provoked the error.
-	 * @param exception
-	 * @return
+	 * @param exception corresponding exception
+	 * @return a JSON object
 	 * @throws Exception
 	 */
 	@ExceptionHandler({SolarSystemNotFoundException.class,StationNotFoundException.class,
